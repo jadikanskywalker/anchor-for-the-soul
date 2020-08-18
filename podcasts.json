@@ -1,0 +1,28 @@
+{
+    "blogs": {
+        "one": {
+            "date": "2020-08-18T18:39:25.277Z",
+            "title": "The Importance of Doctrine (Mind)",
+            "description": "Believing and defending important doctrines is an necessary component of the Christian faith."
+        }
+    },
+    "podcasts": {
+        "one": {
+            "date": "2020-08-18T18:39:25.277Z",
+            "title": "#1 Mind, Heart, and Soul",
+            "description": "Mind, heart, and soul are three tricky biblical concepts, but important nonetheless."
+          }
+    },
+    "blogContent": {
+        "one": {
+            "p1": "Doctrine is very important",
+            "h2": "Everyone Believes Doctrines",
+            "p3": "Even agnostics believe in certain doctrinal principles."
+        }
+    },
+    "podcastAudio": {
+        "one": {
+            "audio": "This is some audio..."
+        }
+    }
+}

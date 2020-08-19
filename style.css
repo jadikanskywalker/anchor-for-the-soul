@@ -10,7 +10,7 @@ body {
 }
 
 .header .row {
-    padding: 20px 0 30px;
+    padding: 15px 0 30px;
 }
 
 .bottom-curve {
@@ -26,6 +26,13 @@ body {
 .header .bottom-curve {
     height: 50px;
     bottom: -49px;
+}
+
+@media (max-width: 768px) {
+    .header .bottom-curve {
+        height: 40px;
+        bottom: -39px;
+    }
 }
 
 .header .navbar {
@@ -59,13 +66,8 @@ body {
     align-items: center;
 }
 
-.jumbotron .container {
-    padding-top: 0px;
-}
-
 .header-verse {
     font-family: 'Calligraffitti', cursive;
-    margin-bottom: 1.1rem;
 }
 
 .header-verse-ref {
@@ -86,24 +88,27 @@ body {
     margin-left: -30%;
 }
 
-/* @media (max-width: 991.98px) {
-    .header-verse {
-        font-size: 280%;
-    }
-} */
-
 .header-down {
     padding: 3px;
     border: 1px solid #6c757d;
     width: 42px;
     border-radius: 50%;
     position: absolute;
-    bottom: 1px;
+    bottom: -1px;
     left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-index: 3;
 }
 
 .header-down:hover {
     border-color: #596068;
+}
+
+@media (min-width: 768px) {
+    .header-down {
+        bottom: -16px;
+    }
 }
 
 .intro {

@@ -10,7 +10,7 @@ body {
 }
 
 .header .row {
-    padding: 70px 0;
+    padding: 20px 0 30px;
 }
 
 .bottom-curve {
@@ -60,7 +60,7 @@ body {
 }
 
 .jumbotron .container {
-    padding-top: 20px;
+    padding-top: 0px;
 }
 
 .header-verse {
@@ -129,7 +129,8 @@ body {
 }
 
 .intro-profile-pic {
-    width: 150px;
+    max-width: 150px;
+    width: 100%;
     border-radius: 50%;
 }
 

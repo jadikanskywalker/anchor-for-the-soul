@@ -38,6 +38,12 @@ body {
     margin-right: 30px;
 }
 
+.navbar-brand span {
+    color: white;
+    font-family: "Calligraffitti", cursive;
+    margin-left: 0.5rem;
+}
+
 .navbar .nav-link {
     color: #6c757d !important;
 }
@@ -80,11 +86,11 @@ body {
     margin-left: -30%;
 }
 
-@media (max-width: 991.98px) {
+/* @media (max-width: 991.98px) {
     .header-verse {
         font-size: 280%;
     }
-}
+} */
 
 .header-down {
     padding: 3px;
@@ -226,8 +232,26 @@ body {
 
 
 /* Podcast Embed Styles */
-.podcast-embed {
-    font-size: 120%;
+.podcast-wrapper {
+    margin: 0;
+    padding: 0;
+    height: 160px;
+    width: 100%;
+    max-width: 770px;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 3;
+    position: relative;
 }
 
+iframe {
+    height: 100%;
+    width: 100%;
+}
 
+@media (max-width: 800px) {
+    .podcast-wrapper {
+        height: 102px;
+        max-width: 450px;
+    }
+}

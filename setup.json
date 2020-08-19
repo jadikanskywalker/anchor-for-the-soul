@@ -1,17 +1,35 @@
 {
     "1": {
-        "date": "2020-08-06T18:39:25.277Z",
-        "title": "#1 Anchor for the Soul",
-        "description": "We have hope because we believe God's promises and wait patiently for future grace."
+        "1": {
+            "p": "Doctrine is very important"
+        },
+        "2": {
+            "h3": "Everyone Believes Doctrines"
+        },
+        "3": {
+            "p": "Even agnostics believe in certain doctrinal principles."
+        }
     },
     "2": {
-        "date": "2020-08-10T18:39:25.277Z",
-        "title": "#2 Mind, Heart, and Soul",
-        "description": "Mind, heart, and soul are three tricky biblical concepts, but important nonetheless."
+        "1": {
+            "p": "This is about the heart. The heart is important."
+        },
+        "2": {
+            "h3": "Everyone Believes in the Heart"
+        },
+        "3": {
+            "p": "Even hearts are amazing."
+        }
     },
     "3": {
-        "date": "2020-08-18T18:39:25.277Z",
-        "title": "#3 The Self-Love Delusion",
-        "description": "The Bible is clear: we don't need bother loving ourselves. We must love Christ and others."
+        "1": {
+            "p": "Self-love delusion is very bad."
+        },
+        "2": {
+            "h3": "Everyone Loves Themselves"
+        },
+        "3": {
+            "p": "We need to learn how to love God and others."
+        }
     }
 }

@@ -80,6 +80,9 @@
     <section class="container-fluid intro">
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
+                <div class="spinner-border text-info podcast-loading" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
                 <div class="podcast-wrapper">
                     <iframe name="podcast" id="podcast" class="podcast-embed" frameborder="0" scrolling="no"></iframe>
                 </div>
@@ -89,7 +92,16 @@
             <path d="M0,0 C60,22 420,38 500,40 L500,0 Z" fill="#e9e9e9" />
         </svg>
     </section>
+    <section class="container-fluid content px-4 px-lg-5 py-3">
+        <p class="h3 px-0 px-lg-3 mt-5 mb-4">Lastest Podcast Episodes</p>
+        <div class="row px-1 px-lg-4" id="latestPodcasts">
+            <div class="loading" id="loadingPodcasts"></div>
+            
+            
+        </div>
+    </section>
     <section class="container-fluid footer">
+        <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
     </section>
 
     <script src="jquery.js"></script>
@@ -100,6 +112,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
             api.podcastEpisode('#podcast', id);
+            api.latestPodcasts(false, id);
         });
     </script>
 </body>

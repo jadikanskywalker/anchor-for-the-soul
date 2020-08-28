@@ -10,7 +10,7 @@ body {
 }
 
 .header .row {
-    padding: 15px 0 30px;
+    padding: 20px 0 10px;
 }
 
 .bottom-curve {
@@ -94,7 +94,7 @@ body {
     width: 42px;
     border-radius: 50%;
     position: absolute;
-    bottom: -1px;
+    bottom: -5px;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -152,12 +152,6 @@ body {
 .content .bottom-curve {
     height: 20px;
     bottom: -19px;
-}
-
-.content .h3 small {
-    margin-left: 20px;
-    font-size: 60%;
-    font-weight: 300;
 }
 
 .content .loading {
@@ -253,6 +247,16 @@ body {
 iframe {
     height: 100%;
     width: 100%;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.podcast-loading {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    display: none;
 }
 
 @media (max-width: 800px) {

@@ -8,15 +8,44 @@
     <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        .header .navbar {
+            padding-bottom: 10px;
+        }
+        .header .bottom-curve {
+            bottom: -5px;
+            height: 6px;
+            -webkit-filter: none;
+            filter: none;
+        }
+        .blog-header {
+            min-height: 230px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .blog-header-main {
+            margin-top: 0.6rem;
+        }
         .blog-title {
             font-family: "Calligraffitti", cursive;
         }
         .blog-description {
-            font-size: 110%;
+            font-size: 120%;
+            font-style: italic;
+            line-height: 1.6;
+            font-weight: 300;
         }
-        .intro {
-            padding-top: 75px;
-            padding-bottom: 18px;
+        .blog-content {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .blog-content h3 {
+            margin: 2.4rem 1px 1.4rem;
+            font-size: 150%;
+            font-weight: 600;
+        }
+        .blog-content p {
+            font-size: 120%;
+            line-height: 1.8;
         }
         .footer {
             padding: 25px;
@@ -53,7 +82,37 @@
             <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
         </svg>
     </section>
+    <section class="container px-lg-5 py-4 blog-header">
+        <div class="row px-lg-5 pt-3">
+            <div class="col-12 px-lg-4">
+                <a href="blog.html" class="text-muted">< All Blogs</a>
+            </div>
+            <div class="col-12 px-lg-5 text-center blog-header-main">
+                <p class="blog-date text-muted mb-3"></p>
+                <p class="display-4 blog-title mb-3"></p>
+            </div>
+            <div class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-4 text-center">
+                <p class="text-muted mb-2 blog-description"></p>
+            </div>
+        </div>
+    </section>
+    <section class="container blog-content">
+        <div class="row">
+            <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-left blog-content-column">
+            </div>
+        </div>
+    </section>
+    <section class="container-fluid content px-4 px-lg-5 pt-3 pb-3">
+        <p class="h3 px-0 px-lg-3 mt-4 mb-4">Lastest Blog Posts</p>
+        <div class="row px-1 px-lg-4" id="latestBlogs">
+            <div class="loading" id="loadingBlogs"></div>
+            
+            
+            
+        </div>
+    </section>
     <section class="container-fluid footer">
+        <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
     </section>
 
     <script src="jquery.js"></script>
@@ -63,7 +122,9 @@
         $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
-            api.blogPost('#podcast', id);
+            api.sizeBlogContent();
+            api.blogPost(id);
+            api.latestBlogs(false, id);
         });
     </script>
 </body>

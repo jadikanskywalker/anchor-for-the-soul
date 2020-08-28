@@ -71,106 +71,12 @@
         <p class="h3 px-0 px-lg-3 mt-4 mb-4">Lastest Blog Posts</p>
         <div class="row px-1 px-lg-4" id="latestBlogs">
             <div class="loading" id="loadingBlogs"></div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-words pb-1">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text"></p>
-                        </div>
-                        <p class="card-date text-muted mb-2"></p>
-                        <a href="" class="btn btn-info">Read ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card ">
-                    <div class="card-body">
-                        <div class="card-words pb-1">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text mb-2"></p>
-                        </div>
-                        <p class="card-date text-muted mb-2"></p>
-                        <a href="" class="btn btn-info">Read ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card ">
-                    <div class="card-body">
-                        <div class="card-words pb-1">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text mb-2"></p>
-                        </div>
-                        <p class="card-date text-muted mb-2"></p>
-                        <a href="" class="btn btn-info">Read ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card text-white card-explore">
-                    <a href="blogs.html">
-                        <div class="card-bg-img"></div>
-                        <div class="layer" >
-                        </div>
-                        <div class="card-body">
-                        <button class="btn btn-outline-light">Explore Blog ></button>
-                        </div>
-                    </a>
-                </div>
-            </div>
         </div>
         <p class="h3 px-0 px-lg-3 mt-5 mb-4">Lastest Podcast Episodes</p>
         <div class="row px-1 px-lg-4" id="latestPodcasts">
             <div class="loading" id="loadingPodcasts"></div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card ">
-                    <div class="card-body">
-                        <div class="card-words pb-1">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text mb-2"></p>
-                        </div>
-                        <p class="card-date text-muted mb-2"></p>
-                        <a href="" class="btn btn-info">Listen ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card ">
-                    <div class="card-body">
-                        <div class="card-words pb-1">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text mb-2"></p>
-                        </div>
-                        <p class="card-date text-muted mb-2"></p>
-                        <a href="" class="btn btn-info">Listen ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card ">
-                    <div class="card-body">
-                        <div class="card-words pb-1">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text mb-2"></p>
-                        </div>
-                        <p class="card-date text-muted mb-2"></p>
-                        <a href="" class="btn btn-info">Listen ></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="card text-white card-explore wave">
-                    <a href="podcasts.html">
-                        <div class="card-bg-img"></div>
-                        <div class="layer" >
-                        </div>
-                        <div class="card-body">
-                            <button class="btn btn-outline-light">Explore Podcast ></button>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            
+            
         </div>
     </section>
     <section class="container-fluid footer">
@@ -181,15 +87,13 @@
     <script src="bootstrap-4.5.2-dist/js/bootstrap.min.js" async defer></script>
     <script src="api.js"></script>
     <script>
-        
-
         $(document).ready(function() {
             $('.header-down').click(function() {
                 let introOffset = $('.intro').offset();
-                $('html, body').animate({scrollTop: introOffset.top + 30}, 800);
+                $('html, body').animate({scrollTop: introOffset.top + 30}, 600);
             });
-            api.latestBlogs(3);
-            api.latestPodcasts(3);
+            api.latestBlogs(true);
+            api.latestPodcasts(true);
 
             $(window).resize(function() {
                 api.sizeCards('#latestBlogs');

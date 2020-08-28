@@ -1,34 +1,68 @@
 {
+    "0": {
+        "0": {
+            "p" : "Doctrine is very important in the Christian life. It allows us to divide falsehood from truth. Doctrine, of course, is a matter of the mind. But it is also a matter of the heart."
+          },
+        "1":{
+            "p" : "The reality is, it is absolutely impossible to free oneself from doctrine. Everyone believes certain doctrines, whether they wish to admit it or not, and everyone needs to be dilligent as to which doctrinal principles they will accept and which they will reject."
+          },
+        "2":{
+            "h3" : "Everyone Believes Doctrines"
+          },
+        "3":{
+            "p" : "Even agnostics believe in certain doctrinal principles. They believe the doctrinal principle that humans can come to any particular doctrinal principles about God (save this one). Athiests, similarly, believe the doctrinal principle that there is no God, and thus every other belief about God is false."
+          }, 
+        "4":{
+            "p" : "Even agnostics believe in certain doctrinal principles. They believe the doctrinal principle that humans can come to any particular doctrinal principles about God (save this one). Athiests, similarly, believe the doctrinal principle that there is no God, and thus every other belief about God is false."
+          },
+        "5":{
+            "h3" : "Christians Need to Be Explicitly Doctrinal"
+          },
+        "6":{
+            "p" : "The reality is, it is absolutely impossible to free oneself from doctrine. Everyone believes certain doctrines, whether they wish to admit it or not, and everyone needs to be dilligent as to which doctrinal principles they will accept and which they will reject."
+          }
+    },
     "1": {
+        "0": {
+            "p": "This is about the heart. The heart is important."
+        },
         "1": {
-            "p": "Doctrine is very important"
+            "h3": "Everyone Believes in the Heart"
         },
         "2": {
-            "h3": "Everyone Believes Doctrines"
-        },
-        "3": {
-            "p": "Even agnostics believe in certain doctrinal principles."
+            "p": "Even hearts are amazing."
         }
     },
     "2": {
-        "1": {
+        "0": {
             "p": "This is about the heart. The heart is important."
         },
-        "2": {
+        "1": {
             "h3": "Everyone Believes in the Heart"
         },
-        "3": {
+        "2": {
             "p": "Even hearts are amazing."
         }
     },
     "3": {
-        "1": {
+        "0": {
             "p": "Self-love delusion is very bad."
         },
-        "2": {
+        "1": {
             "h3": "Everyone Loves Themselves"
         },
-        "3": {
+        "2": {
+            "p": "We need to learn how to love God and others."
+        }
+    },
+    "4": {
+        "0": {
+            "p": "Self-love delusion is very bad."
+        },
+        "1": {
+            "h3": "Everyone Loves Themselves"
+        },
+        "2": {
             "p": "We need to learn how to love God and others."
         }
     }

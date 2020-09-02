@@ -43,7 +43,7 @@ var api = {
                 
                 console.log(data);
                 let cardHTML = '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card"> <div class="card-body"> <div class="card-words pb-1"> <h5 class="card-title"></h5> <p class="card-text"></p> </div> <p class="card-date text-muted mb-2"></p> <a href="" class="btn btn-info">Read ></a> </div> </div> </div>';
-                let exploreHTML = explore ? '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore"> <a href="blogs.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Blog ></button> </div> </a> </div> </div>' : '';
+                let exploreHTML = explore ? '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore"> <a href="blog.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Blog ></button> </div> </a> </div> </div>' : '';
                 $('#loadingBlogs').hide();
                 for (var i = data.length - 1; i > num; i--) {
                     $('#latestBlogs').append(cardHTML);
@@ -52,7 +52,7 @@ var api = {
                     card.find('.card-title').text(blog.title);
                     card.find('.card-text').text(blog.description);
                     card.find('.card-date').text(new Date(blog.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
-                    card.find('.btn').attr('href', 'blogPost.html?id=' + i);
+                    card.find('.btn').attr('href', 'article.html?id=' + i);
                 };
                 $('#latestBlogs').append(exploreHTML);
                 api.sizeCards('#latestBlogs');
@@ -79,7 +79,7 @@ var api = {
                 }
                 let num = explore ? data.length - 4 : data.length - 5;
                 let cardHTML = '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card "> <div class="card-body"> <div class="card-words pb-1"> <h5 class="card-title"></h5> <p class="card-text mb-2"></p> </div> <p class="card-date text-muted mb-2"></p> <a href="" class="btn btn-info">Listen ></a> </div> </div> </div>';
-                let exploreHTML = explore ? '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore wave"> <a href="podcasts.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Podcast ></button> </div> </a> </div> </div>' : '';
+                let exploreHTML = explore ? '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore wave"> <a href="podcast.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Podcast ></button> </div> </a> </div> </div>' : '';
                 $('#loadingPodcasts').hide();
                 for (var i = data.length - 1; i > num; i--) {
                     $('#latestPodcasts').append(cardHTML);

@@ -8,22 +8,13 @@
     <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .header .navbar {
-            padding-bottom: 10px;
-        }
-        .header .bottom-curve {
-            bottom: -5px;
-            height: 6px;
-            -webkit-filter: none;
-            filter: none;
-        }
         .blog-header {
             min-height: 230px;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
         .blog-header-main {
-            margin-top: 0.6rem;
+            margin-top: 0.4rem;
         }
         .blog-title {
             font-family: "Calligraffitti", cursive;
@@ -53,7 +44,7 @@
     </style>
 </head>
 <body>
-    <section class="container-fluid header">
+    <section class="container-fluid header header-small">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
             <a class="navbar-brand">Anchor for the Soul <span>Blog</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,10 +57,10 @@
                     <a class="nav-link" href="index.html">Home</a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="blogs.html">Blog<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="blog.html">Blog<span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="podcasts.html">Podcast</a>
+                    <a class="nav-link" href="podcast.html">Podcast</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
@@ -82,12 +73,12 @@
             <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
         </svg>
     </section>
-    <section class="container px-lg-5 py-4 blog-header">
-        <div class="row px-lg-5 pt-3">
-            <div class="col-12 px-lg-4">
+    <section class="container mt-0 py-4 blog-header">
+        <div class="row">
+            <div class="col-12 col-xl-10 offset-xl-1 px-lg-5">
                 <a href="blog.html" class="text-muted">< All Blogs</a>
             </div>
-            <div class="col-12 px-lg-5 text-center blog-header-main">
+            <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center blog-header-main">
                 <p class="blog-date text-muted mb-3"></p>
                 <p class="display-4 blog-title mb-3"></p>
             </div>
@@ -115,9 +106,9 @@
         <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
     </section>
 
-    <script src="jquery.js"></script>
+    <script src="js/jquery.js"></script>
     <script src="bootstrap-4.5.2-dist/js/bootstrap.min.js" async defer></script>
-    <script src="api.js"></script>
+    <script src="js/api.js"></script>
     <script>
         $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);

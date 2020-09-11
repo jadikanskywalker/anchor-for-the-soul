@@ -171,12 +171,21 @@ body {
     padding: 0 15px;
 }
 
+.content .col-12 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .content .card {
     margin-bottom: 15px;
-    border: none;
-    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.1);
+    /* border: none;
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.1); */
     opacity: 0;
     transition: opacity 0.3s ease;
+}
+
+.content .card:not(.card-lead) .card-title {
+    font-size: 1.3rem;
 }
 
 .content .card-explore {
@@ -190,7 +199,7 @@ body {
     text-decoration: none;
 }
 
-.content .card-explore .card-bg-img {
+.content .card-explore .card-bg-img, .card-lead .card-bg-img {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -202,7 +211,7 @@ body {
     z-index: 1;
 }
 
-.content .card-explore .layer {
+.content .card-explore .layer, .card-lead .layer {
     background-color: #6c757d73;
     position: absolute;
     top: 0;
@@ -211,6 +220,10 @@ body {
     height: 100%;
     border-radius: .25rem;
     z-index: 2;
+}
+
+.card-lead .card-bg-img {
+    border-radius: 0.25rem 0 0 0.25rem;
 }
 
 .content .card-explore a:hover .card-bg-img {
@@ -237,11 +250,50 @@ body {
     z-index: 3;
 }
 
+.card-lead .card-body {
+    padding: 2.5rem 1.5rem 1rem;
+}
+
+.card-lead .card-title {
+    font-family: 'Calligraffitti', cursive;
+}
+
+.card-lead .card-text {
+    font-size: 120%;
+}
+
+.card-lead .card-details {
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
 .footer {
     padding-top: 28px;
     padding-bottom: 40px;
 }
 
+/* Blog Page Style */
+#filters {
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.filter-topic {
+    max-width: 250px;
+}
+
+.card-topic {
+    background-color: #99a0a6;
+    color: white !important;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 85%;
+    width: fit-content;
+    cursor: pointer;
+}
 
 /* Podcast Embed Styles */
 .podcast-wrapper {

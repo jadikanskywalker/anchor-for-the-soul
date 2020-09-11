@@ -68,13 +68,13 @@
         </svg>
     </section>
     <section class="container-fluid content px-4 px-lg-5 py-5">
-        <p class="h3 px-0 px-lg-3 mt-4 mb-4">Lastest Blog Posts</p>
-        <div class="row px-1 px-lg-4" id="latestBlogs">
-            <div class="loading" id="loadingBlogs"></div>
+        <p class="h3 px-0 px-lg-4 mt-4 mb-4 pt-2 pb-3">Lastest Blog Posts</p>
+        <div class="row px-2 px-lg-5" id="latestArticles">
+            <div class="loading" id="loadingLatestArticles"></div>
         </div>
-        <p class="h3 px-0 px-lg-3 mt-5 mb-4">Lastest Podcast Episodes</p>
-        <div class="row px-1 px-lg-4" id="latestPodcasts">
-            <div class="loading" id="loadingPodcasts"></div>
+        <p class="h3 px-0 px-lg-4 mt-5 mb-4 pt-0 pb-3">Lastest Podcast Episodes</p>
+        <div class="row px-1 px-lg-5" id="latestEpisodes">
+            <div class="loading" id="loadingLatestEpisodes"></div>
         </div>
     </section>
     <section class="container-fluid footer">
@@ -90,12 +90,12 @@
                 let introOffset = $('.intro').offset();
                 $('html, body').animate({scrollTop: introOffset.top + 30}, 600);
             });
-            api.latestBlogs(true);
-            api.latestPodcasts(true);
+            api.latestArticles(true);
+            api.latestEpisodes(true);
 
             $(window).resize(function() {
-                api.sizeCards('#latestBlogs');
-                api.sizeCards('#latestPodcasts');
+                api.sizeCards('#latestArticles');
+                api.sizeCards('#latestEpisodes');
             });
         });
     </script>

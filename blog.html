@@ -7,41 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .blog-header {
-            min-height: 230px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .blog-header-main {
-            margin-top: 0.4rem;
-        }
-        .blog-title {
-            font-family: "Calligraffitti", cursive;
-        }
-        .blog-description {
-            font-size: 120%;
-            font-style: italic;
-            line-height: 1.6;
-            font-weight: 300;
-        }
-        .blog-content {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .blog-content h3 {
-            margin: 2.4rem 1px 1.4rem;
-            font-size: 150%;
-            font-weight: 600;
-        }
-        .blog-content p {
-            font-size: 120%;
-            line-height: 1.8;
-        }
-        .footer {
-            padding: 25px;
-        }
-    </style>
 </head>
 <body>
     <section class="container-fluid header header-small">
@@ -73,23 +38,27 @@
             <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
         </svg>
     </section>
-    <section class="container-fluid content px-4 px-lg-5 pt-5 pb-3">
-        <div class="row">
-            <div class="col-3">
-                <img src="images/podcast-logo.png" style="width: 100%; border-radius: 5px">
+    <section class="container-fluid content px-4 px-lg-5 pt-4 pb-3">
+        <p class="h1 px-2 px-lg-3 mt-3 mb-4">Articles</p>
+        <div class="row px-1 px-lg-4" id="blog-lead"></div>
+        <div class="row px-0 mx-2 mx-lg-4 mt-0 mb-4 pb-0 align-items-center" id="filters">
+          <p class="text-muted mb-0">Filters:</p>
+          <div class="input-group ml-3 filter-topic">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Topic</label>
             </div>
+            <select class="custom-select" id="filter-topic-select">
+                <option selected value="none">All Topics</option>
+                <option value="theology">Theology</option>
+                <option value="philosophy">Philosophy</option>
+                <option value="culture">Culture</option>
+                <option value="politics">Politics</option>
+            </select>
+          </div>
         </div>
+        <div class="row px-1 px-lg-4" id="blog"></div>
     </section>
-    <section class="container-fluid content px-4 px-lg-5 pt-3 pb-3">
-        <p class="h3 px-0 px-lg-3 mt-4 mb-4">Lastest Blog Posts</p>
-        <div class="row px-1 px-lg-4" id="latestBlogs">
-            <div class="loading" id="loadingBlogs"></div>
-            
-            
-            
-        </div>
-    </section>
-    <section class="container-fluid footer">
+    <section class="container-fluid footer d-none">
         <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
     </section>
 
@@ -100,9 +69,10 @@
         $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
-            api.sizeBlogContent();
-            api.blogPost(id);
-            api.latestBlogs(false, id);
+            api.blog();
+            $(document).on('change','#filter-topic-select',function() {
+                api.filterTopic($('#filter-topic-select'));
+            });
         });
     </script>
 </body>

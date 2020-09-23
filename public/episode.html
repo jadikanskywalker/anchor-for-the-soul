@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anchor for the Soul - Podcast</title>
+    
+    <script src="/__/firebase/7.21.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .podcast-details {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .podcast-title {
+            font-family: "Calligraffitti", cursive;
+        }
+        /* .display-4 .text-muted {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 60%;
+            font-weight: 300;
+        } */
+        .podcast-description {
+            font-size: 110%;
+        }
+        /* .header .row {
+            padding-top: 85px;
+            padding-bottom: 45px;
+        } */
+        .intro {
+            padding-top: 75px;
+            padding-bottom: 18px;
+        }
+        .footer {
+            padding: 25px;
+        }
+        /* Editor Styles */
+        #podcast-date {
+            background: transparent;
+            font-weight: 300;
+        }
+        input, div {
+            outline: 0;
+        }
+        .custom-select {
+            border: none !important;
+            background: #343a40 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='#ffffff' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px !important;
+            color: white !important;
+            outline: 0;
+        }
+        .podcast-url {
+            background: #343a40!important;
+            color: white !important;
+            border: 1px solid #343a40 !important;
+            border-radius: 5px;
+            padding: 4px;
+            max-width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <section class="container-fluid header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <a class="navbar-brand">Anchor <span>Podcast</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mr-1">
+                    <li class="nav-item">
+                      <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item btn-group mx-2">
+                      <a class="btn btn-info" href="content.html">Resources</a>
+                      <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <div class="dropdown-menu">
+                          <a class="dropdown-item" href="content.html?type=article">Articles</a>
+                          <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
+                      </div>
+                  </li>
+                    <li class="nav-item">
+                      <button class="btn btn-light" id="signout">Sign Out</button>
+                    </li>
+                  </ul>
+            </div>
+        </nav>
+        <div class="row mt-0 pt-4 pb-3 pb-md-4 px-2 px-md-5 podcast-details">
+            <div class="user">
+                <div class="col-12 mb-4">
+                    <a href="content.html" class="mx-3 mx-md-5 text-muted">< All Content</a>
+                </div>
+                <div class="col-12 mb-4 d-flex align-items-middle">
+                    <p class="text-muted ml-3 ml-md-5 mb-0 podcast-date">Date</p>
+                    <p class="podcast-topic text-muted m-0 ml-3"></p>
+                </div>
+                <div class="col-12">
+                    <p class="display-4 mb-3 podcast-title">Podcast Title</p>
+                </div>
+                <div class="col-12">
+                    <p class="lead text-muted mx-3 mx-md-5 podcast-description">Podcast Description</p>
+                </div>
+            </div>
+            <div class="editor-only">
+                <div class="col-12 mb-3">
+                    <a href="content.html" class="mx-3 mx-md-5 text-muted">< All Content</a>
+                </div>
+                <div class="col-12 mx-3 mx-md-5 mb-4 align-items-middle">
+                    <input type="datetime" class="text-muted mr-3 podcast-date" id="podcast-date">
+                    <select class="custom-select" id="podcast-topic" style="width:fit-content">
+                        <option value="theology">Theology</option>
+                        <option value="philosophy">Philosophy</option>
+                        <option value="culture">Culture</option>
+                        <option value="politics">Politics</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <div contenteditable class="display-4 mb-3 podcast-title" id="podcast-title">Podcast Title</div>
+                </div>
+                <div class="col-12 mx-3 mx-md-5">
+                    <div contenteditable class="lead text-muted mb-4 podcast-description" id="podcast-description">Podcast Description</div>
+                    <div class="input-group mb-3">
+                        <input type="url" class="form-control text-muted podcast-url" id="podcast-url" value="" aria-describedby="url-go">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" id="url-go">Go</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mx-3 mx-md-5 mt-4">
+                        <div class="alert alert-success py-2 px-3" id="save-alert" role="alert">
+                            Changes saved.
+                        </div>
+                        <button class="btn btn-info" id="editor-episode-save">Save</button>
+                        <a class="btn btn-secondary" id="editor-episode-cancel" href="content.html">Cancel</a>
+                        <button class="btn btn-danger float-right editor-episode-delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
+        </svg>
+    </section>
+    <section class="container-fluid intro">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="spinner-border text-info podcast-loading" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="podcast-wrapper">
+                    <iframe name="podcast" id="podcast" class="podcast-embed" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </div>
+        </div>
+        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <path d="M0,0 C60,22 420,38 500,40 L500,0 Z" fill="rgb(216, 216, 216)" />
+        </svg>
+    </section>
+    <section class="container-fluid content px-4 px-lg-5 pt-5 pb-4">
+        <p class="h3 px-0 px-lg-4 mt-4 mb-4 pt-1 pb-3">Lastest Episodes</p>
+        <div class="row px-1 px-lg-4" id="latestEpisodes">
+            <div class="loading" id="loadingLatestEpisodes"></div>
+        </div>
+    </section>
+    <section class="container-fluid footer">
+        <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
+    </section>
+
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap-4.5.2-dist/js/bootstrap.min.js" async defer></script>
+    <script src="js/editor.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        $(document).ready(function() {
+            const id = api.params.get('id');
+            auth.initApp(function() {
+                api.episode('#podcast', id);
+                api.latestEpisodes(false, id);
+            });
+        });
+    </script>
+</body>
+</html>

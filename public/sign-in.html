@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anchor for the Soul</title>
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.21.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
+
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
+    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        #signin {
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
+        }
+        .form-control {
+            border: none;
+        }
+        .alert {
+            display: none;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <section class="container-fluid header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <a class="navbar-brand">Anchor for the Soul <span>Sign In</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-5 mr-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="blog.html">Blog<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="podcast.html">Podcast</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                  </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row justify-content-center mt-5 pb-5">
+            <div class="col-12 col-md-6 col-lg-4 bg-dark py-2 px-3 text-white" id="signin">
+                <p class="h3 mb-4 pt-2">Sign In</p>
+                <div class="px-1">
+                    <input name="email" id="email" class="form-control mb-2" type="email" placeholder="Email Address">
+                    <input name="password" id="password" type="password" class="form-control mb-3" placeholder="Password">
+                </div>
+                <div class="alert alert-danger mx-1 py-2 px-3" id="submit-error" role="alert">
+                    A simple danger alert—check it out!
+                </div>
+                <button class="btn btn-info ml-1 mb-2 mt-1" id="submit">Submit</button>
+            </div>
+        </div>
+        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <path d="M0,0 L0,40 C200,40 390,36 500,20 L500,0 Z" fill="#111111" />
+        </svg>
+    </section>
+    <section class="container-fluid intro px-4 px-lg-5 pb-5">
+        <div class="row intro-profile px-lg-5">
+        </div>
+        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <path d="M0,0 C60,25 440,38 500,40 L500,0 Z" fill="rgb(216, 216, 216)" />
+        </svg>
+    </section>
+
+    <script deter src="js/jquery.js"></script>
+    <script deter src="js/auth.js"></script>
+    <script>
+        $("#submit").click(function() {
+            auth.signin();
+        });
+    </script>
+</body>

@@ -1,0 +1,10 @@
+{
+  "rules": {
+    ".read": "true", 
+    ".write": "root.child('editors').child(auth.uid).exists()",
+    "editors": {
+      ".read": "true",
+      ".write": "false"
+    }
+  }
+}

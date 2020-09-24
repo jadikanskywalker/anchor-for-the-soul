@@ -72,10 +72,6 @@ body {
     color: white !important;
 }
 
-#signout {
-    display: none;
-}
-
 .jumbotron {
     height: 100%;
     display: flex;
@@ -354,6 +350,10 @@ body {
     cursor: pointer;
 }
 
+.article-topic, .podcast-topic {
+    display: none;
+}
+
 /* Podcast Embed Styles */
 .podcast-wrapper {
     margin: 0;
@@ -393,14 +393,26 @@ iframe {
     display: none;
     width: 100%;
 }
+.editor-account {
+    display: none;
+}
 .user {
     width: 100%;
 }
 .alert {
     display: none;
     position: fixed;
-    top: 76px;
+    top: 20px;
     right: 20px;
     width: 300px;
     z-index: 10;
+}
+#signout {
+    cursor: pointer;
+}
+#save-alert-2 {
+    top: 80px;
+}
+.auth-only {
+    display: none;
 }

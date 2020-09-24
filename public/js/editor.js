@@ -38,8 +38,14 @@ var editor = {
         let style = $('input[name="style"]:checked').val();
         editor.article.addSection(id, style);
       });
+      $('#modal-delete-article .modal-confirm').off().click(function() {
+        editor.article.delete();
+      });
       $('#editor-article-save').off().click(function() {
         editor.article.save();
+      });
+      $('#editor-article-delete').off().click(function() {
+        $('#modal-delete-article').modal('show');
       });
     },
     deleteSection: function(id) {
@@ -56,7 +62,7 @@ var editor = {
       $('#' + startID).parent().after(content);
       editor.article.setClickhandlers();
     },
-    save: function() {
+    save: function(blogs = 'blogs/', blogContent = 'blogContent/', callback = null) {
       let articleID = api.params.get('id');
       // Article Header
       let header = {
@@ -99,10 +105,13 @@ var editor = {
       if (articleID != 'new') {
         console.log('in first one');
         let updates = {};
-        updates['blogs/' + articleID] = header;
-        updates['blogContent/' + articleID] = content;
+        updates[blogs + articleID] = header;
+        updates[blogContent + articleID] = content;
         editor.database.ref().update(updates).then((res) => {
           editor.alert($('#save-alert'), 'alert-success', 'Changes saved.');
+          if (callback) {
+            callback();
+          }
         }).catch((err) => {
           editor.alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
         });
@@ -116,7 +125,22 @@ var editor = {
         editor.database.ref().update(updates).then((res) => {
           window.location.href = '/content.html';
         }).catch((err) => {
-          $('#save-alert').removeClass('alert-success').addClass('alert-danger').text('Something went wrong. Err: ' + err).fadeIn();
+          editor.alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
+        });
+      }
+    },
+    delete: function() {
+      let articleID = api.params.get('id');
+      if (articleID != 'new') {
+        editor.article.save('blogsArchive/', 'blogContentArchive/', function() {
+          let updates = {};
+          updates['blogs/' + articleID] = null;
+          updates['blogContent/' + articleID] = null;
+          editor.database.ref().update(updates).then(() => {
+            window.location.href = '/content.html';
+          }).catch((err) => {
+            editor.alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
+          });
         });
       }
     }
@@ -126,8 +150,14 @@ var editor = {
       $('#editor-episode-save').off().click(function() {
         editor.episode.save();
       });
+      $('#modal-delete-episode .modal-confirm').off().click(function() {
+        editor.episode.delete();
+      });
+      $('#editor-episode-delete').off().click(function() {
+        $('#modal-delete-episode').modal('show');
+      });
     },
-    save: function() {
+    save: function(podcasts = 'podcasts/', callback = null) {
       let episodeID = api.params.get('id');
       let header = {
         date: $('#podcast-date').val(),
@@ -140,9 +170,12 @@ var editor = {
       if (episodeID != 'new') {
         console.log('in first one');
         let updates = {};
-        updates['podcasts/' + episodeID] = header;
+        updates[podcasts + episodeID] = header;
         editor.database.ref().update(updates).then((res) => {
           editor.alert($('#save-alert'), 'alert-success', 'Changes saved.');
+          if (callback) {
+            callback();
+          }
         }).catch((err) => {
           editor.alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
         });
@@ -157,6 +190,20 @@ var editor = {
           window.location.href = '/content.html';
         }).catch((err) => {
           alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
+        });
+      }
+    },
+    delete: function() {
+      let episodeID = api.params.get('id');
+      if (episodeID != 'new') {
+        editor.episode.save('podcastsArchive/', function() {
+          let updates = {};
+          updates['podcasts/' + episodeID] = null;
+          editor.database.ref().update(updates).then(() => {
+            window.location.href = '/content.html';
+          }).catch((err) => {
+            editor.alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
+          });
         });
       }
     }

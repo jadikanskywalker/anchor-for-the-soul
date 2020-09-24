@@ -224,31 +224,18 @@ var api = {
             },
             success: function(content, status, jqXHR) {
                 var data = content;
-                // console.log(data);
-                api.data[1] = data;
                 if (id) {
-                    for (var i = data.length - 1; i >= 0; i--) {
-                        if (id == data[i].id) {
-                            data.splice(id, 1);
+                    console.log(data);
+                    for (key in data) {
+                        if (id == data[key].id) {
+                            delete data[key];
                             break;
                         }
                     }
+                    console.log(data);
                 }
-                let num = explore ? data.length - 4 : data.length - 5;
-                let cardHTML = '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card "> <div class="card-body"> <div class="card-words pb-1"> <h5 class="card-title"></h5> <p class="card-text mb-2"></p> </div> <p class="card-date text-muted mb-2"></p> <a href="" class="btn btn-info">Listen ></a> </div> </div> </div>';
-                let exploreHTML = explore ? '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore wave"> <a href="podcast.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Podcast ></button> </div> </a> </div> </div>' : '';
-                $('#loadingLatestEpisodes').hide();
-                for (var i = data.length - 1; i > num; i--) {
-                    $('#latestEpisodes').append(cardHTML);
-                    let blog = data[i];
-                    let card = $('#latestEpisodes .card').eq(data.length - 1 - i);
-                    card.find('.card-title').text(blog.title);
-                    card.find('.card-text').text(blog.description);
-                    card.find('.card-date').text(new Date(blog.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
-                    card.find('.btn').attr('href', 'episode.html?id=' + i);
-                }
-                $('#latestEpisodes').append(exploreHTML);
-                api.sizeCards('#latestEpisodes');
+                data = api.sortByDate([data], ['episode']);
+                api.populate(data, false, 4, false);
             }
         });
     },
@@ -278,7 +265,7 @@ var api = {
                     $('.editor-only').hide();
                     api.blogID = id;
                     $('.article-title').text(data[id].title);
-                    $('.article-topic').text(data[id].topic.charAt(0).toUpperCase() + data[id].topic.slice(1)).attr('value', data[id].topic);
+                    $('.article-topic').text(data[id].topic.charAt(0).toUpperCase() + data[id].topic.slice(1)).attr('value', data[id].topic).show();
                     api.cardClickhandlers(false);
                     $('.article-description').text(data[id].description);
                     $('.article-date').text(new Date(data[id].date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
@@ -288,7 +275,7 @@ var api = {
                     $('.user').hide();
                     $('.editor-only').show();
                     $('#article-title').html(data[id].title);
-                    $('#article-topic').val(data[id].topic);
+                    $('#article-topic').val(data[id].topic).show();
                     $('#article-description').html(data[id].description);
                     $('#article-date').val(data[id].date);
                     $('.article-header').css('opacity', '1');
@@ -332,7 +319,7 @@ var api = {
                 $('.user').hide();
                 $('.editor-only').show();
                 $('#article-title').html("Title");
-                $('#article-topic').val();
+                $('#article-topic').show();
                 $('#article-description').html("Description");
                 $('#article-date').val(new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000)).toISOString());
                 $('.article-header').css('opacity', '1');
@@ -361,7 +348,7 @@ var api = {
                     $('.user').show();
                     $('.editor-only').hide();
                     $('.podcast-date').text(new Date(data[id].date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
-                    $('.podcast-topic').text(data[id].topic.charAt(0).toUpperCase() + data[id].topic.slice(1)).attr('value', data[id].topic).addClass('bg-dark').addClass('text-white');
+                    $('.podcast-topic').text(data[id].topic.charAt(0).toUpperCase() + data[id].topic.slice(1)).attr('value', data[id].topic).addClass(['bg-dark', 'text-white']).show();
                     api.cardClickhandlers(false);
                     $('.podcast-title').text(data[id].title);
                     $('.podcast-description').text(data[id].description);
@@ -369,7 +356,7 @@ var api = {
                     $('.editor-only').show();
                     $('.user').hide();
                     $('#podcast-date').val(data[id].date);
-                    $('#podcast-topic').val(data[id].topic);
+                    $('#podcast-topic').val(data[id].topic).show();
                     $('#podcast-title').text(data[id].title);
                     $('#podcast-description').text(data[id].description);
                     $('#podcast-url').val(data[id].url);
@@ -395,6 +382,7 @@ var api = {
             $('.user').hide();
             $('#podcast-date').val(new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000)).toISOString());
             $('#podcast-title').text('Title');
+            $('#podcast-topic').show();
             $('#podcast-description').text('Description');
             $('#podcast-url').val('URL');
             $('#url-go').click(function() {

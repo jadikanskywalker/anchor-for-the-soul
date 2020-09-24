@@ -34,14 +34,19 @@
                     <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="content.html?type=article">Articles</a>
                         <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
                     </div>
                 </li>
-                  <li class="nav-item">
-                    <button class="btn btn-light" id="signout">Sign Out</button>
-                  </li>
+                <li class="nav-item dropdown auth-only">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/profile.html">Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="signout">Sign Out</a>
+                  </div>
+                </li>
                 </ul>
             </div>
         </nav>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anchor for the Soul - Content</title>
+    
+    <script src="/__/firebase/7.21.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <section class="container-fluid header header-small">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <a class="navbar-brand">Anchor for the Soul <span>Profile</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mr-2">
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                  </li>
+                  <li class="nav-item btn-group mx-2">
+                    <a class="btn btn-info" href="content.html">Resources</a>
+                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="content.html?type=article">Articles</a>
+                        <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown auth-only">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="/profile.html">Profile</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" id="signout">Sign Out</a>
+                    </div>
+                </li>
+              </ul>
+            </div>
+        </nav>
+        </div>
+        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
+        </svg>
+    </section>
+    <section class="container px-md-5 pt-4 mt-1 pb-3">
+        <div class="row">
+            <p class="h1 mb-3 col-12 col-lg-8 offset-lg-2 px-1 px-lg-3">Profile</p>
+        </div>
+        <div class="row">
+            <div class="form-group px-2 px-lg-4 col-12 col-lg-8 offset-lg-2">
+                <label for="profile-name">Name</label>
+                <input type="text" class="form-control" id="profile-name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group px-2 px-lg-4 col-12 col-lg-8 offset-lg-2">
+                <label for="profile-email">Email</label>
+                <input type="email" class="form-control" id="profile-email">
+                <button class="btn btn-link text-info pt-3 pl-0 pb-0" id="profile-verify" style="display: none">Verify Email</button>
+                <small class="form-text text-muted" id="profile-verify-instructions" style="display: none">This will send a verification link to your saved email address.</small>
+                <small class="form-text text-muted" id="profile-verified" style="display: none">Email is verified. &#10003</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group px-2 px-lg-4 mb-3 col-12 col-lg-8 offset-lg-2">
+                <button class="btn btn-link text-info pt-0 pl-0 pb-0" id="profile-reset">Reset Password</button>
+                <small class="form-text text-muted">This will send a password reset link to your saved email address.</small>
+            </div>
+        </div>
+        <div class="row editor-account">
+          <div class="form-group px-2 px-lg-4 mb-4 col-12 col-lg-8 offset-lg-2">
+              <label class="form-text text-muted mx-auto">&#10003 This is an editor account.</label>
+          </div>
+      </div>
+        <div class="row">
+            <div class="px-2 px-lg-4 col-12 col-lg-8 offset-lg-2">
+                <div class="alert alert-success py-2 px-3" id="save-alert" role="alert">
+                    Changes saved.
+                </div>
+                <div class="alert alert-success py-2 px-3" id="save-alert-2" role="alert">
+                    Changes saved.
+                </div>
+                <button class="btn btn-info" id="profile-save">Save Changes</button>
+                <a class="btn btn-dark" id="profile-cancel" href="/index.html">Cancel</a>
+                <button class="btn btn-danger float-right" id="profile-delete">Delete Account</button>
+            </div>
+        </div>
+    </section>
+    <section class="container-fluid footer d-none">
+        <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
+    </section>
+
+    <div class="modal fade" id="modal-resignin" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title mb-2" id="exampleModalLabel2">Please Sign In Again</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="mb-1">Please sign in again to <span class="action">update your email address</span>.</p>
+              <div class="form-check">
+                <label class="" for="modal-email">
+                    Email
+                  </label>
+                <input class="form-control" type="email" id="modal-email">
+              </div>
+              <div class="form-check">
+                <label for="modal-password">
+                    Paragraph
+                  </label>
+                <input class="form-control" type="password" id="modal-password">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-info modal-confirm" id="modal-enter">Enter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to permanently delete your account? Once deleted, your account cannot be retrieved.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger modal-confirm">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap-4.5.2-dist/js/bootstrap.min.js" async defer></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        $(document).ready(function() {
+            auth.initApp(function() {
+              if (auth.editorStatus) {
+                $('.editor-account').show();
+              }
+            }, true);
+        });
+    </script>
+</body>
+</html>

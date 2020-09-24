@@ -40,34 +40,50 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
             
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-5 mr-auto">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mr-2">
                   <li class="nav-item">
                     <a class="nav-link" href="index.html">Home</a>
-                  </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="blog.html">Blog<span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="podcast.html">Podcast</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                   </li>
-                </ul>
+                  <li class="nav-item btn-group mx-2">
+                    <a class="btn btn-info" href="content.html">Resources</a>
+                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="content.html?type=article">Articles</a>
+                        <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown auth-only">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="/profile.html">Profile</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" id="signout">Sign Out</a>
+                    </div>
+                </li>
+              </ul>
             </div>
         </nav>
-        <div class="row justify-content-center mt-5 pb-5">
-            <div class="col-12 col-md-6 col-lg-4 bg-dark py-2 px-3 text-white" id="signin">
-                <p class="h3 mb-4 pt-2">Sign In</p>
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 col-md-6 col-lg-4 bg-dark py-2 mb-0 px-3 text-white" id="signin">
+                <p class="h3 mb-4 pt-2" id="signin-text">Sign In</p>
                 <div class="px-1">
                     <input name="email" id="email" class="form-control mb-2" type="email" placeholder="Email Address">
                     <input name="password" id="password" type="password" class="form-control mb-3" placeholder="Password">
                 </div>
-                <div class="alert alert-danger mx-1 py-2 px-3" id="submit-error" role="alert">
-                    A simple danger alert—check it out!
-                </div>
-                <button class="btn btn-info ml-1 mb-2 mt-1" id="submit">Submit</button>
+                <div class="alert alert-danger mx-1 py-2 px-3" id="submit-error" role="alert"></div>
+                <button class="btn btn-link text-info float-right mt-1" id="forgot-password">Forgot password?</button>
+                <button class="btn btn-info ml-0 mb-2 mt-1" id="submit">Submit</button>
+            </div>
+        </div>
+        <div class="row justify-content-center pt-0 pb-5 my-0">
+            <div class="col-12 col-md-6 col-lg-4 py-0 px-3">
+                <a class="btn btn-link text-muted" href="signup.html">Don't have an account? Sign Up</a>
             </div>
         </div>
         <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
@@ -87,6 +103,17 @@
     <script>
         $("#submit").click(function() {
             auth.signin();
+        });
+        $('#forgot-password').click(function() {
+            $(this).hide();
+            $('#password').hide();
+            $('#email').addClass('mb-3');
+            $('#signin-text').text('Reset Password');
+            $('#submit').hide();
+            $('#signin').append('<button class="btn btn-info ml-0 mb-2 mt-1" id="send-reset-link">Send Reset Link</button>');
+            $('#send-reset-link').click(function() {
+                auth.sendPasswordReset($('#submit-error'));
+            });
         });
     </script>
 </body>

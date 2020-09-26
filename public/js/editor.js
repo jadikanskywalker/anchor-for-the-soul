@@ -39,10 +39,54 @@ var editor = {
         editor.article.addSection(id, style);
       });
       $('#modal-delete-article .modal-confirm').off().click(function() {
-        editor.article.delete();
+        let published = api.params.get('published');
+        if (published === 'false') {
+          editor.article.delete('unpublished/blogs/', 'unpublished/blogContent/');
+        } else {
+          editor.article.delete();
+        }
       });
       $('#editor-article-save').off().click(function() {
-        editor.article.save();
+        let published = api.params.get('published');
+        if (published !== 'false') {
+          editor.article.save();
+        } else {
+          editor.article.save('unpublished/blogs/', 'unpublished/blogContent/', function() {
+            editor.alert($('#save-alert'), 'alert-success', 'Changes saved.');
+          });
+        }
+      });
+      $('#editor-article-publish').off().click(function() {
+        editor.article.save('blogs/', 'blogContent/', function() {
+          let articleID = api.params.get('id');
+          let updates = {};
+          updates['unpublished/blogs/' + articleID] = null;
+          updates['unpublished/blogContent/' + articleID] = null;
+          editor.database.ref().update(updates).then(function() {
+            $('#editor-article-publish').hide();
+            $('#editor-article-published').show();
+            window.history.replaceState({}, document.title, "/article.html?id=" + api.params.get('id'));
+            editor.alert($('#save-alert'), 'alert-success', 'Article published.');
+          }).catch(function(err) {
+            editor.alert($('#save-alert'), 'alert-warning', 'Article published. Unpublished copy not deleted.');
+          });
+        }, true);
+      });
+      $('#editor-article-unpublish').off().click(function() {
+        editor.article.save('unpublished/blogs/', 'unpublished/blogContent/', function() {
+          let articleID = api.params.get('id');
+          let updates = {};
+          updates['blogs/' + articleID] = null;
+          updates['blogContent/' + articleID] = null;
+          editor.database.ref().update(updates).then(function() {
+            $('#editor-article-publish').show();
+            $('#editor-article-published, #editor-article-unpublish').hide();
+            window.history.replaceState({}, document.title, "/article.html?id=" + api.params.get('id') + '&published=false');
+            editor.alert($('#save-alert'), 'alert-success', 'Article unpublished.');
+          }).catch(function(err) {
+            editor.alert($('#save-alert'), 'alert-warning', 'Article not unpublished. However, a copy was saved to unpublished.');
+          });
+        }, true);
       });
       $('#editor-article-delete').off().click(function() {
         $('#modal-delete-article').modal('show');
@@ -108,9 +152,10 @@ var editor = {
         updates[blogs + articleID] = header;
         updates[blogContent + articleID] = content;
         editor.database.ref().update(updates).then((res) => {
-          editor.alert($('#save-alert'), 'alert-success', 'Changes saved.');
           if (callback) {
             callback();
+          } else {
+            editor.alert($('#save-alert'), 'alert-success', 'Changes published.');
           }
         }).catch((err) => {
           editor.alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
@@ -119,23 +164,23 @@ var editor = {
         var newRef = editor.database.ref('blogs/').push();
         header.id = newRef.key;
         let updates = {}
-        updates['blogs/' + newRef.key] = header;
-        updates['blogContent/' + newRef.key] = content;
+        updates['unpublished/blogs/' + newRef.key] = header;
+        updates['unpublished/blogContent/' + newRef.key] = content;
         console.log(updates);
         editor.database.ref().update(updates).then((res) => {
-          window.location.href = '/content.html';
+          window.location.href = '/article.html?id=' + newRef.key + '&published=false';
         }).catch((err) => {
           editor.alert($('#save-alert'), 'alert-danger', 'Something went wrong. Err: ' + err);
         });
       }
     },
-    delete: function() {
+    delete: function(blogs = 'blogs/', blogContent = 'blogContent/') {
       let articleID = api.params.get('id');
       if (articleID != 'new') {
         editor.article.save('blogsArchive/', 'blogContentArchive/', function() {
           let updates = {};
-          updates['blogs/' + articleID] = null;
-          updates['blogContent/' + articleID] = null;
+          updates[blogs + articleID] = null;
+          updates[blogContent + articleID] = null;
           editor.database.ref().update(updates).then(() => {
             window.location.href = '/content.html';
           }).catch((err) => {

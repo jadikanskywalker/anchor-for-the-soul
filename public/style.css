@@ -333,6 +333,9 @@ body {
     transition: opacity 0.3s ease;
     padding-bottom: 2px;
 }
+#filters > * {
+    margin-bottom: 10px;
+}
 
 .filter {
     max-width: 230px;
@@ -412,6 +415,9 @@ iframe {
 }
 #save-alert-2 {
     top: 80px;
+}
+#editor-article-publish {
+    display: none;
 }
 .auth-only {
     display: none;

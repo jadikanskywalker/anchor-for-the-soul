@@ -5,6 +5,8 @@ var api = {
     cardLeadHTML: '<div class="col-12 col-md-12 offset-md-0 mb-2"><div class="card card-lead bg-light"> <div class="row no-gutters"> <div class="col-md-4"> <div class="card-bg-img"></div> <div class="layer"></div> </div> <div class="col-md-8"> <div class="card-body"> <div class="card-words pb-5 mb-4"> <div class="card-words pb-2 mb-1"> <div class="d-flex justify-content-between align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted m-0" value=""></p> </div> <h5 class="card-title display-4 mb-4 pb-3">The Self-Love Delusion</h5> <p class="card-text ml-2">The Bible is clear: we don\'t need bother loving ourselves. We must love Christ and others.</p> </div> </div> <div class="card-details"> <div>  <p class="card-date text-muted mt-1 mb-0">August 31, 2020</p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div> </div> </div>',
     data: [],
     dataFlat: [],
+    dataUnpublished: [],
+    dataFlatUnpublished: [],
     params: new URLSearchParams(window.location.search),
     filters: {
         topic: 'none',
@@ -63,6 +65,7 @@ var api = {
                     filteredData.push(data[i]);
                 }
             }
+            console.log(filteredData);
             api.populate(filteredData, false);
         }
     },
@@ -73,6 +76,10 @@ var api = {
         $('#content-lead').empty();
         let num = leadCard ? 2 : 1;
         let end = limit && data.length > limit ? data.length - limit : 0;
+        let hrefEnd = '';
+        if (api.filters.published == 'false') {
+            hrefEnd = '&published=false';
+        }
         for (var i = data.length - 1; i >= end; i--) {
             var blog = data[i];
             if (i != data.length - 1 || !leadCard) {
@@ -90,7 +97,7 @@ var api = {
             card.find($('.card-topic')).text(blog.topic.charAt(0).toUpperCase() + blog.topic.slice(1)).attr('value', blog.topic);
             card.find('.card-date').html(dateTag + new Date(blog.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
             let btn = card.find('.btn');
-            btn.attr('href', blog.type + '.html?id=' + blog.id);
+            btn.attr('href', blog.type + '.html?id=' + blog.id + hrefEnd);
             if (auth.editorStatus) {
                 btn.text('Edit >');
             } else if (blog.type == 'episode') {
@@ -132,9 +139,9 @@ var api = {
             })
         ).then(function() {
             if (auth.editorStatus) {
-                $('#clear-filters').after('<a class="btn btn-info ml-3" id="new-article" href="/article.html?id=new">+ New Article</a><a class="btn btn-info ml-2" id="new-episode" href="/episode.html?id=new">+ New Episode</a>');
+                $('#clear-filters').after('<select class="custom-select ml-3" id="filter-published-select" style="width:140px""><option selected="" value="true">Published</option><option value="false">Unpublished</option></select><a class="btn btn-info ml-2" id="new-article" href="/article.html?id=new">+ New Article</a><a class="btn btn-info ml-2" id="new-episode" href="/episode.html?id=new">+ New Episode</a>');
             } else {
-                $('#new-article, #new-episode').remove();
+                $('#new-article, #new-episode, #filter-published-select').remove();
             }
             api.dataFlat = api.sortByDate(api.data, ['article', 'episode']);
             if (filter) {
@@ -147,10 +154,36 @@ var api = {
                     api.filters.type = params.get('type');
                     $("#filter-type-select").val(params.get('type'));
                 }
-                $(document).on('change','#filter-topic-select, #filter-type-select',function() {
+                if (auth.editorStatus) {
+                    if (params.has('published')) {
+                        api.filters.published = params.get('published');
+                        $('#filter-published-select').val(params.get('published'));
+                        if (api.filters.published === 'false') {
+                            console.log('here');
+                            api.unpublishedContentInit(false);
+                        } else {
+                            api.unpublishedContentInit(true);
+                        }
+                    } else {
+                        api.unpublishedContentInit(true);
+                    }
+                } else {
+                    api.filter(api.dataFlat);
+                }
+                $(document).on('change','#filter-topic-select, #filter-type-select, #filter-published-select',function() {
                     api.filters.topic = $('#filter-topic-select').val(),
                     api.filters.type = $('#filter-type-select').val();
-                    api.filter(api.dataFlat);
+                    if (auth.editorStatus) {
+                        api.filters.published = $('#filter-published-select').val();
+                        console.log(api.filters.published, api.dataFlatUnpublished);
+                        if (api.filters.published === 'false') {
+                            api.filter(api.dataFlatUnpublished, false);
+                        } else {
+                            api.filter(api.dataFlat);
+                        }
+                    } else {
+                        api.filter(api.dataFlat);
+                    }
                 });
                 $('#clear-filters').click(function() {
                     api.filters = {
@@ -159,11 +192,42 @@ var api = {
                     }
                     $('#filter-topic-select').val("none"),
                     $('#filter-type-select').val("none");
-                    api.filter(api.dataFlat);
+                    if (auth.editorStatus) {
+                        api.filters.published = $('#filter-published-select').val();
+                        if (api.filters.published === 'false') {
+                            api.filter(api.dataFlatUnpublished, false);
+                        } else {
+                            api.filter(api.dataFlat);
+                        }
+                    } else {
+                        api.filter(api.dataFlat);
+                    }
                 });
-                api.filter(api.dataFlat);
             } else {
                 api.populate(api.dataFlat, true, null, false);
+            }
+        });
+    },
+    unpublishedContentInit: function(published = true) {
+        $.when(
+            // Get Articles
+            $.ajax({
+                url: 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogs.json',
+                data: {
+                    orderBy: '"$key"',
+                    limitToLast: 100
+                },
+                success: function(content, status, jqXHR) {
+                    api.dataUnpublished[0] = content;
+                }
+            })
+        ).then(function() {
+            api.dataFlatUnpublished = api.sortByDate(api.dataUnpublished, ['article']);
+            console.log(api.dataUnpublished, api.dataFlatUnpublished);
+            if (published) {
+                api.filter(api.dataFlat, true);
+            } else {
+                api.filter(api.dataFlatUnpublished, false);
             }
         });
     },
@@ -250,9 +314,20 @@ var api = {
         $('.article-content').css('min-height', height.window - height.navbar - height.articleHeader);
     },
     article: function(id) {
+        let published = api.params.get('published');
+        let urlHeader, urlContent;
+        if (published === 'false' && auth.editorStatus) {
+            urlHeader = 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogs.json';
+            urlContent = 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogContent.json';
+        } else if (published === 'false' && !auth.editorStatus) {
+            window.location.href = '/content.html';
+        } else {
+            urlHeader = 'https://anchor-for-the-soul.firebaseio.com/blogs.json';
+            urlContent = 'https://anchor-for-the-soul.firebaseio.com/blogContent.json';
+        }
         if (id !== 'new') {
         $.ajax({
-            url: 'https://anchor-for-the-soul.firebaseio.com/blogs.json',
+            url: urlHeader,
             data: {
                 orderBy: '"$key"',
                 equalTo: '"' + id + '"'
@@ -278,6 +353,11 @@ var api = {
                     $('#article-topic').val(data[id].topic).show();
                     $('#article-description').html(data[id].description);
                     $('#article-date').val(data[id].date);
+                    if (published === 'false') {
+                        $('#editor-article-publish').show();
+                        $('#editor-article-published').hide();
+                        $('#editor-article-unpublish').hide();
+                    }
                     $('.article-header').css('opacity', '1');
                 }
                 api.sizeArticleContent();
@@ -285,7 +365,7 @@ var api = {
             }
         });
         $.ajax({
-            url: 'https://anchor-for-the-soul.firebaseio.com/blogContent.json',
+            url: urlContent,
             data: {
                 orderBy: '"$key"',
                 equalTo: '"' + id + '"'
@@ -323,7 +403,9 @@ var api = {
                 $('#article-description').html("Description");
                 $('#article-date').val(new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000)).toISOString());
                 $('.article-header').css('opacity', '1');
-
+                $('#editor-article-delete').hide();
+                $('#editor-article-published').hide();
+                $('#editor-article-unpublish').hide();
                 var contentColumn = $('.article-content-column');
                 api.highestID = 1;
                 contentColumn.empty();
@@ -333,6 +415,8 @@ var api = {
                 editor.init();
                 api.sizeArticleContent();
                 $(window).resize(function() { api.sizeArticleContent(); });
+            } else {
+                window.location.href = '/content.html';
             }
         }
     },

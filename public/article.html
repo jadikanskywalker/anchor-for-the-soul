@@ -48,6 +48,25 @@
         .footer {
             padding: 25px;
         }
+        @media (max-width: 768px) {
+          .article-title {
+            font-family: "Calligraffitti", cursive;
+            outline: 0;
+          }
+        .article-description {
+            font-size: 120%;
+            font-style: italic;
+            line-height: 1.6;
+            font-weight: 300;
+          }
+          .article-content h3, .h3 {
+            font-size: 160%;
+            margin-left: 0px;
+          }
+          .article-content p, .article-content div.content-editable, .p {
+            font-size: 130%;
+          }
+        }
         /* Editor Styles */
         input, div.content-editable {
             border: none;
@@ -76,6 +95,7 @@
         }
         .editor-input, .editor-editable {
             position: relative;
+            margin-right: 22px;
         }
         .editor-delete {
             background: none;
@@ -155,7 +175,7 @@
         </div>
         <div class="row editor-only">
             <div class="col-12 col-xl-10 offset-xl-1 px-lg-5">
-                <a href="content.html" class="text-muted">< All Content</a>
+                <a href="content.html" class="text-muted">< All Resources</a>
             </div>
             <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center article-header-main">
                 <input type="datetime-local" id="article-date" class="article-date text-muted mb-1">
@@ -180,8 +200,14 @@
                 <div class="alert alert-success py-2 px-3" id="save-alert" role="alert">
                     Changes saved.
                 </div>
+                <div class="alert alert-success py-2 px-3" id="save-alert-2" role="alert">
+                  Changes saved.
+                </div>
                 <button class="btn btn-info" id="editor-article-save">Save</button>
                 <a class="btn btn-secondary" id="editor-article-cancel" href="content.html">Cancel</a>
+                <button class="btn btn-success ml-3" id="editor-article-publish">Publish</button>
+                <button class="btn btn-warning text-white ml-3" id="editor-article-unpublish">Unpublish</button>
+                <label class="text-muted ml-3" id="editor-article-published">&check; Published</label>
                 <button class="btn btn-danger float-right" id="editor-article-delete">Delete</button>
             </div>
         </div>

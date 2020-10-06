@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Anchor for the Soul - Content</title>
+    <title>Anchor for the Soul – Resources</title>
     
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
     <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
@@ -16,80 +16,91 @@
 <body>
     <section class="container-fluid header header-small">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-            <a class="navbar-brand">Anchor for the Soul <span>Resources</span></a>
+            <a class="navbar-brand">Anchor <span>Resources</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
             
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mr-2">
-                  <li class="nav-item">
+                  <li class="nav-item my-1">
                     <a class="nav-link" href="index.html">Home</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item my-1">
                     <a class="nav-link" href="#">About</a>
                   </li>
-                  <li class="nav-item btn-group mx-2">
+                  <li class="nav-item btn-group my-1 mx-lg-2">
                     <a class="btn btn-info" href="content.html">Resources</a>
                     <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg-right">
                         <a class="dropdown-item" href="content.html?type=article">Articles</a>
                         <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown auth-only">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="/profile.html">Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" id="signout">Sign Out</a>
-                  </div>
+                <li class="nav-item dropdown auth-only my-1">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
+                    <div class="dropdown-menu dropdown-menu-lg-right">
+                      <a class="dropdown-item" href="/profile.html">Profile</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" id="signout">Sign Out</a>
+                    </div>
                 </li>
                 </ul>
             </div>
         </nav>
         </div>
         <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
-            <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
+            <path d="M0,0 L0,40 C180,40 390,26 500,8 L500,0 Z" fill="#111111" />
         </svg>
     </section>
-    <section class="container-fluid content px-4 px-lg-5 pt-4 mt-1 pb-3">
-        <!-- <p class="h1 px-2 px-lg-3 mt-3 mb-4">Articles</p> -->
-        <div class="row px-0 mx-2 mx-lg-3 mt-0 mb-3 align-items-center" id="filters">
-          <!-- <p class="text-muted mb-0">Filters:</p> -->
-          <div class="input-group ml-3 filter">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Type</label>
+    <section class="container-fluid content px-2 px-lg-5 pt-4 mt-1 pb-3">
+        <button class="btn filter-menu text-muted">
+            <img src="images/sort-black-18dp.svg"> <p class="pl-1 m-0">Filters</p>
+        </button>
+        <div class="row mx-2 mx-lg-3 mt-0 mb-3 align-items-center bg-dark" id="filters">
+            <button class="filter-close text-white">X</button>
+            <h3 class="text-white filter-title">Filters</h3>
+            <div class="input-group filter mx-2">
+              <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Type</label>
+              </div>
+              <select class="custom-select" id="filter-type-select">
+                  <option selected="" value="none">All Types</option>
+                  <option value="article">Articles</option>
+                  <option value="episode">Episodes</option>
+              </select>
             </div>
-            <select class="custom-select" id="filter-type-select">
-                <option selected value="none">All Types</option>
-                <option value="article">Article</option>
-                <option value="episode">Episode</option>
-            </select>
-          </div>
-          <div class="input-group ml-3 filter">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Topic</label>
+            <div class="input-group filter mx-2">
+              <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Topic</label>
+              </div>
+              <select class="custom-select" id="filter-topic-select">
+                  <option selected="" value="none">All Topics</option>
+                  <option value="theology">Theology</option>
+                  <option value="philosophy">Philosophy</option>
+                  <option value="culture">Culture</option>
+                  <option value="politics">Politics</option>
+              </select>
             </div>
-            <select class="custom-select" id="filter-topic-select">
-                <option selected value="none">All Topics</option>
-                <option value="theology">Theology</option>
-                <option value="philosophy">Philosophy</option>
-                <option value="culture">Culture</option>
-                <option value="politics">Politics</option>
-            </select>
-          </div>
-          <p id="clear-filters" class="text-muted ml-3">Clear Filters</p>
+            <p id="clear-filters" class="text-light mx-3 mb-0">Clear Filters</p>
         </div>
-        <div class="row px-1 px-lg-4" id="content-lead"></div>
-        
-        <div class="row px-1 px-lg-4" id="content"></div>
+        <div class="main">
+            <div class="row px-1 px-lg-4 mx-1" id="content-lead"></div>
+            <div class="row px-1 px-lg-4 mx-1" id="content"></div>
+        </div>
     </section>
-    <section class="container-fluid footer d-none">
-        <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
+    <div class="loading-div">
+        <div class="spinner-border text-info loading" id="content-loading" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+  <div class="main">
+    <section class="container-fluid footer">
+      <p class="mb-0 mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
     </section>
+  </div>
 
     <script src="js/jquery.js"></script>
     <script src="bootstrap-4.5.2-dist/js/bootstrap.min.js" async defer></script>
@@ -97,8 +108,25 @@
     <script src="js/auth.js"></script>
     <script>
         $(document).ready(function() {
+            $('.loading').show();
             auth.initApp(function() {
               api.contentInit();
+            });
+
+            function filterMenu() {
+                var scrollHeight = $(window).scrollTop();
+                var navbarHeight = $('.navbar').outerHeight() + 6;
+                if (scrollHeight > navbarHeight) {
+                    $('.filter-menu').css('top', '2rem');
+                    console.log('1');
+                } else {
+                    $('.filter-menu').css('top', (navbarHeight + 24) + 'px')
+                    console.log('2');
+                }
+            }
+            filterMenu();
+            $(window).scroll(function() {
+                filterMenu();
             });
         });
     </script>

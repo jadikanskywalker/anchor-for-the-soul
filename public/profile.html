@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Anchor for the Soul - Content</title>
+    <title>Anchor for the Soul - Profile</title>
     
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
     <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
@@ -29,19 +29,19 @@
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                   </li>
-                  <li class="nav-item btn-group mx-2">
+                  <li class="nav-item btn-group my-1 mx-lg-2">
                     <a class="btn btn-info" href="content.html">Resources</a>
                     <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg-right">
                         <a class="dropdown-item" href="content.html?type=article">Articles</a>
                         <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown auth-only">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg-right">
                       <a class="dropdown-item" href="/profile.html">Profile</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" id="signout">Sign Out</a>
@@ -69,6 +69,12 @@
             <div class="form-group px-2 px-lg-4 col-12 col-lg-8 offset-lg-2">
                 <label for="profile-email">Email</label>
                 <input type="email" class="form-control" id="profile-email">
+                <div class="form-check pt-2 ml-1">
+                  <input class="form-check-input" type="checkbox" value="" id="profile-updates">
+                  <label class="form-check-label" for="profile-updates">
+                      Recieve email updates for new resources.
+                  </label>
+                </div>
                 <button class="btn btn-link text-info pt-3 pl-0 pb-0" id="profile-verify" style="display: none">Verify Email</button>
                 <small class="form-text text-muted" id="profile-verify-instructions" style="display: none">This will send a verification link to your saved email address.</small>
                 <small class="form-text text-muted" id="profile-verified" style="display: none">Email is verified. &#10003</small>

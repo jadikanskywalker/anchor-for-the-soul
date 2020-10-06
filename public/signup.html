@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Anchor for the Soul</title>
+    <title>Anchor for the Soul – Sign Up</title>
     
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
@@ -35,7 +35,7 @@
 <body>
     <section class="container-fluid header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-            <a class="navbar-brand">Anchor for the Soul <span>Sign Up</span></a>
+            <a class="navbar-brand">Anchor for the Soul <span>Signup</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -48,19 +48,19 @@
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                   </li>
-                  <li class="nav-item btn-group mx-2">
+                  <li class="nav-item btn-group my-1 mx-lg-2">
                     <a class="btn btn-info" href="content.html">Resources</a>
                     <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg-right">
                         <a class="dropdown-item" href="content.html?type=article">Articles</a>
                         <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown auth-only">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg-right">
                       <a class="dropdown-item" href="/profile.html">Profile</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" id="signout">Sign Out</a>
@@ -73,18 +73,24 @@
             <div class="col-12 col-md-6 col-lg-4 bg-dark py-2 px-3 text-white" id="signin">
                 <p class="h3 mb-4 pt-2">Sign Up</p>
                 <div class="px-1">
-                    <label for="name">Name</label>
+                    <label for="name" class="text-light pl-1">Name</label>
                     <input name="name" id="name" class="form-control mb-2" type="text" placeholder="Name">
-                    <label for="email">Email Address</label>
+                    <label for="email" class="text-light pl-1">Email Address</label>
                     <input name="email" id="email" class="form-control mb-2" type="email" placeholder="Email Address">
-                    <label for="password">Password</label>
+                    <div class="form-check mb-2 ml-1">
+                        <input class="form-check-input" type="checkbox" value="" id="email-updates" checked>
+                        <label class="form-check-label text-light" for="email-updates">
+                            Recieve email updates for new resources.
+                        </label>
+                    </div>
+                    <label for="password" class="text-light pl-1">Password</label>
                     <input name="password" id="password" type="password" class="form-control mb-3" placeholder="Password">
                 </div>
                 <div class="alert alert-danger mx-1 py-2 px-3" id="submit-error" role="alert"></div>
                 <button class="btn btn-info ml-1 mb-2 mt-1" id="submit">Submit</button>
             </div>
         </div>
-        <div class="row justify-content-center pt-0 pb-5 my-0">
+        <div class="row justify-content-center pt-0 pb-4 my-0">
             <div class="col-12 col-md-6 col-lg-4 py-0 px-3">
                 <a class="btn btn-link text-muted" href="signin.html">Already have an account? Sign In</a>
             </div>
@@ -93,7 +99,7 @@
             <path d="M0,0 L0,40 C200,40 390,36 500,20 L500,0 Z" fill="#111111" />
         </svg>
     </section>
-    <section class="container-fluid intro px-4 px-lg-5 pb-5">
+    <section class="container-fluid intro px-4 px-lg-5 pb-0">
         <div class="row intro-profile px-lg-5">
         </div>
         <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">

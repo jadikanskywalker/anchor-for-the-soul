@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Anchor for the Soul - Podcast</title>
+    <title>Anchor for the Soul – Resources</title>
     
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
     <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
@@ -80,24 +80,24 @@
                     <li class="nav-item">
                       <a class="nav-link" href="#">About</a>
                     </li>
-                    <li class="nav-item btn-group mx-2">
-                      <a class="btn btn-info" href="content.html">Resources</a>
-                      <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="sr-only">Toggle Dropdown</span>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="content.html?type=article">Articles</a>
-                          <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
-                      </div>
-                  </li>
-                  <li class="nav-item dropdown auth-only">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                      <a class="dropdown-item" href="/profile.html">Profile</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" id="signout">Sign Out</a>
-                    </div>
-                  </li>
+                    <li class="nav-item btn-group my-1 mx-lg-2">
+                        <a class="btn btn-info" href="content.html">Resources</a>
+                        <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg-right">
+                            <a class="dropdown-item" href="content.html?type=article">Articles</a>
+                            <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown auth-only">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
+                        <div class="dropdown-menu dropdown-menu-lg-right">
+                          <a class="dropdown-item" href="/profile.html">Profile</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" id="signout">Sign Out</a>
+                        </div>
+                    </li>
                   </ul>
             </div>
         </nav>
@@ -162,7 +162,7 @@
     <section class="container-fluid intro">
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
-                <div class="spinner-border text-info podcast-loading" role="status">
+                <div class="spinner-border text-info loading" id="podcast-loading" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
                 <div class="podcast-wrapper">

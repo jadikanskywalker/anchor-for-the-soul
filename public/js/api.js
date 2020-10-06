@@ -1,17 +1,19 @@
 var api = {
     blogID: null,
-    cardHTML: '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card bg-light"> <div class="card-body"> <div class="card-words pb-2 mb-1"> <div class="d-flex justify-content-between align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted m-0" value=""></p> </div> <h5 class="card-title"></h5> <p class="card-text"></p> </div> <div class="mt-1 d-flex justify-content-between align-items-end"> <div>  <p class="card-date text-muted mb-0"></p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div>',
+    cardHTML: '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card bg-light"> <div class="card-body"> <div class="card-words pb-2 mb-1"> <div class="d-flex justify-content-between align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted" value=""></p> </div> <h5 class="card-title"></h5> <p class="card-text"></p> </div> <div class="mt-1 d-flex justify-content-between align-items-end"> <div>  <p class="card-date text-muted mb-0"></p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div>',
     exploreHTML: '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore"> <a href="blog.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Blog ></button> </div> </a> </div> </div>',
-    cardLeadHTML: '<div class="col-12 col-md-12 offset-md-0 mb-2"><div class="card card-lead bg-light"> <div class="row no-gutters"> <div class="col-md-4"> <div class="card-bg-img"></div> <div class="layer"></div> </div> <div class="col-md-8"> <div class="card-body"> <div class="card-words pb-5 mb-4"> <div class="card-words pb-2 mb-1"> <div class="d-flex justify-content-between align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted m-0" value=""></p> </div> <h5 class="card-title display-4 mb-4 pb-3">The Self-Love Delusion</h5> <p class="card-text ml-2">The Bible is clear: we don\'t need bother loving ourselves. We must love Christ and others.</p> </div> </div> <div class="card-details"> <div>  <p class="card-date text-muted mt-1 mb-0">August 31, 2020</p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div> </div> </div>',
+    cardLeadHTML: '<div class="col-12 col-md-12 offset-md-0 mt-1 mt-md-3 mb-4 px-0 px-md-2"><div class="card card-lead"> <div class="row no-gutters"> <div class="col-md-5"> <div class="card-bg-img"></div> <div class="layer"></div> </div> <div class="col-md-7"> <div class="card-body"> <div class="card-words pb-5 mb-2"> <div class="card-words pb-1"> <div class="d-flex align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted" value=""></p> </div> <h5 class="card-title display-4 mb-4 pb-3"></h5> <p class="card-text ml-2"></p> </div> </div> <div class="card-details"> <div>  <p class="card-date text-muted mt-1 mb-0">August 31, 2020</p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div> </div> </div>',
     data: [],
     dataFlat: [],
     dataUnpublished: [],
     dataFlatUnpublished: [],
+    dataFlatBoth: [],
     params: new URLSearchParams(window.location.search),
     filters: {
         topic: 'none',
         type: 'none'
     },
+    filterMenu: false,
     highestID: null,
     sizeCards: function(set) {
         let cards = $(set + ' .card');
@@ -65,8 +67,11 @@ var api = {
                     filteredData.push(data[i]);
                 }
             }
-            console.log(filteredData);
-            api.populate(filteredData, false);
+            if (type && !topic) {
+                api.populate(filteredData, leadCard);
+            } else {
+                api.populate(filteredData, false);
+            }
         }
     },
     populate: function(data, leadCard = true, limit = null, filter = true) {
@@ -76,10 +81,6 @@ var api = {
         $('#content-lead').empty();
         let num = leadCard ? 2 : 1;
         let end = limit && data.length > limit ? data.length - limit : 0;
-        let hrefEnd = '';
-        if (api.filters.published == 'false') {
-            hrefEnd = '&published=false';
-        }
         for (var i = data.length - 1; i >= end; i--) {
             var blog = data[i];
             if (i != data.length - 1 || !leadCard) {
@@ -97,20 +98,28 @@ var api = {
             card.find($('.card-topic')).text(blog.topic.charAt(0).toUpperCase() + blog.topic.slice(1)).attr('value', blog.topic);
             card.find('.card-date').html(dateTag + new Date(blog.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
             let btn = card.find('.btn');
-            btn.attr('href', blog.type + '.html?id=' + blog.id + hrefEnd);
             if (auth.editorStatus) {
                 btn.text('Edit >');
+                if (blog.published === 'false') {
+                    card.find('.card-date').before('<p class="text-info mb-0">&#10007; Unpublished</p>');
+                    btn.attr('href', blog.type + '.html?id=' + blog.id + '&published=false');
+                } else {
+                    card.find('.card-date').css('margin-bottom', '0.5rem').before('<p class="text-success mb-0">&#10003; Published</p>');
+                    btn.attr('href', blog.type + '.html?id=' + blog.id);
+                }
             } else if (blog.type == 'episode') {
                 btn.text('Listen >');
+                btn.attr('href', blog.type + '.html?id=' + blog.id);
             }
-        };
+        }
         if (leadCard) {
             $('.card-lead').show().css('opacity', 1);
         } else {
             $('.card-lead').hide();
         }
         api.cardClickhandlers(filter);
-        $('#filters').css('opacity', 1);
+        $('#content-loading').hide();
+        $('.main').show();
         api.sizeCards('#content');
     },
     contentInit: function(filter = true) {
@@ -120,7 +129,7 @@ var api = {
                 url: 'https://anchor-for-the-soul.firebaseio.com/blogs.json',
                 data: {
                     orderBy: '"$key"',
-                    limitToLast: 10
+                    limitToLast: 20
                 },
                 success: function(content, status, jqXHR) {
                     api.data[0] = content;
@@ -139,7 +148,7 @@ var api = {
             })
         ).then(function() {
             if (auth.editorStatus) {
-                $('#clear-filters').after('<select class="custom-select ml-3" id="filter-published-select" style="width:140px""><option selected="" value="true">Published</option><option value="false">Unpublished</option></select><a class="btn btn-info ml-2" id="new-article" href="/article.html?id=new">+ New Article</a><a class="btn btn-info ml-2" id="new-episode" href="/episode.html?id=new">+ New Episode</a>');
+                $('#clear-filters').after('<select class="custom-select mx-2 mt-2" id="filter-published-select" style="width:140px""><option selected value="both">All Articles</option><option value="true">Published</option><option value="false">Unpublished</option></select><a class="btn btn-info mx-2" id="new-article" href="/article.html?id=new">+ New Article</a><a class="btn btn-info mx-2" id="new-episode" href="/episode.html?id=new">+ New Episode</a>');
             } else {
                 $('#new-article, #new-episode, #filter-published-select').remove();
             }
@@ -149,6 +158,9 @@ var api = {
                 if (params.has('topic')) {
                     api.filters.topic = params.get('topic');
                     $("#filter-topic-select").val(params.get('topic'));
+                    $('#filters').show().css('opacity', 1);
+                    $('.filter-menu p').css('max-width', '7rem');
+                    api.filterMenu = true;
                 }
                 if (params.has('type')) {
                     api.filters.type = params.get('type');
@@ -159,13 +171,14 @@ var api = {
                         api.filters.published = params.get('published');
                         $('#filter-published-select').val(params.get('published'));
                         if (api.filters.published === 'false') {
-                            console.log('here');
-                            api.unpublishedContentInit(false);
+                            api.unpublishedContentInit('false');
+                        } else if (api.filters.published === 'true') {
+                            api.unpublishedContentInit('true');
                         } else {
-                            api.unpublishedContentInit(true);
+                            api.unpublishedContentInit('both');
                         }
                     } else {
-                        api.unpublishedContentInit(true);
+                        api.unpublishedContentInit('both');
                     }
                 } else {
                     api.filter(api.dataFlat);
@@ -175,11 +188,12 @@ var api = {
                     api.filters.type = $('#filter-type-select').val();
                     if (auth.editorStatus) {
                         api.filters.published = $('#filter-published-select').val();
-                        console.log(api.filters.published, api.dataFlatUnpublished);
                         if (api.filters.published === 'false') {
                             api.filter(api.dataFlatUnpublished, false);
-                        } else {
+                        } else if (api.filters.published === 'true') {
                             api.filter(api.dataFlat);
+                        } else {
+                            api.filter(api.dataFlatBoth);
                         }
                     } else {
                         api.filter(api.dataFlat);
@@ -188,21 +202,37 @@ var api = {
                 $('#clear-filters').click(function() {
                     api.filters = {
                         topic: 'none',
-                        type: 'none'
+                        type: 'none',
+                        published: 'both'
                     }
                     $('#filter-topic-select').val("none"),
                     $('#filter-type-select').val("none");
+                    $('#filter-published-select').val("both");
                     if (auth.editorStatus) {
-                        api.filters.published = $('#filter-published-select').val();
-                        if (api.filters.published === 'false') {
-                            api.filter(api.dataFlatUnpublished, false);
-                        } else {
-                            api.filter(api.dataFlat);
-                        }
+                        api.populate(api.dataFlatBoth);
                     } else {
-                        api.filter(api.dataFlat);
+                        api.populate(api.dataFlat);
                     }
                 });
+                $('.filter-menu').click(function() {
+                    if (api.filterMenu) {
+                        $('#filters').animate({ opacity: 0, right: '1.1rem' }, 300, 'swing', function() {
+                            $('#filters').hide();
+                        });
+                        $('.filter-menu p').css('max-width', '')
+                    } else {
+                        $('#filters').css('right', '1rem').show().animate({ opacity: 1, right: '1.3rem' }, 200);
+                        $('.filter-menu p').css('max-width', '7rem')
+                    }
+                    api.filterMenu = !api.filterMenu;
+                });
+                $('.filter-close').click(function() {
+                    $('#filters').animate({ opacity: 0, right: '1.1rem' }, 300, 'swing', function() {
+                        $('#filters').hide();
+                    });
+                    $('.filter-menu p').css('max-width', '');
+                    api.filterMenu = false;
+                })
             } else {
                 api.populate(api.dataFlat, true, null, false);
             }
@@ -223,11 +253,16 @@ var api = {
             })
         ).then(function() {
             api.dataFlatUnpublished = api.sortByDate(api.dataUnpublished, ['article']);
-            console.log(api.dataUnpublished, api.dataFlatUnpublished);
-            if (published) {
+            for (article in api.dataFlatUnpublished) {
+                api.dataFlatUnpublished[article].published = 'false';
+            }
+            api.dataFlatBoth = api.sortByDate([api.dataUnpublished[0], api.data[0], api.data[1]], ['article', 'article', 'episode']);
+            if (published === 'true') {
                 api.filter(api.dataFlat, true);
-            } else {
+            } else if (published === 'false') {
                 api.filter(api.dataFlatUnpublished, false);
+            } else {
+                api.filter(api.dataFlatBoth);
             }
         });
     },
@@ -238,7 +273,12 @@ var api = {
                 if (value) {
                     api.filters.topic = value;
                     $('#filter-topic-select').val(value);
-                    api.filter(api.dataFlat)
+                    api.filter(api.dataFlat);
+                    if (!api.filterMenu) {
+                        $('#filters').css('right', '1rem').show().animate({ opacity: 1, right: '1.3rem' }, 200);
+                        $('.filter-menu p').css('max-width', '7rem')
+                        api.filterMenu = true;
+                    }
                 }
             });
             $('.card-type').click(function() {
@@ -246,7 +286,12 @@ var api = {
                 if (value) {
                     api.filters.type= value;
                     $('#filter-type-select').val(value);
-                    api.filter(api.dataFlat)
+                    api.filter(api.dataFlat);
+                    if (!api.filterMenu) {
+                        $('#filters').css('right', '1rem').show().animate({ opacity: 1, right: '1.3rem' }, 200);
+                        $('.filter-menu p').css('max-width', '7rem')
+                        api.filterMenu = true;
+                    }
                 }
             });
         } else {
@@ -332,8 +377,8 @@ var api = {
                 orderBy: '"$key"',
                 equalTo: '"' + id + '"'
             }, success: function(data, status, jqXHR) {
-                console.log(auth.editorStatus);
                 api.data = data[id];
+                document.title = data[id].title  + ' – Resources';
                 if (!auth.editorStatus) {
                     // Display existing article
                     $('.user').show();
@@ -362,6 +407,8 @@ var api = {
                 }
                 api.sizeArticleContent();
                 $(window).resize(function() { api.sizeArticleContent(); });
+                $('#article-loading').hide();
+                $('.main').fadeIn();
             }
         });
         $.ajax({
@@ -428,6 +475,7 @@ var api = {
                 orderBy: '"$key"',
                 equalTo: '"' + id + '"'
             }, success: function(data, status, jqXHR) {
+                document.title = data[id].title  + ' – Resources';
                 if (!auth.editorStatus) {
                     $('.user').show();
                     $('.editor-only').hide();
@@ -448,10 +496,10 @@ var api = {
                         $(iframe).attr('src', $('#podcast-url').val());
                     });
                 }
-                $('.podcast-loading').show();
+                $('#podcast-loading').show();
                 $('.podcast-details').css('opacity', 1);
                 $(iframe).on('load', function() {
-                    $('.podcast-loading').fadeOut(300);
+                    $('#podcast-loading').fadeOut(300);
                     $(this).css('opacity', 1);
                 });
                 $(iframe).attr('src', data[id].url);
@@ -462,27 +510,27 @@ var api = {
         });
         } else {
             if (auth.editorStatus) {
-            $('.editor-only').show();
-            $('.user').hide();
-            $('#podcast-date').val(new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000)).toISOString());
-            $('#podcast-title').text('Title');
-            $('#podcast-topic').show();
-            $('#podcast-description').text('Description');
-            $('#podcast-url').val('URL');
-            $('#url-go').click(function() {
-                $(iframe).attr('src', $('#podcast-url').val());
-                $('.podcast-loading').show();
-                $(iframe).hide();
-            });
-            $('.podcast-loading').hide();
-            $('.podcast-details').css('opacity', 1);
-            $(iframe).on('load', function() {
-                $('.podcast-loading').fadeOut(300);
-                $(this).css('opacity', 1);
-            });
-            if (auth.editorStatus) {
-                editor.init();
-            }
+                $('.editor-only').show();
+                $('.user').hide();
+                $('#podcast-date').val(new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000)).toISOString());
+                $('#podcast-title').text('Title');
+                $('#podcast-topic').show();
+                $('#podcast-description').text('Description');
+                $('#podcast-url').val('URL');
+                $('#url-go').click(function() {
+                    $(iframe).attr('src', $('#podcast-url').val());
+                    $('#podcast-loading').show();
+                    $(iframe).hide();
+                });
+                $('#podcast-loading').show();
+                $('.podcast-details').css('opacity', 1);
+                $(iframe).on('load', function() {
+                    $('#podcast-loading').fadeOut(300);
+                    $(this).css('opacity', 1);
+                });
+                if (auth.editorStatus) {
+                    editor.init();
+                }
             }
         }
     }

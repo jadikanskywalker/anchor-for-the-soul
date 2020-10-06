@@ -47,7 +47,7 @@ var editor = {
         }
       });
       $('#editor-article-save').off().click(function() {
-        let published = api.params.get('published');
+        let published = new URLSearchParams(window.location.search).get('published');
         if (published !== 'false') {
           editor.article.save();
         } else {
@@ -64,6 +64,7 @@ var editor = {
           updates['unpublished/blogContent/' + articleID] = null;
           editor.database.ref().update(updates).then(function() {
             $('#editor-article-publish').hide();
+            $('#editor-article-unpublish').show();
             $('#editor-article-published').show();
             window.history.replaceState({}, document.title, "/article.html?id=" + api.params.get('id'));
             editor.alert($('#save-alert'), 'alert-success', 'Article published.');
@@ -93,7 +94,9 @@ var editor = {
       });
     },
     deleteSection: function(id) {
-      $('#' + id).parent().remove();
+      if ($('#article-content > div').length > 1) {
+        $('#' + id).parent().remove();
+      }
     },
     addSection: function(startID, style) {
       let content;
@@ -106,7 +109,7 @@ var editor = {
       $('#' + startID).parent().after(content);
       editor.article.setClickhandlers();
     },
-    save: function(blogs = 'blogs/', blogContent = 'blogContent/', callback = null) {
+    save: function(blogs = 'blogs/', blogContent = 'blogContent/', callback = null, publish = false) {
       let articleID = api.params.get('id');
       // Article Header
       let header = {
@@ -116,44 +119,44 @@ var editor = {
         description: $('#article-description').text(),
         topic: $('#article-topic').val()
       }
+      let currentDate = new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000)).toISOString();
+      if (publish) {
+        header.date = currentDate;
+      }
       // Article Content
       var feilds = $('#article-content').children();
       var content = {};
       var current, key, value, indexStr;
       var num = 0;
       feilds.each(function(index) {
-        console.log(index);
         if ($(this).hasClass('editor-editable')) {
-          console.log('in 1');
           current = $(this).find('div.content-editable');
           key = current.attr('type');
           value = current.text();
         } else if ($(this).hasClass('editor-input')) {
-          console.log('in 2');
           current = $(this).find('input');
           key = current.attr('type');
           value = current.val();
         }
         
         indexStr = num.toString();
-        console.log(key, value);
         if (key == 'p' || key == 'h3' && value.length > 1) {
           content[indexStr] = {}
           content[indexStr][key] =  value;
           num++;
         }
-        console.log(content);
       });
-      console.log(content);
       // Update Database
       if (articleID != 'new') {
-        console.log('in first one');
         let updates = {};
         updates[blogs + articleID] = header;
         updates[blogContent + articleID] = content;
         editor.database.ref().update(updates).then((res) => {
           if (callback) {
             callback();
+            if (publish) {
+              $('#article-date').val(currentDate);
+            }
           } else {
             editor.alert($('#save-alert'), 'alert-success', 'Changes published.');
           }
@@ -166,7 +169,6 @@ var editor = {
         let updates = {}
         updates['unpublished/blogs/' + newRef.key] = header;
         updates['unpublished/blogContent/' + newRef.key] = content;
-        console.log(updates);
         editor.database.ref().update(updates).then((res) => {
           window.location.href = '/article.html?id=' + newRef.key + '&published=false';
         }).catch((err) => {

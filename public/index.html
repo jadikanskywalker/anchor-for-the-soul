@@ -29,19 +29,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
                     </li>
-                    <li class="nav-item btn-group mx-2">
+                    <li class="nav-item btn-group my-1 mx-lg-2">
                         <a class="btn btn-info" href="content.html">Resources</a>
                         <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-menu dropdown-menu-lg-right">
                             <a class="dropdown-item" href="content.html?type=article">Articles</a>
                             <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown auth-only">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-menu dropdown-menu-lg-right">
                           <a class="dropdown-item" href="/profile.html">Profile</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" id="signout">Sign Out</a>
@@ -85,12 +85,21 @@
         </svg>
     </section>
     <section class="container-fluid content px-4 px-lg-5 px-xl-3 pt-5 pb-4 mt-3">
-        <p class="h3 px-0 px-lg-4 mx-lg-2 mb-4 pb-2">Latest Posts</p>
+        <p class="h3 px-0 px-lg-4 mx-lg-2 mb-4 pb-2">Latest Resources</p>
         <div class="row px-2 px-lg-5" id="content-lead"></div>
         <div class="row px-2 px-lg-5" id="content">
     </section>
-    <section class="container-fluid footer">
-        <p class="mb-0 mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
+    <section class="container-fluid footer footer-lg bg-dark text-white px-3 px-sm-5">
+        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <!-- <path d="M0,0 C60,25 440,38 500,40 L500,0 Z" fill="rgb(216, 216, 216)" /> -->
+            <!-- <path d="M500,40 L0,40 C60,15 440,2 500,0 Z" fill="#343a40" /> -->
+            <!-- <path d="M500,40 L0,40 C80,38 400,15 500,0 Z" fill="#343a40" /> -->
+            <path d="M0,0 C60,10 420,38 500,40 L0,40 Z" fill="#343a40" />
+        </svg>
+        <p class="h4 font-cursive mb-3 pb-1">Anchor for the Soul</p>
+        <p class="p ml-2 mb-2 pb-1"><a class="text-info" href="/signup.html">Sign up</a> to recieve email updates. <a class="text-info" href="/signin.html">Sign in</a></p>
+        <p class="p ml-2"></p>
+        <p class="text-muted m-0">&copy; 2020 Jaden Hicks</p>
     </section>
 
     <script src="js/jquery.js"></script>

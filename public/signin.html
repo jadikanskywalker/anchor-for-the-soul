@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Anchor for the Soul</title>
+    <title>Anchor for the Soul – Sign In</title>
     
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
@@ -19,7 +19,7 @@
     <link href="style.css" rel="stylesheet">
     <style>
         #signin {
-            border-radius: 8px;
+            border-radius: 7px;
             border: none;
             box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
         }
@@ -35,11 +35,10 @@
 <body>
     <section class="container-fluid header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-            <a class="navbar-brand">Anchor for the Soul <span>Sign In</span></a>
+            <a class="navbar-brand">Anchor for the Soul <span>Signin</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-            
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mr-2">
                   <li class="nav-item">
@@ -48,19 +47,19 @@
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                   </li>
-                  <li class="nav-item btn-group mx-2">
+                  <li class="nav-item btn-group my-1 mx-lg-2">
                     <a class="btn btn-info" href="content.html">Resources</a>
                     <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg-right">
                         <a class="dropdown-item" href="content.html?type=article">Articles</a>
                         <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown auth-only">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg-right">
                       <a class="dropdown-item" href="/profile.html">Profile</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" id="signout">Sign Out</a>
@@ -70,7 +69,7 @@
             </div>
         </nav>
         <div class="row justify-content-center mt-5">
-            <div class="col-12 col-md-6 col-lg-4 bg-dark py-2 mb-0 px-3 text-white" id="signin">
+            <div class="col-12 col-md-6 col-lg-4 bg-dark pt-1 pb-2 mb-0 px-3 text-white" id="signin">
                 <p class="h3 mb-4 pt-2" id="signin-text">Sign In</p>
                 <div class="px-1">
                     <input name="email" id="email" class="form-control mb-2" type="email" placeholder="Email Address">
@@ -78,10 +77,10 @@
                 </div>
                 <div class="alert alert-danger mx-1 py-2 px-3" id="submit-error" role="alert"></div>
                 <button class="btn btn-link text-info float-right mt-1" id="forgot-password">Forgot password?</button>
-                <button class="btn btn-info ml-0 mb-2 mt-1" id="submit">Submit</button>
+                <button class="btn btn-info ml-0 mb-1 mt-1" id="submit">Submit</button>
             </div>
         </div>
-        <div class="row justify-content-center pt-0 pb-5 my-0">
+        <div class="row justify-content-center pt-0 pb-4 my-0">
             <div class="col-12 col-md-6 col-lg-4 py-0 px-3">
                 <a class="btn btn-link text-muted" href="signup.html">Don't have an account? Sign Up</a>
             </div>
@@ -90,7 +89,7 @@
             <path d="M0,0 L0,40 C200,40 390,36 500,20 L500,0 Z" fill="#111111" />
         </svg>
     </section>
-    <section class="container-fluid intro px-4 px-lg-5 pb-5">
+    <section class="container-fluid intro px-4 px-lg-5 pb-0">
         <div class="row intro-profile px-lg-5">
         </div>
         <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">

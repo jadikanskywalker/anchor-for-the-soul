@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Anchor for the Soul - header</title>
+    <title>Anchor for the Soul – Resources</title>
     
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
     <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
@@ -131,23 +131,23 @@
                     <li class="nav-item">
                       <a class="nav-link" href="#">About</a>
                     </li>
-                    <li class="nav-item btn-group mx-2">
+                    <li class="nav-item btn-group my-1 mx-lg-2">
                       <a class="btn btn-info" href="content.html">Resources</a>
                       <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span class="sr-only">Toggle Dropdown</span>
                       </button>
-                      <div class="dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-menu dropdown-menu-lg-right">
                           <a class="dropdown-item" href="content.html?type=article">Articles</a>
                           <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
                       </div>
                   </li>
                   <li class="nav-item dropdown auth-only">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                      <a class="dropdown-item" href="/profile.html">Profile</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" id="signout">Sign Out</a>
-                    </div>
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
+                      <div class="dropdown-menu dropdown-menu-lg-right">
+                        <a class="dropdown-item" href="/profile.html">Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" id="signout">Sign Out</a>
+                      </div>
                   </li>
                   </ul>
             </div>
@@ -157,6 +157,7 @@
             <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
         </svg>
     </section>
+  <div class="main">
     <section class="container mt-0 py-4 mt-1 article-header">
         <div class="row user">
             <div class="col-12 col-xl-10 offset-xl-1 px-lg-5">
@@ -178,7 +179,7 @@
                 <a href="content.html" class="text-muted">< All Resources</a>
             </div>
             <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center article-header-main">
-                <input type="datetime-local" id="article-date" class="article-date text-muted mb-1">
+                <input type="datetime-local" id="article-date" class="article-date text-muted mb-3">
                 <select class="custom-select mb-3" id="article-topic" style="width:fit-content">
                     <option value="theology">Theology</option>
                     <option value="philosophy">Philosophy</option>
@@ -221,6 +222,13 @@
     <section class="container-fluid footer">
         <p class="mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
     </section>
+  </div>
+  <div class="loading-div">
+    <div class="spinner-border text-info loading" id="article-loading" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
     <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -239,8 +247,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal fade" id="modal-add" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    </div>
+    <div class="modal fade" id="modal-add" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -270,8 +278,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal fade" id="modal-delete-article" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+    <div class="modal fade" id="modal-delete-article" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -289,7 +297,7 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
 
     <script src="js/jquery.js"></script>
     <script src="bootstrap-4.5.2-dist/js/bootstrap.min.js" async defer></script>
@@ -297,14 +305,15 @@
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>
-        $(document).ready(function() {
-            auth.initApp(function() {
-                api.sizeArticleContent();
-                api.article(id);
-                api.latestArticles(id);
-            });
-            const id = api.params.get('id');
+      $(document).ready(function() {
+        $('.loading').show();
+        auth.initApp(function() {
+          api.sizeArticleContent();
+          api.article(id);
+          api.latestArticles(id);
         });
+        const id = api.params.get('id');
+      });
     </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 var auth = {
     editors: {},
     editorStatus: false,
+    updates: false,
     signin: function() {
           var email = $('#email').val();
           var password = $('#password').val();
@@ -42,6 +43,7 @@ var auth = {
         var name = $('#name').val();
         var email = $('#email').val();
         var password = $('#password').val();
+        var updates = $('#email-updates').is(':checked');
         let submit = $('#submit');
         var alertElement = $("#submit-error");
         submit.attr("disabled", true);
@@ -61,7 +63,12 @@ var auth = {
           return;
         }
         firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-          firebase.auth().currentUser.updateProfile({ displayName: name }).then(function() {
+          if (updates == true) {
+            updates = 'true';
+          } else {
+            updates = 'false'
+          }
+          firebase.auth().currentUser.updateProfile({ displayName: name, photoURL: updates}).then(function() {
             window.location.href = '/index.html';
           }).catch(function(error) {
             window.location.href = '/index.html';
@@ -130,6 +137,9 @@ var auth = {
             if (profile) {
                 $('#profile-name').val(user.displayName);
                 $('#profile-email').val(user.email);
+                if (user.photoURL === 'true') {
+                  $('#profile-updates').prop('checked', true)
+                };
                 if (emailVerified) {
                     $('#profile-verified').show();
                     $('#profile-verify, #profile-verify-instructions').hide();
@@ -208,11 +218,13 @@ var auth = {
       save: function() {
         let name = $('#profile-name').val();
         let email = $('#profile-email').val();
+        let updates = $('#profile-updates').is(":checked") ? 'true' : 'false';
+        console.log(updates, firebase.auth().currentUser.photoURL);
         let emailTest = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (name && email && name.match(/^[A-Za-z ]+$/) && emailTest.test(email)) {
             var user = firebase.auth().currentUser;
-            if (name !== user.displayName) {
-                user.updateProfile({ displayName: name }).then(function() {
+            if (name !== user.displayName || updates !== user.photoURL) {
+                user.updateProfile({ displayName: name, photoURL: updates }).then(function() {
                     auth.alert($('#save-alert'), 'alert-success', 'Name saved.');
                 }).catch(function(error) {
                     auth.alert($('#save-alert'), 'alert-danger', 'Name not saved.');

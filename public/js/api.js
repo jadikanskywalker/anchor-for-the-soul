@@ -208,6 +208,10 @@ var api = {
                     $('#filter-topic-select').val("none"),
                     $('#filter-type-select').val("none");
                     $('#filter-published-select').val("both");
+                    $('#filters').animate({ opacity: 0, right: '1.1rem' }, 300, 'swing', function() {
+                        $('#filters').hide();
+                    });
+                    $('.filter-menu p').css('max-width', '')
                     if (auth.editorStatus) {
                         api.populate(api.dataFlatBoth);
                     } else {
@@ -219,10 +223,10 @@ var api = {
                         $('#filters').animate({ opacity: 0, right: '1.1rem' }, 300, 'swing', function() {
                             $('#filters').hide();
                         });
-                        $('.filter-menu p').css('max-width', '')
+                        $('.filter-menu p').css('max-width', '');
                     } else {
                         $('#filters').css('right', '1rem').show().animate({ opacity: 1, right: '1.3rem' }, 200);
-                        $('.filter-menu p').css('max-width', '7rem')
+                        $('.filter-menu p').css('max-width', '7rem');
                     }
                     api.filterMenu = !api.filterMenu;
                 });

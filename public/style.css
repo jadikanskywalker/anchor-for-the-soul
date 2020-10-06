@@ -479,6 +479,10 @@ body {
     display: none;
 }
 
+.podcast-topic {
+    background-color: #343a40!important;
+}
+
 /* Podcast Embed Styles */
 .podcast-wrapper {
     margin: 0;

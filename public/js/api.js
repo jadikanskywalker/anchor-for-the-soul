@@ -98,6 +98,7 @@ var api = {
             card.find($('.card-topic')).text(blog.topic.charAt(0).toUpperCase() + blog.topic.slice(1)).attr('value', blog.topic);
             card.find('.card-date').html(dateTag + new Date(blog.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
             let btn = card.find('.btn');
+            btn.attr('href', blog.type + '.html?id=' + blog.id);
             if (auth.editorStatus) {
                 btn.text('Edit >');
                 if (blog.published === 'false') {
@@ -105,11 +106,9 @@ var api = {
                     btn.attr('href', blog.type + '.html?id=' + blog.id + '&published=false');
                 } else {
                     card.find('.card-date').css('margin-bottom', '0.5rem').before('<p class="text-success mb-0">&#10003; Published</p>');
-                    btn.attr('href', blog.type + '.html?id=' + blog.id);
                 }
             } else if (blog.type == 'episode') {
                 btn.text('Listen >');
-                btn.attr('href', blog.type + '.html?id=' + blog.id);
             }
         }
         if (leadCard) {

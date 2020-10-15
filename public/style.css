@@ -156,11 +156,13 @@ body {
 }
 
 .intro {
-    background-color: rgb(216, 216, 216) !important;
+    background-color: rgb(210, 213, 214) !important;
     padding-top: 100px;
     margin: 0;
     position: relative;
     text-align: center;
+    /* background-image: url('paper.svg');
+    background-size: cover; */
 }
 
 .intro .bottom-curve {
@@ -194,8 +196,38 @@ body {
 
 .content {
     position: relative;
-    padding-top: 70px;
+    padding-top: 1.8rem;
+    /* background-image: url('stars.svg');
+    background-size: initial;
+    background-repeat-y: repeat; */
+    min-height: 50vh;
 }
+
+.content > div, .card {
+    position: relative;
+    z-index: 2;
+}
+
+/* .light-layer {
+    background-image: linear-gradient(165deg, rgb(78, 183, 218) 50%, rgb(245, 245, 245) 130%);
+background-position-x: initial;
+background-position-y: initial;
+background-size: initial;
+background-repeat-x: initial;
+background-repeat-y: initial;
+background-attachment: initial;
+background-origin: initial;
+background-clip: initial;
+background-color: initial;
+width: 100%;
+height: 100%;
+position: absolute !important;
+top: 0px;
+left: 0px;
+box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 10px 2px inset;
+opacity: 0.8;
+z-index: 1 !important;
+} */
 
 .content .bottom-curve {
     height: 20px;
@@ -213,9 +245,9 @@ body {
 }
 
 .content .card {
-    margin-bottom: 15px;
+    margin-bottom: 1.1rem;
     border: none;
-    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -360,16 +392,74 @@ body {
     text-decoration: underline;
 }
 
+.footer-container {
+    position: relative;
+    margin-top: -30px;
+}
+
 .footer {
     padding-top: 28px;
     padding-bottom: 40px;
 }
 
 .footer-lg {
-    margin-top: 2.5rem;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    margin-top: 5.2rem;
+    padding-top: 1.8rem; 
+    background-color: #dbad7b !important;
+    padding-bottom: 2.2rem;
     position: relative;
+    z-index: 2;
+}
+
+.footer-anchor {
+    position: absolute;
+    right: 48px;
+    top: -2.5rem;
+    transform: rotate(13deg);
+}
+
+.footer-bubbles {
+    position: absolute;
+    right: 68px;
+    top: -5.4rem;
+    transform: rotate(12deg);
+}
+
+@media (max-width: 648px) {
+    .footer-anchor {
+        right: 0%;
+    }
+
+    .footer-bubbles {
+        right: 20px;
+    }
+}
+
+.footer-seashell {
+    position: absolute;
+    width: 2rem;
+    top: -1rem;
+    transform: rotate(-20deg);
+    left: 10px;
+}
+
+.footer-lg .h3 {
+    font-family: 'Calligraffitti', cursive;
+}
+
+.footer-lg p {
+    color: #926e46;
+}
+
+.footer-lg a {
+    /* color: #1088a0 !important; */
+    /* background-image: url('images/rock-tp2.png');
+    background-size:cover;
+    background-position: center center;
+    padding: 1rem 0.5rem; */
+    font-weight: 400;
+    font-family: 'Calligraffitti', cursive;
+    padding: 0 0.2rem;
 }
 
 .footer-lg a:hover {
@@ -377,9 +467,11 @@ body {
     color: #17a2b8!important
 }
 
-.footer-lg .bottom-curve {
-    height: 10px;
-    top: -9px;
+.footer-bottom-curve {
+    height: 30px;
+    top: -29px;
+    z-index: 1;
+    /* filter: drop-shadow(-5px -0px 5px black); */
 }
 
 /* Resources Page Style */

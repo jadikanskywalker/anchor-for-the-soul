@@ -120,6 +120,9 @@ var api = {
         $('#content-loading').hide();
         $('.main').show();
         api.sizeCards('#content');
+        $(window).resize(function() {
+            api.sizeCards('#content');
+        });
     },
     contentInit: function(filter = true) {
         $.when(
@@ -276,7 +279,12 @@ var api = {
                 if (value) {
                     api.filters.topic = value;
                     $('#filter-topic-select').val(value);
-                    api.filter(api.dataFlat);
+                    if (!auth.editorStatus) {
+                        api.filter(api.dataFlat);
+                    } else {
+                        api.filter(api.dataFlatBoth);
+                    }
+                    
                     if (!api.filterMenu) {
                         $('#filters').css('right', '1rem').show().animate({ opacity: 1, right: '1.3rem' }, 200);
                         $('.filter-menu p').css('max-width', '7rem')
@@ -463,6 +471,7 @@ var api = {
                 contentColumn.append("<div class='editor-editable'><div contenteditable id='1'  type='p' class='bg-light content-editable' style='width:100%;'>Paragraph</div><button class='editor-delete text-muted' placeid='1'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="1">+</button> </div>' + "</div>");
                 $('.article-content').css('opacity', '1');
                 editor.init();
+                $('#article-loading').hide();
                 api.sizeArticleContent();
                 $(window).resize(function() { api.sizeArticleContent(); });
             } else {

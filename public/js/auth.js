@@ -225,9 +225,9 @@ var auth = {
             var user = firebase.auth().currentUser;
             if (name !== user.displayName || updates !== user.photoURL) {
                 user.updateProfile({ displayName: name, photoURL: updates }).then(function() {
-                    auth.alert($('#save-alert'), 'alert-success', 'Name saved.');
+                    auth.alert($('#save-alert'), 'alert-success', 'Name/Updates saved.');
                 }).catch(function(error) {
-                    auth.alert($('#save-alert'), 'alert-danger', 'Name not saved.');
+                    auth.alert($('#save-alert'), 'alert-danger', 'Name/Update not saved.');
                 });
             }
             if (email != user.email) {

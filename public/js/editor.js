@@ -1,9 +1,7 @@
 var editor = {
-  database: null,
+  database: firebase.database(),
   init: function() {
     var pathname = window.location.pathname;
-
-    editor.database = firebase.database();
 
     if (pathname.startsWith('/article')) {
       editor.article.setClickhandlers();

@@ -128,30 +128,14 @@ var api = {
         });
     },
     contentInit: function(filter = true) {
-        // api.database = firebase.database();
-        console.log(api.database);
         $.when(
             // Get Articles
-            $.ajax({
-                url: 'https://anchor-for-the-soul.firebaseio.com/blogs.json',
-                data: {
-                    orderBy: '"$key"',
-                    limitToLast: 20
-                },
-                success: function(content, status, jqXHR) {
-                    api.data[0] = content;
-                }
+            api.database.ref('blogs').orderByKey().limitToLast(10).once('value').then((snapshot) => {
+                api.data[0] = (snapshot.val()) || null;
             }),
             // Get Episodes
-            $.ajax({
-                url: 'https://anchor-for-the-soul.firebaseio.com/podcasts.json',
-                data: {
-                    orderBy: '"$key"',
-                    limitToLast: 10
-                },
-                success: function(content, status, jqXHR) {
-                    api.data[1] = content;
-                }
+            api.database.ref('podcasts').orderByKey().limitToLast(10).once('value').then((snapshot) => {
+                api.data[1] = (snapshot.val()) || null;
             })
         ).then(function() {
             if (auth.editorStatus) {
@@ -268,32 +252,6 @@ var api = {
           }).catch((err) => {
             console.log(err);
           });
-        // $.when(
-        //     // Get Articles
-        //     $.ajax({
-        //         url: 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogs.json',
-        //         data: {
-        //             orderBy: '"$key"',
-        //             limitToLast: 100
-        //         },
-        //         success: function(content, status, jqXHR) {
-        //             api.dataUnpublished[0] = content;
-        //         }
-        //     })
-        // ).then(function() {
-        //     api.dataFlatUnpublished = api.sortByDate(api.dataUnpublished, ['article']);
-        //     for (article in api.dataFlatUnpublished) {
-        //         api.dataFlatUnpublished[article].published = 'false';
-        //     }
-        //     api.dataFlatBoth = api.sortByDate([api.dataUnpublished[0], api.data[0], api.data[1]], ['article', 'article', 'episode']);
-        //     if (published === 'true') {
-        //         api.filter(api.dataFlat, true);
-        //     } else if (published === 'false') {
-        //         api.filter(api.dataFlatUnpublished, false);
-        //     } else {
-        //         api.filter(api.dataFlatBoth);
-        //     }
-        // });
     },
     cardClickhandlers: function(content = true) {
         if (content) { 
@@ -334,52 +292,37 @@ var api = {
         }
     },
     latestArticles: function(id) {
-        $.ajax({
-            url: 'https://anchor-for-the-soul.firebaseio.com/blogs.json',
-            data: {
-                orderBy: '"$key"',
-                limitToLast: 5
-            },
-            success: function(content, status, jqXHR) {
-                var data = content;
-                // console.log(data);
-                if (id) {
-                    console.log(data);
-                    for (key in data) {
-                        if (id == data[key].id) {
-                            delete data[key];
-                            break;
-                        }
+        api.database.ref('blogs').orderByKey().limitToLast(5).once('value').then((snapshot) => {
+            var data = (snapshot.val()) || null;
+            if (id) {
+                console.log(data);
+                for (key in data) {
+                    if (id == data[key].id) {
+                        delete data[key];
+                        break;
                     }
-                    console.log(data);
                 }
-                data = api.sortByDate([data], ['article']);
-                api.populate(data, false, 4, false);
+                console.log(data);
             }
+            data = api.sortByDate([data], ['article']);
+            api.populate(data, false, 4, false);
         });
     },
     latestEpisodes: function(explore, id) {
-        $.ajax({
-            url: 'https://anchor-for-the-soul.firebaseio.com/podcasts.json',
-            data: {
-                orderBy: '"$key"',
-                limitToLast: 5
-            },
-            success: function(content, status, jqXHR) {
-                var data = content;
-                if (id) {
-                    console.log(data);
-                    for (key in data) {
-                        if (id == data[key].id) {
-                            delete data[key];
-                            break;
-                        }
+        api.database.ref('podcasts').orderByKey().limitToLast(5).once('value').then((snapshot) => {
+            var data = (snapshot.val()) || null;
+            if (id) {
+                console.log(data);
+                for (key in data) {
+                    if (id == data[key].id) {
+                        delete data[key];
+                        break;
                     }
-                    console.log(data);
                 }
-                data = api.sortByDate([data], ['episode']);
-                api.populate(data, false, 4, false);
+                console.log(data);
             }
+            data = api.sortByDate([data], ['episode']);
+            api.populate(data, false, 4, false);
         });
     },
     sizeArticleContent: function() {

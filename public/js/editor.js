@@ -219,7 +219,7 @@ var editor = {
         let updates = {};
         updates[podcasts + episodeID] = header;
         editor.database.ref().update(updates).then((res) => {
-          editor.alert($('#save-alert'), 'alert-success', 'Changes saved.');
+          editor.alert($('#save-alert'), 'alert-success', 'Changes published.');
           if (callback) {
             callback();
           }

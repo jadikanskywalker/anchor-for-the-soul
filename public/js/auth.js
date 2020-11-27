@@ -189,29 +189,43 @@ var auth = {
                 isEditorCallback();
             }
         } else {
-            $.when(
-                $.ajax({
-                    url: 'https://anchor-for-the-soul.firebaseio.com/editors.json',
-                    data: {
-                        orderBy: '"$key"',
-                        limitToLast: 10
-                    },
-                    success: function(data, status, jqXHR) {
-                        auth.editors = data;
-                        for (key in data) {
-                            if (data[key] && key == uid) {
-                                auth.editorStatus = true;
-                            } else {
-                                auth.editorStatus = false;
-                            }
-                        }
-                    }
-                })
-            ).then(function() {
-              isEditorCallback();
-            }).catch(function(err) {
-              console.log('Error: ' + err)
-            });
+          return firebase.database().ref('/editors/').once('value').then((snapshot) => {
+            auth.editors = (snapshot.val()) || {};
+            for (key in auth.editors) {
+              if (auth.editors[key] && key == uid) {
+                auth.editorStatus = true;
+              } else {
+                auth.editorStatus = false;
+              }
+            }
+            isEditorCallback();
+          }).catch((err) => {
+            auth.editorStatus = false;
+            isEditorCallback();
+          });
+            // $.when(
+            //     $.ajax({
+            //         url: 'https://anchor-for-the-soul.firebaseio.com/editors.json',
+            //         data: {
+            //             orderBy: '"$key"',
+            //             limitToLast: 10
+            //         },
+            //         success: function(data, status, jqXHR) {
+            //             auth.editors = data;
+            //             for (key in data) {
+            //                 if (data[key] && key == uid) {
+            //                     auth.editorStatus = true;
+            //                 } else {
+            //                     auth.editorStatus = false;
+            //                 }
+            //             }
+            //         }
+            //     })
+            // ).then(function() {
+            //   isEditorCallback();
+            // }).catch(function(err) {
+            //   console.log('Error: ' + err)
+            // });
         }
     },
     profile: {

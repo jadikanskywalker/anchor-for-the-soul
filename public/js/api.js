@@ -3,7 +3,10 @@ var api = {
     cardHTML: '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card bg-light"> <div class="card-body"> <div class="card-words pb-2 mb-1"> <div class="d-flex justify-content-between align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted" value=""></p> </div> <h5 class="card-title"></h5> <p class="card-text"></p> </div> <div class="mt-1 d-flex justify-content-between align-items-end"> <div>  <p class="card-date text-muted mb-0"></p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div>',
     exploreHTML: '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore"> <a href="blog.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Blog ></button> </div> </a> </div> </div>',
     cardLeadHTML: '<div class="col-12 col-md-12 offset-md-0 mt-1 mt-md-3 mb-4 px-0 px-md-2"><div class="card card-lead"> <div class="row no-gutters"> <div class="col-md-5"> <div class="card-bg-img"></div> <div class="layer"></div> </div> <div class="col-md-7"> <div class="card-body"> <div class="card-words pb-5 mb-2"> <div class="card-words pb-1"> <div class="d-flex align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted" value=""></p> </div> <h5 class="card-title display-4 mb-4 pb-3"></h5> <p class="card-text ml-2"></p> </div> </div> <div class="card-details"> <div>  <p class="card-date text-muted mt-1 mb-0">August 31, 2020</p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div> </div> </div>',
+    database: firebase.database(),
+    //Content, Article, and Podcast Page
     data: [],
+    //Content Page
     dataFlat: [],
     dataUnpublished: [],
     dataFlatUnpublished: [],
@@ -125,6 +128,8 @@ var api = {
         });
     },
     contentInit: function(filter = true) {
+        // api.database = firebase.database();
+        console.log(api.database);
         $.when(
             // Get Articles
             $.ajax({
@@ -245,19 +250,9 @@ var api = {
         });
     },
     unpublishedContentInit: function(published = true) {
-        $.when(
-            // Get Articles
-            $.ajax({
-                url: 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogs.json',
-                data: {
-                    orderBy: '"$key"',
-                    limitToLast: 100
-                },
-                success: function(content, status, jqXHR) {
-                    api.dataUnpublished[0] = content;
-                }
-            })
-        ).then(function() {
+        return api.database.ref('/unpublished/blogs/').once('value').then((snapshot) => {
+            api.dataUnpublished[0] = (snapshot.val()) || null;
+            console.log(api.dataUnpublished[0]);
             api.dataFlatUnpublished = api.sortByDate(api.dataUnpublished, ['article']);
             for (article in api.dataFlatUnpublished) {
                 api.dataFlatUnpublished[article].published = 'false';
@@ -270,7 +265,35 @@ var api = {
             } else {
                 api.filter(api.dataFlatBoth);
             }
-        });
+          }).catch((err) => {
+            console.log(err);
+          });
+        // $.when(
+        //     // Get Articles
+        //     $.ajax({
+        //         url: 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogs.json',
+        //         data: {
+        //             orderBy: '"$key"',
+        //             limitToLast: 100
+        //         },
+        //         success: function(content, status, jqXHR) {
+        //             api.dataUnpublished[0] = content;
+        //         }
+        //     })
+        // ).then(function() {
+        //     api.dataFlatUnpublished = api.sortByDate(api.dataUnpublished, ['article']);
+        //     for (article in api.dataFlatUnpublished) {
+        //         api.dataFlatUnpublished[article].published = 'false';
+        //     }
+        //     api.dataFlatBoth = api.sortByDate([api.dataUnpublished[0], api.data[0], api.data[1]], ['article', 'article', 'episode']);
+        //     if (published === 'true') {
+        //         api.filter(api.dataFlat, true);
+        //     } else if (published === 'false') {
+        //         api.filter(api.dataFlatUnpublished, false);
+        //     } else {
+        //         api.filter(api.dataFlatBoth);
+        //     }
+        // });
     },
     cardClickhandlers: function(content = true) {
         if (content) { 
@@ -370,45 +393,41 @@ var api = {
         $('.article-content').css('min-height', height.window - height.navbar - height.articleHeader);
     },
     article: function(id) {
+        api.database = firebase.database();
         let published = api.params.get('published');
-        let urlHeader, urlContent;
+        let blogs, blogContent;
         if (published === 'false' && auth.editorStatus) {
-            urlHeader = 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogs.json';
-            urlContent = 'https://anchor-for-the-soul.firebaseio.com/unpublished/blogContent.json';
+            blogs = '/unpublished/blogs/' + id;
+            blogContent = '/unpublished/blogContent/' + id;
         } else if (published === 'false' && !auth.editorStatus) {
             window.location.href = '/content.html';
         } else {
-            urlHeader = 'https://anchor-for-the-soul.firebaseio.com/blogs.json';
-            urlContent = 'https://anchor-for-the-soul.firebaseio.com/blogContent.json';
+            blogs = '/blogs/' + id;
+            blogContent = '/blogContent/' + id;
         }
         if (id !== 'new') {
-        $.ajax({
-            url: urlHeader,
-            data: {
-                orderBy: '"$key"',
-                equalTo: '"' + id + '"'
-            }, success: function(data, status, jqXHR) {
-                api.data = data[id];
-                document.title = data[id].title  + ' – Resources';
+            api.database.ref(blogs).on('value', (snapshot) => {
+                api.data = (snapshot.val()) || null;
+                document.title = api.data.title;
                 if (!auth.editorStatus) {
                     // Display existing article
                     $('.user').show();
                     $('.editor-only').hide();
                     api.blogID = id;
-                    $('.article-title').text(data[id].title);
-                    $('.article-topic').text(data[id].topic.charAt(0).toUpperCase() + data[id].topic.slice(1)).attr('value', data[id].topic).show();
+                    $('.article-title').text(api.data.title);
+                    $('.article-topic').text(api.data.topic.charAt(0).toUpperCase() + api.data.topic.slice(1)).attr('value', api.data.topic).show();
                     api.cardClickhandlers(false);
-                    $('.article-description').text(data[id].description);
-                    $('.article-date').text(new Date(data[id].date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
+                    $('.article-description').text(api.data.description);
+                    $('.article-date').text(new Date(api.data.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
                     $('.article-header').css('opacity', '1');
                 } else {
                     // Edit existing article
                     $('.user').hide();
                     $('.editor-only').show();
-                    $('#article-title').html(data[id].title);
-                    $('#article-topic').val(data[id].topic).show();
-                    $('#article-description').html(data[id].description);
-                    $('#article-date').val(data[id].date);
+                    $('#article-title').html(api.data.title);
+                    $('#article-topic').val(api.data.topic).show();
+                    $('#article-description').html(api.data.description);
+                    $('#article-date').val(api.data.date);
                     if (published === 'false') {
                         $('#editor-article-publish').show();
                         $('#editor-article-published').hide();
@@ -420,27 +439,22 @@ var api = {
                 $(window).resize(function() { api.sizeArticleContent(); });
                 $('#article-loading').hide();
                 $('.main').fadeIn();
-            }
-        });
-        $.ajax({
-            url: urlContent,
-            data: {
-                orderBy: '"$key"',
-                equalTo: '"' + id + '"'
-            }, success: function(data, status, jqXHR) {
+              });
+            api.database.ref(blogContent).on('value', (snapshot) => {
+                api.dataContent = (snapshot.val()) || null;
                 var contentColumn = $('.article-content-column');
                 var key;
-                api.highestID = data[id].length - 1;
+                api.highestID = api.dataContent.length - 1;
                 contentColumn.empty();
-                for (var i = 0; i < data[id].length; i++) {
-                    key = Object.keys(data[id][i])[0];
+                for (var i = 0; i < api.dataContent.length; i++) {
+                    key = Object.keys(api.dataContent[i])[0];
                     if (!auth.editorStatus) {
-                        contentColumn.append("<" + key + ">" + data[id][i][key] + "</" + key + ">");
+                        contentColumn.append("<" + key + ">" + api.dataContent[i][key] + "</" + key + ">");
                     } else {
                         if (key == 'p') {
-                            contentColumn.append("<div class='editor-editable'><div contenteditable id='" + i + "'  type='" + key + "' class='bg-light content-editable' style='width:100%;'>" + data[id][i][key] + "</div><button class='editor-delete text-muted' placeid='" + i + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + i + '">+</button> </div>' + "</div>");
+                            contentColumn.append("<div class='editor-editable'><div contenteditable id='" + i + "'  type='" + key + "' class='bg-light content-editable' style='width:100%;'>" + api.dataContent[i][key] + "</div><button class='editor-delete text-muted' placeid='" + i + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + i + '">+</button> </div>' + "</div>");
                         } else {
-                            contentColumn.append("<div class='editor-input'><input id='" + i + "' type='" + key + "' value='" + data[id][i][key] + "' class='bg-light " + key + "' style='width:100%;'> <button class='editor-delete text-muted' placeid='" + i + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + i + '">+</button> </div>' + "<div>");
+                            contentColumn.append("<div class='editor-input'><input id='" + i + "' type='" + key + "' value='" + api.dataContent[i][key] + "' class='bg-light " + key + "' style='width:100%;'> <button class='editor-delete text-muted' placeid='" + i + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + i + '">+</button> </div>' + "<div>");
                         }
                         contentColumn.append();
                     }
@@ -449,8 +463,7 @@ var api = {
                 if (auth.editorStatus) {
                     editor.init();
                 }
-            }
-        });
+              });
         } else if (id == 'new') {
             if (auth.editorStatus) {
                 // Create New Article Template
@@ -480,30 +493,27 @@ var api = {
         }
     },
     episode: function(iframe, id) {
+        api.database = firebase.database();
         if (id != 'new') {
-        $.ajax({
-            url: 'https://anchor-for-the-soul.firebaseio.com/podcasts.json',
-            data: {
-                orderBy: '"$key"',
-                equalTo: '"' + id + '"'
-            }, success: function(data, status, jqXHR) {
-                document.title = data[id].title  + ' – Resources';
+            api.database.ref('/podcasts/' + id).on('value', (snapshot) => {
+                api.data = (snapshot.val()) || null;
+                document.title = api.data.title;
                 if (!auth.editorStatus) {
                     $('.user').show();
                     $('.editor-only').hide();
-                    $('.podcast-date').text(new Date(data[id].date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
-                    $('.podcast-topic').text(data[id].topic.charAt(0).toUpperCase() + data[id].topic.slice(1)).attr('value', data[id].topic).addClass(['bg-dark', 'text-white']).show();
+                    $('.podcast-date').text(new Date(api.data.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
+                    $('.podcast-topic').text(api.data.topic.charAt(0).toUpperCase() + api.data.topic.slice(1)).attr('value', api.data.topic).addClass(['bg-dark', 'text-white']).show();
                     api.cardClickhandlers(false);
-                    $('.podcast-title').text(data[id].title);
-                    $('.podcast-description').text(data[id].description);
+                    $('.podcast-title').text(api.data.title);
+                    $('.podcast-description').text(api.data.description);
                 } else {
                     $('.editor-only').show();
                     $('.user').hide();
-                    $('#podcast-date').val(data[id].date);
-                    $('#podcast-topic').val(data[id].topic).show();
-                    $('#podcast-title').text(data[id].title);
-                    $('#podcast-description').text(data[id].description);
-                    $('#podcast-url').val(data[id].url);
+                    $('#podcast-date').val(api.data.date);
+                    $('#podcast-topic').val(api.data.topic).show();
+                    $('#podcast-title').text(api.data.title);
+                    $('#podcast-description').text(api.data.description);
+                    $('#podcast-url').val(api.data.url);
                     $('#url-go').click(function() {
                         $(iframe).attr('src', $('#podcast-url').val());
                     });
@@ -514,12 +524,11 @@ var api = {
                     $('#podcast-loading').fadeOut(300);
                     $(this).css('opacity', 1);
                 });
-                $(iframe).attr('src', data[id].url);
+                $(iframe).attr('src', api.data.url);
                 if (auth.editorStatus) {
                     editor.init();
                 }
-            }
-        });
+            });
         } else {
             if (auth.editorStatus) {
                 $('.editor-only').show();

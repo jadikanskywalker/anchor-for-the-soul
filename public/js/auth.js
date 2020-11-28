@@ -122,10 +122,13 @@ var auth = {
             item.fadeOut();
         }, 3500);
     },
-    initApp: function(isEditorCallback, profile = false) {
+    initApp: function(isEditorCallback, profile = false, signin = false) {
         firebase.auth().onAuthStateChanged(function(user) {
           console.log(user);
           if (user) {
+            if (signin) {
+                window.location.href = "/content.html";
+            }
             var displayName = user.displayName;
             var email = user.email;
             var emailVerified = user.emailVerified;

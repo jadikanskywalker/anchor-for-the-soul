@@ -100,18 +100,21 @@
     <script deter src="js/jquery.js"></script>
     <script deter src="js/auth.js"></script>
     <script>
-        $("#submit").click(function() {
-            auth.signin();
-        });
-        $('#forgot-password').click(function() {
-            $(this).hide();
-            $('#password').hide();
-            $('#email').addClass('mb-3');
-            $('#signin-text').text('Reset Password');
-            $('#submit').hide();
-            $('#signin').append('<button class="btn btn-info ml-0 mb-2 mt-1" id="send-reset-link">Send Reset Link</button>');
-            $('#send-reset-link').click(function() {
-                auth.sendPasswordReset($('#submit-error'));
+        $(document).ready(function() {
+            auth.initApp({}, false, true);
+            $("#submit").click(function() {
+                auth.signin();
+            });
+            $('#forgot-password').click(function() {
+                $(this).hide();
+                $('#password').hide();
+                $('#email').addClass('mb-3');
+                $('#signin-text').text('Reset Password');
+                $('#submit').hide();
+                $('#signin').append('<button class="btn btn-info ml-0 mb-2 mt-1" id="send-reset-link">Send Reset Link</button>');
+                $('#send-reset-link').click(function() {
+                    auth.sendPasswordReset($('#submit-error'));
+                });
             });
         });
     </script>

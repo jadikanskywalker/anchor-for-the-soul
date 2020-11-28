@@ -110,8 +110,11 @@
     <script deter src="js/jquery.js"></script>
     <script deter src="js/auth.js"></script>
     <script>
-        $("#submit").click(function() {
-            auth.signup();
+        $(document).ready(function() {
+            auth.initApp({}, false, true);
+            $("#submit").click(function() {
+                auth.signup();
+            });
         });
     </script>
 </body>

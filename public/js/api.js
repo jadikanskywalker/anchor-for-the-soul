@@ -139,7 +139,7 @@ var api = {
             })
         ).then(function() {
             if (auth.editorStatus) {
-                $('#clear-filters').after('<select class="custom-select mx-2 mt-2" id="filter-published-select" style="width:140px""><option selected value="both">All Articles</option><option value="true">Published</option><option value="false">Unpublished</option></select><a class="btn btn-info mx-2" id="new-article" href="/article.html?id=new">+ New Article</a><a class="btn btn-info mx-2" id="new-episode" href="/episode.html?id=new">+ New Episode</a>');
+                $('#clear-filters').after('<select class="custom-select mx-2 mt-2" id="filter-published-select" style="width:150px""><option selected value="both">All Resources</option><option value="true">Published</option><option value="false">Unpublished</option></select><a class="btn btn-info mx-2" id="new-article" href="/article.html?id=new">+ New Article</a><a class="btn btn-info mx-2" id="new-episode" href="/episode.html?id=new">+ New Episode</a>');
             } else {
                 $('#new-article, #new-episode, #filter-published-select').remove();
             }
@@ -278,7 +278,12 @@ var api = {
                 if (value) {
                     api.filters.type= value;
                     $('#filter-type-select').val(value);
-                    api.filter(api.dataFlat);
+                    if (!auth.editorStatus) {
+                        api.filter(api.dataFlat);
+                    } else {
+                        api.filter(api.dataFlatBoth);
+                    }
+
                     if (!api.filterMenu) {
                         $('#filters').css('right', '1rem').show().animate({ opacity: 1, right: '1.3rem' }, 200);
                         $('.filter-menu p').css('max-width', '7rem')
@@ -335,6 +340,42 @@ var api = {
         }
         $('.article-content').css('min-height', height.window - height.navbar - height.articleHeader);
     },
+    transformArticleText: function(text) {
+        function getIndicesOf(searchStr, str, caseSensitive = false) {
+            var searchStrLen = searchStr.length;
+            if (searchStrLen == 0) {
+                return [];
+            }
+            var startIndex = 0, index, indices = [];
+            if (!caseSensitive) {
+                str = str.toLowerCase();
+                searchStr = searchStr.toLowerCase();
+            }
+            while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+                indices.push(index);
+                startIndex = index + searchStrLen;
+            }
+            return indices;
+        }
+        
+        var italics = getIndicesOf("/i", text);
+        var transformedText = text;
+        for (i in italics) {
+            transformedText = text.substring(0, italics[i]) + '<i>' + text.substring(italics[i] + 2);
+            console.log(transformedText);
+            let index = italics[i];
+            while (index < transformedText.length) {
+                console.log(transformedText.charAt(index));
+                if (transformedText.charAt(index) == '/') {
+                    console.log('in here');
+                    transformedText = transformedText.substring(0, index) + '</i>' + transformedText.substring(index + 1);
+                    break;
+                }
+                index++;
+            }
+        }
+        return transformedText;
+    },
     article: function(id) {
         api.database = firebase.database();
         let published = api.params.get('published');
@@ -389,10 +430,15 @@ var api = {
                 var key;
                 api.highestID = api.dataContent.length - 1;
                 contentColumn.empty();
+                if (auth.editorStatus) {
+                    contentColumn.append("<div class='editor-top'><div class='content-top' style='width:100%;' id='-1'></div>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="-1">+</button> </div>' + "</div>");
+                }
+                let object;
                 for (var i = 0; i < api.dataContent.length; i++) {
                     key = Object.keys(api.dataContent[i])[0];
                     if (!auth.editorStatus) {
-                        contentColumn.append("<" + key + ">" + api.dataContent[i][key] + "</" + key + ">");
+                        object = api.transformArticleText(api.dataContent[i][key]);
+                        contentColumn.append("<" + key + ">" + object + "</" + key + ">");
                     } else {
                         if (key == 'p') {
                             contentColumn.append("<div class='editor-editable'><div contenteditable id='" + i + "'  type='" + key + "' class='bg-light content-editable' style='width:100%;'>" + api.dataContent[i][key] + "</div><button class='editor-delete text-muted' placeid='" + i + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + i + '">+</button> </div>' + "</div>");
@@ -423,6 +469,7 @@ var api = {
                 var contentColumn = $('.article-content-column');
                 api.highestID = 1;
                 contentColumn.empty();
+                contentColumn.append("<div class='editor-top'><div class='content-top' style='width:100%;' id='-1'></div>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="-1">+</button> </div>' + "</div>");
                 contentColumn.append("<div class='editor-input'><input id='0' type='h3' value='Header' class='bg-light h3' style='width:100%;'> <button class='editor-delete text-muted' placeid='0'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="0">+</button> </div>' + "<div>");
                 contentColumn.append("<div class='editor-editable'><div contenteditable id='1'  type='p' class='bg-light content-editable' style='width:100%;'>Paragraph</div><button class='editor-delete text-muted' placeid='1'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="1">+</button> </div>' + "</div>");
                 $('.article-content').css('opacity', '1');

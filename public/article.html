@@ -41,6 +41,12 @@
             font-size: 150%;
             font-weight: 600;
         }
+        .article-content h4, .h4 {
+			margin: 2.4rem 1px 1.4rem;
+			font-size: 140%;
+			font-weight: 300;
+			font-style: italic;
+        }
         .article-content p, .article-content div.content-editable, .p {
             font-size: 120%;
             line-height: 1.8;
@@ -53,7 +59,7 @@
             font-family: "Calligraffitti", cursive;
             outline: 0;
           }
-        .article-description {
+          .article-description {
             font-size: 120%;
             font-style: italic;
             line-height: 1.6;
@@ -61,6 +67,10 @@
           }
           .article-content h3, .h3 {
             font-size: 160%;
+            margin-left: 0px;
+		  }
+		  .article-content h4, .h4 {
+            font-size: 150%;
             margin-left: 0px;
           }
           .article-content p, .article-content div.content-editable, .p {
@@ -75,13 +85,13 @@
             outline: 0;
             margin: 0.5rem 0;
         }
-        .article-content input.h3 {
+        .article-content input.h3, .article-content input.h4 {
             margin: 0.5rem 0;
         }
         #modal-add .form-check {
             margin: 0.1rem 0.3rem;
         }
-        #modal-add .h3, #modal-add .p {
+        #modal-add .h3, #modal-add .h4, #modal-add .p {
             margin: 0!important;
             line-height: 1;
         }
@@ -93,7 +103,7 @@
             right: -32px;
             margin-top: -15px;
         }
-        .editor-input, .editor-editable {
+        .editor-input, .editor-editable, .editor-top {
             position: relative;
             margin-right: 22px;
         }
@@ -169,7 +179,7 @@
                 <p class="article-topic text-muted m-0 ml-3 mb-1" value=""></p>
               </div>
               <p class="display-4 article-title mb-3 py-2"></p>
-              <hr style="width: 5%; background-color: #eceded">
+              <hr style="width: 36px; background-color: #eceded">
             </div>
             <div class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-4 text-center">
               <p class="text-muted mb-2 article-description"></p>
@@ -188,6 +198,7 @@
                     <option value="politics">Politics</option>
                 </select>
                 <div contenteditable  id="article-title" class="display-4 article-title mb-3"></div>
+                <hr style="width: 36px; background-color: #eceded">
             </div>
             <div class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-4 text-center">
                 <div contenteditable id="article-description" class="text-muted mb-2 article-description content-editable" style="width: 100%;"></div>
@@ -200,7 +211,7 @@
             </div>
             <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 mt-1 pt-4 px-4 editor-only">
                 <div class="alert alert-success py-2 px-3" id="save-alert" role="alert">
-                    Changes saved.
+                  Changes saved.
                 </div>
                 <div class="alert alert-success py-2 px-3" id="save-alert-2" role="alert">
                   Changes saved.
@@ -263,7 +274,13 @@
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="style" id="radio-h3" value="h3">
                 <label class="form-check-label h3" for="radio-h3">
-                  Heading
+                  Heading 1
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="style" id="radio-h4" value="h4">
+                <label class="form-check-label h4" for="radio-h4">
+                  Heading 2
                 </label>
               </div>
               <div class="form-check">

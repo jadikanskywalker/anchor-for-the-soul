@@ -247,7 +247,7 @@ z-index: 1 !important;
 .content .card {
     margin-bottom: 1.1rem;
     border: none;
-    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.1);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -405,7 +405,7 @@ z-index: 1 !important;
 .footer-lg {
     margin-top: 5.2rem;
     padding-top: 1.8rem; 
-    background-color: #dbad7b !important;
+    background-color: #e9b984 !important;
     padding-bottom: 2.2rem;
     position: relative;
     z-index: 2;
@@ -427,7 +427,7 @@ z-index: 1 !important;
 
 @media (max-width: 648px) {
     .footer-anchor {
-        right: 0%;
+        right: 3.5%;
     }
 
     .footer-bubbles {

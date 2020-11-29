@@ -101,8 +101,10 @@ var editor = {
       api.highestID++;
       if (style == "p") {
         content = "<div class='editor-editable'><div contenteditable id='" + api.highestID + "'  type='p' class='bg-light content-editable' style='width:100%;'> </div> <button class='editor-delete text-muted' placeid='" + api.highestID + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + api.highestID + '">+</button> </div>' + "</div>";
-      } else {
+      } else if (style ==  "h3") {
         content = "<div class='editor-input'><input id='" + api.highestID + "' type='h3' value='' class='bg-light h3' style='width:100%;'> <button class='editor-delete text-muted' placeid='" + api.highestID + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + api.highestID + '">+</button> </div>' + "<div>";
+      } else if (style ==  "h4") {
+        content = "<div class='editor-input'><input id='" + api.highestID + "' type='h4' value='' class='bg-light h4' style='width:100%;'> <button class='editor-delete text-muted' placeid='" + api.highestID + "'>x</button>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="' + api.highestID + '">+</button> </div>' + "<div>";
       }
       $('#' + startID).parent().after(content);
       editor.article.setClickhandlers();
@@ -138,7 +140,7 @@ var editor = {
         }
         
         indexStr = num.toString();
-        if (key == 'p' || key == 'h3' && value.length > 1) {
+        if (key == 'p' || key == 'h3' || key == "h4" && value.length > 1) {
           content[indexStr] = {}
           content[indexStr][key] =  value;
           num++;

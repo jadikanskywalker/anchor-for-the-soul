@@ -32,6 +32,21 @@
             line-height: 1.6;
             font-weight: 300;
         }
+        .article-author-img-div {
+          width: 40px;
+          height: 40px;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .article-author-img {
+          margin-top: 3px;
+        }
+        .article-author {
+          font-size: 110%;
+          font-weight: 600;
+        }
         .article-content {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -168,7 +183,7 @@
         </svg>
     </section>
   <div class="main">
-    <section class="container mt-1 py-4 mt-1 mb-4 article-header">
+    <section class="container mt-1 py-4 mt-1 mb-3 article-header">
         <div class="row user">
             <div class="col-12 col-xl-10 offset-xl-1 px-lg-5">
                 <a href="content.html" class="text-muted">< All Resources</a>
@@ -184,6 +199,12 @@
             <div class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-4 text-center">
               <p class="text-muted mb-2 article-description"></p>
             </div>
+            <!-- <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 pt-5 d-flex align-items-center">
+              <div class="article-author-img-div rounded-circle">
+                <img class="article-author-img" src="images/profile.jpg" width="55px">
+              </div>
+              <p class="article-author mb-0 ml-3">Jaden Hicks</p>
+            </div> -->
         </div>
         <div class="row editor-only">
             <div class="col-12 col-xl-10 offset-xl-1 px-lg-5">

@@ -359,20 +359,21 @@ var api = {
         }
         
         var italics = getIndicesOf("/i", text);
+        italics = Array.from(italics);
         var transformedText = text;
-        for (i in italics) {
-            transformedText = text.substring(0, italics[i]) + '<i>' + text.substring(italics[i] + 2);
-            console.log(transformedText);
+        
+        var i = italics.length - 1;
+        while (i > -1) {
+            transformedText = text.substring(0, italics[i]) + '<i>' + transformedText.substring(italics[i] + 3);
             let index = italics[i];
             while (index < transformedText.length) {
-                console.log(transformedText.charAt(index));
                 if (transformedText.charAt(index) == '/') {
-                    console.log('in here');
                     transformedText = transformedText.substring(0, index) + '</i>' + transformedText.substring(index + 1);
                     break;
                 }
                 index++;
             }
+            i--;
         }
         return transformedText;
     },

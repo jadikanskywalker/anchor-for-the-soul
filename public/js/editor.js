@@ -90,6 +90,18 @@ var editor = {
       $('#editor-article-delete').off().click(function() {
         $('#modal-delete-article').modal('show');
       });
+      $('#accessibility-preview').click(function() {
+        console.log("triggered preview");
+        api.article(api.params.get('id'), true);
+      });
+      $('#accessibility-preview-2').show().click(function() {
+        console.log("triggered preview");
+        api.article(api.params.get('id'));
+        if ($('body').hasClass('dark')) {
+          $('#accessibility-color').click();
+        }
+        $('.dropdown-menu .dropdown-item[size="md"]').click();
+      });
     },
     deleteSection: function(id) {
       if ($('#article-content > div').length > 1) {

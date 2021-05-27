@@ -1,3 +1,28 @@
+<!--
+  To-Do List
+   • link element (and sources)
+   • image element
+   • verse element
+   • quote element
+   • key point element
+
+   • bold effect
+   • underline effect
+
+   • preview articles
+   • lazy loading of articles
+   • article search (maybe change filter position?)
+   • save creation date of articles and previous version
+
+   • phone - title spacing
+   • navbar spacing
+
+   • about page?
+   • card images/background designs
+  
+   • analytics
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +46,61 @@
         }
         .article-header-main {
             margin-top: 0.4rem;
+        }
+        .article-accessibility-menu {
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+        .accessibility-color {
+          background-color: #eceded;
+          border: none;
+          border-radius: 8px;
+          padding: 4px 6px !important;
+          width: 34px;
+          height: 31px;
+        }
+        .accessibility-color img {
+          padding-bottom: 1px;
+        }
+        .article-topic.dark, .accessibility-color.dark, .accessibility-preview.dark {
+          background-color: #919699 !important;
+          color: #1c1c1c !important;
+        }
+        .accessibility-size {
+          /* background-color: #eceded; */
+          color: #1c1c1c;
+          border: none;
+          border-radius: 8px;
+          padding: 7.5px 7px !important;
+          height: 31px;
+          font-size: 17px;
+          line-height: 1;
+        }
+        .dropdown-toggle::after {
+          margin-left: 0.05rem;
+        }
+        .article-accessibility-menu .dropdown-menu {
+          left: auto;
+          right: 0;
+          min-width: 0;
+          text-align: right;
+          padding: 0.3rem 0;
+        }
+        .article-accessibility-menu .dropdown-menu .dropdown-item {
+          padding: 0.25rem 0.9rem 0.25rem 1rem;
+          cursor: pointer;
+        }
+        .accessibility-size.dark {
+          color: #919699;
+        }
+        .accessibility-preview {
+          background-color: #eceded;
+          border: none;
+          border-radius: 8px;
+          padding: 4px 6px 5px !important;
+          height: 32px;
+          width: 34px;
         }
         .article-title {
             font-family: "Calligraffitti", cursive;
@@ -57,10 +137,10 @@
             font-weight: 600;
         }
         .article-content h4, .h4 {
-			margin: 2.4rem 1px 1.4rem;
-			font-size: 140%;
-			font-weight: 300;
-			font-style: italic;
+			    margin: 2.4rem 1px 1.4rem;
+			    font-size: 140%;
+			    font-weight: 300;
+			    font-style: italic;
         }
         .article-content p, .article-content div.content-editable, .p {
             font-size: 120%;
@@ -138,6 +218,9 @@
         #save-alert {
             display: none;
         }
+        .do-not-display {
+          display: none;
+        }
     </style>
 </head>
 <body>
@@ -186,12 +269,31 @@
     <section class="container mt-1 py-4 mt-1 mb-3 article-header">
         <div class="row user">
             <div class="col-12 col-xl-10 offset-xl-1 px-lg-5">
-                <a href="content.html" class="text-muted">< All Resources</a>
+                <a href="content.html" class="text-muted back-to-resources">< All Resources</a>
             </div>
             <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center article-header-main">
+              <div class="article-accessibility-menu d-flex justify-content-center">
+                <div class="dropdown mr-1">
+                  <button class="btn btn-sm accessibility-size dropdown-toggle" id="accessibility-size" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Aa
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accessibility-size">
+                    <li><a class="dropdown-item" size="sm">Small</a></li>
+                    <li><a class="dropdown-item" size="md">Medium</a></li>
+                    <li><a class="dropdown-item" size="lg">Large</a></li>
+                  </ul>
+                </div>
+                <button class="btn btn-sm accessibility-color" id="accessibility-color">
+                  <img src="images/dark.svg" height="22px" width="22px">
+                  <img class="d-none" src="images/light.svg" height="22px" width="22px">
+                </button>
+                <button class="btn btn-sm accessibility-preview do-not-display ml-1" id="accessibility-preview-2">
+                  <img src="images/preview.svg" height="22px" width="22px">
+                </button>
+              </div>
               <div class="d-flex justify-content-center align-items-center pb-3 mb-1">
                 <p class="article-date text-muted mb-0"></p>
-                <p class="article-topic text-muted m-0 ml-3 mb-1" value=""></p>
+                <p class="article-topic text-muted m-0 ml-3" value=""></p>
               </div>
               <p class="display-4 article-title mb-3 py-2"></p>
               <hr style="width: 36px; background-color: #eceded">
@@ -211,6 +313,11 @@
                 <a href="content.html" class="text-muted">< All Resources</a>
             </div>
             <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center article-header-main">
+              <div class="article-accessibility-menu d-flex justify-content-center">
+                <button class="btn btn-sm accessibility-preview" id="accessibility-preview">
+                  <img src="images/preview.svg" height="22px" width="22px">
+                </button>
+              </div>
                 <input type="datetime-local" id="article-date" class="article-date text-muted mb-3">
                 <select class="custom-select mb-3" id="article-topic" style="width:fit-content">
                     <option value="theology">Theology</option>

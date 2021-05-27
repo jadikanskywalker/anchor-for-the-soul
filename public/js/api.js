@@ -4,6 +4,7 @@ var api = {
     exploreHTML: '<div class="col-12 col-sm-6 col-lg-4 col-xl-3"> <div class="card text-white card-explore"> <a href="blog.html"> <div class="card-bg-img"></div> <div class="layer" > </div> <div class="card-body"> <button class="btn btn-outline-light">Explore Blog ></button> </div> </a> </div> </div>',
     cardLeadHTML: '<div class="col-12 col-md-12 offset-md-0 mt-1 mt-md-3 mb-4 px-0 px-md-2"><div class="card card-lead"> <div class="row no-gutters"> <div class="col-md-5"> <div class="card-bg-img"></div> <div class="layer"></div> </div> <div class="col-md-7"> <div class="card-body"> <div class="card-words pb-5 mb-2"> <div class="card-words pb-1"> <div class="d-flex align-items-start"> <p class="card-type d-flex align-items-center"></p> <p class="card-topic text-muted" value=""></p> </div> <h5 class="card-title display-4 mb-4 pb-3"></h5> <p class="card-text ml-2"></p> </div> </div> <div class="card-details"> <div>  <p class="card-date text-muted mt-1 mb-0">August 31, 2020</p> </div> <a href="" class="btn btn-info">Read ></a> </div> </div> </div> </div> </div> </div>',
     database: firebase.database(),
+    analytics: firebase.analytics(),
     //Content, Article, and Podcast Page
     data: [],
     //Content Page
@@ -138,6 +139,9 @@ var api = {
                 api.data[1] = (snapshot.val()) || null;
             })
         ).then(function() {
+            api.analytics.logEvent('select_content', {
+                content_type: 'resources'
+            });
             if (auth.editorStatus) {
                 $('#clear-filters').after('<select class="custom-select mx-2 mt-2" id="filter-published-select" style="width:150px""><option selected value="both">All Resources</option><option value="true">Published</option><option value="false">Unpublished</option></select><a class="btn btn-info mx-2" id="new-article" href="/article.html?id=new">+ New Article</a><a class="btn btn-info mx-2" id="new-episode" href="/episode.html?id=new">+ New Episode</a>');
             } else {
@@ -377,7 +381,7 @@ var api = {
         }
         return transformedText;
     },
-    article: function(id) {
+    article: function(id, preview = false) {
         api.database = firebase.database();
         let published = api.params.get('published');
         let blogs, blogContent;
@@ -390,11 +394,48 @@ var api = {
             blogs = '/blogs/' + id;
             blogContent = '/blogContent/' + id;
         }
+        $('#accessibility-color').off().click(function() {
+            console.log("triggered dark");
+            $('body').toggleClass("dark");
+            $('.article-date, .article-description, .back-to-resources').toggleClass("text-muted").toggleClass("color-light");
+            $('.article-topic, .accessibility-color, .accessibility-size, .dropdown-menu, .accessibility-preview').toggleClass("dark");
+            $('.accessibility-color img').toggleClass('d-none');
+        });
+        var sizeMenu = false;
+        $('#accessibility-size').off().click(function() {
+            console.log("triggered size");
+            if (!sizeMenu) {
+                $(this).next().fadeIn(100);
+                sizeMenu = !sizeMenu;
+            } else {
+                $(this).next().fadeOut(100);
+                sizeMenu = !sizeMenu;
+            }
+        });
+        $('.article-accessibility-menu .dropdown-item').off().click(function() {
+            var size = $(this).attr('size');
+            if (size == 'sm') {
+                $('.main').css('font-size', '90%');
+            } else if (size == 'md') {
+                $('.main').css('font-size', '100%');
+            } else {
+                $('.main').css('font-size', '110%');
+            }
+        });
         if (id !== 'new') {
             api.database.ref(blogs).on('value', (snapshot) => {
                 api.data = (snapshot.val()) || null;
                 document.title = api.data.title;
                 if (!auth.editorStatus) {
+                    api.analytics.logEvent('select_item', {
+                        items: {
+                            item_id: api.data.id,
+                            item_name: api.data.title
+                        },
+                        item_list_name: "Articles"
+                    });
+                }
+                if (!auth.editorStatus || preview) {
                     // Display existing article
                     $('.user').show();
                     $('.editor-only').hide();
@@ -431,13 +472,13 @@ var api = {
                 var key;
                 api.highestID = api.dataContent.length - 1;
                 contentColumn.empty();
-                if (auth.editorStatus) {
+                if (auth.editorStatus && !preview) {
                     contentColumn.append("<div class='editor-top'><div class='content-top' style='width:100%;' id='-1'></div>" + '<div class="editor-buttons"> <button class="btn btn-info editor-add" placeid="-1">+</button> </div>' + "</div>");
                 }
                 let object;
                 for (var i = 0; i < api.dataContent.length; i++) {
                     key = Object.keys(api.dataContent[i])[0];
-                    if (!auth.editorStatus) {
+                    if (!auth.editorStatus || preview) {
                         object = api.transformArticleText(api.dataContent[i][key]);
                         contentColumn.append("<" + key + ">" + object + "</" + key + ">");
                     } else {
@@ -450,7 +491,7 @@ var api = {
                     }
                 }
                 $('.article-content').css('opacity', '1');
-                if (auth.editorStatus) {
+                if (auth.editorStatus && !preview) {
                     editor.init();
                 }
               });
@@ -489,6 +530,15 @@ var api = {
             api.database.ref('/podcasts/' + id).on('value', (snapshot) => {
                 api.data = (snapshot.val()) || null;
                 document.title = api.data.title;
+                if (!auth.editorStatus) {
+                    api.analytics.logEvent('select_item', {
+                        items: {
+                            item_id: api.data.id,
+                            item_name: api.data.title
+                        },
+                        item_list_name: "Episodes"
+                    });
+                }
                 if (!auth.editorStatus) {
                     $('.user').show();
                     $('.editor-only').hide();

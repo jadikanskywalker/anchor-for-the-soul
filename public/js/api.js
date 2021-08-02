@@ -131,11 +131,11 @@ var api = {
     contentInit: function(filter = true) {
         $.when(
             // Get Articles
-            api.database.ref('blogs').orderByKey().limitToLast(10).once('value').then((snapshot) => {
+            api.database.ref('blogs').orderByKey().limitToLast(100).once('value').then((snapshot) => {
                 api.data[0] = (snapshot.val()) || null;
             }),
             // Get Episodes
-            api.database.ref('podcasts').orderByKey().limitToLast(10).once('value').then((snapshot) => {
+            api.database.ref('podcasts').orderByKey().limitToLast(100).once('value').then((snapshot) => {
                 api.data[1] = (snapshot.val()) || null;
             })
         ).then(function() {
@@ -207,6 +207,7 @@ var api = {
                         $('#filters').hide();
                     });
                     $('.filter-menu p').css('max-width', '')
+                    api.filterMenu = false;
                     if (auth.editorStatus) {
                         api.populate(api.dataFlatBoth);
                     } else {
@@ -287,7 +288,6 @@ var api = {
                     } else {
                         api.filter(api.dataFlatBoth);
                     }
-
                     if (!api.filterMenu) {
                         $('#filters').css('right', '1rem').show().animate({ opacity: 1, right: '1.3rem' }, 200);
                         $('.filter-menu p').css('max-width', '7rem')

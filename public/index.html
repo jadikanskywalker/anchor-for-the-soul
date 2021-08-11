@@ -52,26 +52,37 @@
             </div>
         </nav>
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-9">
                 <div class="jumbotron jumbotron-fluid bg-transparent">
-                    <div class="container px-md-3">
+                    <div class="container px-md-3 px-lg-5">
                         <p class="display-4 mb-1 mb-md-3 pl-md-2 pl-lg-4 header-verse">"We have this hope as an <em class="text-muted">anchor for the soul</em>, firm and secure."</p>
                         <small class="text-muted header-verse-ref">&ndash; Hebrews 6:19 (NIV)</small>
                     </div>
                 </div>
             </div>
-            <div class="d-none d-md-flex col-md-4 ship-container">
-                <img class="ship" src="images/ship-white.png">
+            <div class="d-none d-md-flex align-items-end col-md-3 ship-container">
+                <img class="ship" src="images/ship-black-9.png">
             </div>
         </div>
-        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
-            <path d="M0,0 L0,40 C200,40 390,36 500,20 L500,0 Z" fill="#111111" />
-        </svg>
+        <!-- <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <path d="M0,0 L0,40 C200,40 390,36 500,20 L500,0 Z" fill="white" />
+        </svg> -->
         <button class="btn header-down">
             <img width="35" src="images/anchor-gray.svg">
         </button>
     </section>
-    <section class="container-fluid intro px-4 px-lg-5 pb-5">
+    
+    <section class="container-fluid content bg-blue px-4 px-lg-5 px-xl-3 pb-4 mt-3">
+        <svg class="top-curve" viewBox="0 0 500 120" preserveAspectRatio="none">
+            <path d="M0,20 C30,60 80,90 200,80 C260,5 320,20 400,80 C430,100 480,100 500,80 L500,120 0,120 Z" fill="#d1e8f9" /> <!-- Back Wave -->
+            <path d="M0,80 C60,25 120,0 200,80 C260,120 340,120 400,90 C440,70 480,50 500,40 L500,120 0,120 Z" fill="rgb(187, 223, 250)" /> <!-- Front Wave -->
+        </svg>
+        <div><p class="h3 px-0 px-lg-4 mx-lg-2 mb-4">Latest Resources</p></div>
+        <div class="row px-2 px-lg-5" id="content-lead"></div>
+        <div class="row px-2 px-lg-5" id="content"></div>
+    </section>
+
+    <section class="container-fluid intro bg-blue px-4 px-lg-5 pb-5">
         <div class="row intro-profile px-lg-5">
             <p class="col-12 col-sm-8 col-md-12 lead mb-0 mb-md-4">Welcome to the personal online ministry of <strong>Jaden Hicks</strong>.</p>
             <div class="d-none d-sm-block col-sm-4 col-md-3">
@@ -81,56 +92,13 @@
                 <p class="intro-profile-desc">I am a highly contemplative college student who has decided to share his thoughts with the world. I am a Christian. To be specific, I am a Protestant, Calvinistic, charismatic, complementarian, conservative, credo-baptistic Christian Hedonist. But I certainly have a lot of finding-out to do. I love math, science, philosophy, and politics, and I hope that this website is a valuable resource to you.</p>
             </div>
         </div>
-        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
+        <!-- <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
             <path d="M0,0 C60,25 440,38 500,40 L500,0 Z" fill="rgb(210, 213, 214)" />
-            <filter id='rough' x='0%' y='0%' width='100%' height="100%">
-                <feTurbulence type="fractalNoise" baseFrequency='0.04' result='noise' />
-                <feDiffuseLighting in='noise' lighting-color='white' surfaceScale='2'>
-                    <feDistantLight azimuth='45' elevation='60' />
-                </feDiffuseLighting>
-            </filter>
-        </svg>
+        </svg> -->
     </section>
-    
-    <section class="container-fluid content px-4 px-lg-5 px-xl-3 pb-4 mt-3">
-        <svg width="0" height="0">
-            <!-- Back Layer -->
-            <filter id="filter-back">
-              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" />
-              <feDisplacementMap  in="SourceGraphic" scale="170" />
-            </filter>
-            <!-- Middle Layer -->
-            <filter id="filter-mid">
-              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" />
-              <feDisplacementMap  in="SourceGraphic" scale="150" />
-            </filter>
-            <!-- Front Layer -->
-            <filter id="filter-front">
-              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" />
-              <feDisplacementMap  in="SourceGraphic" scale="100" />
-            </filter>
-        </svg>
-        <div><p class="h3 px-0 px-lg-4 mx-lg-2 mb-4">Latest Resources</p></div>
-        <div class="row px-2 px-lg-5" id="content-lead"></div>
-        <div class="row px-2 px-lg-5" id="content"></div>
-        <!-- <div class="light-layer"></div> -->
-    </section>
+
     <div class="footer-container">
-        <svg class="bottom-curve footer-bottom-curve" viewBox="0 0 500 120" preserveAspectRatio="none">
-            <filter id="dropshadow" width="100%" height="130%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="10"/> <!-- stdDeviation is how much to blur -->
-                <feOffset dx="0" dy="2" result="offsetblur"/> <!-- how much to offset -->
-                <feComponentTransfer>
-                    <feFuncA type="linear" slope="0.5"/> <!-- slope is the opacity of the shadow -->
-                </feComponentTransfer>
-                <feMerge> 
-                <feMergeNode/> <!-- this contains the offset blurred image -->
-                <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
-                </feMerge>
-            </filter>
-            <filter id="shadow" x="0" y="0" width="200%" height="200%">
-                <feDropShadow dx="500" dy="40" stdDeviation="35" flood-color="#ff0000" flood-opacity="1" />
-            </filter>
+        <svg class="bottom-curve footer-bottom-curve bg-blue" viewBox="0 0 500 120" preserveAspectRatio="none">
             <path d="M0,20 C30,60 80,90 200,80 C260,0 320,15 400,80 C430,100 480,100 500,80 L500,120 0,120 Z" fill="#f6cfa7" />
             <path d="M0,80 C60,20 120,35 200,80 C260,120 340,120 400,90 C440,70 480,50 500,40 L500,120 0,120 Z" fill="#e9b984" />
         </svg>
@@ -160,8 +128,8 @@
                 api.sizeCards('#latestEpisodes');
             });
             $('.header-down').click(function() {
-                let introOffset = $('.intro').offset();
-                $('html, body').animate({scrollTop: introOffset.top + 30}, 600);
+                let contentOffset = $('.content').offset();
+                $('html, body').animate({scrollTop: contentOffset.top + 5}, 600);
             });
         });
     </script>

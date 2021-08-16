@@ -74,6 +74,9 @@
           background-color: #919699 !important;
           color: #1c1c1c !important;
         }
+        .top-info {
+          min-height: 31px;
+        }
         .accessibility-size {
           /* background-color: #eceded; */
           color: #1c1c1c;
@@ -81,8 +84,14 @@
           border-radius: 8px;
           padding: 7.5px 7px !important;
           height: 31px;
-          font-size: 17px;
+          font-size: 16px;
           line-height: 1;
+        }
+        @media (max-width: 400px) {
+          .accessibility-size {
+            height: auto;
+            padding: 7.5px 2px !important;
+          }
         }
         .dropdown-toggle::after {
           margin-left: 0.05rem;
@@ -112,6 +121,7 @@
         .article-title {
             font-family: "Calligraffitti", cursive;
             outline: 0;
+            line-height: 1.45;
         }
         .article-description {
             font-size: 120%;
@@ -233,7 +243,7 @@
 <body>
     <section class="container-fluid header header-small">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-            <a class="navbar-brand">Anchor for the Soul <span>Resources</span></a>
+            <a class="navbar-brand">Anchored <span>Resources</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -268,14 +278,17 @@
             </div>
         </nav>
         </div>
-        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
-            <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
+        <svg class="bottom-curve bottom-curve-light" viewBox="0 0 500 40" preserveAspectRatio="none">
+            <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#ebeded" />
         </svg>
+        <svg class="bottom-curve bottom-curve-dark d-none" viewBox="0 0 500 40" preserveAspectRatio="none">
+          <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
+      </svg>
     </section>
   <div class="main">
     <section class="container mt-1 py-4 mt-1 mb-3 article-header">
         <div class="row user">
-            <div class="col-12 col-xl-10 offset-xl-1 px-lg-5">
+            <div class="col-12 col-xl-10 offset-xl-1 px-lg-5 mb-1">
                 <a href="content.html" class="text-muted back-to-resources">< All Resources</a>
             </div>
             <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center article-header-main">
@@ -298,7 +311,7 @@
                   <img src="images/preview.svg" height="22px" width="22px">
                 </button>
               </div>
-              <div class="d-flex justify-content-center align-items-center pb-3 mb-1">
+              <div class="d-flex justify-content-center align-items-center top-info mb-4">
                 <p class="article-date text-muted mb-0"></p>
                 <p class="article-topic text-muted m-0 ml-3" value=""></p>
               </div>

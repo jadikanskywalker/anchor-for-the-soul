@@ -54,14 +54,14 @@ var editor = {
           let published = api.params.get("published");
           if (published === "false") {
             editor.article.delete(
-              "unpublished/blogs/",
-              "unpublished/blogContent/"
+              "unpublished/articles/",
+              "unpublished/articleContents/"
             );
           } else {
             editor.article.delete();
           }
         });
-      $("#editor-article-save")
+      $("#editor-item-save")
         .off()
         .click(function () {
           let published = new URLSearchParams(window.location.search).get(
@@ -71,8 +71,8 @@ var editor = {
             editor.article.save();
           } else {
             editor.article.save(
-              "unpublished/blogs/",
-              "unpublished/blogContent/",
+              "unpublished/articles/",
+              "unpublished/articleContents/",
               function () {
                 editor.alert(
                   $("#save-alert"),
@@ -83,29 +83,31 @@ var editor = {
             );
           }
         });
-      $("#editor-article-publish")
+      $("#editor-item-publish")
         .off()
         .click(function () {
           editor.article.save(
-            "blogs/",
-            "blogContent/",
+            "articles/",
+            "articleContents/",
             function () {
               let articleID = api.params.get("id");
               let updates = {};
-              updates["unpublished/blogs/" + articleID] = null;
-              updates["unpublished/blogContent/" + articleID] = null;
+              updates["unpublished/articles/" + articleID] = null;
+              updates["unpublished/articleContents/" + articleID] = null;
               editor.database
                 .ref()
                 .update(updates)
                 .then(function () {
-                  $("#editor-article-publish").hide();
-                  $("#editor-article-unpublish").show();
-                  $("#editor-article-published").show();
+                  $("#editor-item-publish").hide();
+                  $("#editor-item-unpublish").show();
+                  $("#editor-item-published").show();
                   window.history.replaceState(
                     {},
                     document.title,
                     "/article.html?id=" + api.params.get("id")
                   );
+                  api.params = new URLSearchParams(window.location.search);
+                  api.item(articleID, "article");
                   editor.alert(
                     $("#save-alert"),
                     "alert-success",
@@ -123,24 +125,24 @@ var editor = {
             true
           );
         });
-      $("#editor-article-unpublish")
+      $("#editor-item-unpublish")
         .off()
         .click(function () {
           editor.article.save(
-            "unpublished/blogs/",
-            "unpublished/blogContent/",
+            "unpublished/articles/",
+            "unpublished/articleContents/",
             function () {
               let articleID = api.params.get("id");
               let updates = {};
-              updates["blogs/" + articleID] = null;
-              updates["blogContent/" + articleID] = null;
+              updates["articles/" + articleID] = null;
+              updates["articleContents/" + articleID] = null;
               editor.database
                 .ref()
                 .update(updates)
                 .then(function () {
-                  $("#editor-article-publish").show();
+                  $("#editor-item-publish").show();
                   $(
-                    "#editor-article-published, #editor-article-unpublish"
+                    "#editor-item-published, #editor-item-unpublish"
                   ).hide();
                   window.history.replaceState(
                     {},
@@ -149,6 +151,8 @@ var editor = {
                       api.params.get("id") +
                       "&published=false"
                   );
+                  api.params = new URLSearchParams(window.location.search);
+                  api.item(articleID, "article");
                   editor.alert(
                     $("#save-alert"),
                     "alert-success",
@@ -166,20 +170,20 @@ var editor = {
             true
           );
         });
-      $("#editor-article-delete")
+      $("#editor-item-delete")
         .off()
         .click(function () {
           $("#modal-delete-article").modal("show");
         });
       $("#accessibility-preview").click(function () {
         console.log("triggered preview");
-        api.article(api.params.get("id"), true);
+        api.item(api.params.get("id"), "article", true);
       });
       $("#accessibility-preview-2")
         .show()
         .click(function () {
           console.log("triggered preview");
-          api.article(api.params.get("id"));
+          api.item(api.params.get("id"), "article");
           if ($("body").hasClass("dark")) {
             $("#accessibility-color").click();
           }
@@ -187,7 +191,7 @@ var editor = {
         });
     },
     deleteSection: function (id) {
-      if ($("#article-content > div").length > 1) {
+      if ($("#item-content > div").length > 1) {
         $("#" + id)
           .parent()
           .remove();
@@ -236,19 +240,19 @@ var editor = {
       editor.article.setClickhandlers();
     },
     save: function (
-      blogs = "blogs/",
-      blogContent = "blogContent/",
+      articles = "articles/",
+      articleContent = "articleContents/",
       callback = null,
       publish = false
     ) {
       let articleID = api.params.get("id");
       // Article Header
       let header = {
-        date: $("#article-date").val(),
-        title: $("#article-title").text(),
+        date: $("#item-date").val(),
+        title: $("#item-title").text(),
         id: articleID,
-        description: $("#article-description").text(),
-        topic: $("#article-topic").val(),
+        description: $("#item-description").text(),
+        topic: $("#item-topic").val(),
       };
       let currentDate = new Date(
         Date.now() - new Date().getTimezoneOffset() * 60000
@@ -259,7 +263,7 @@ var editor = {
         header.date = currentDate;
       }
       // Article Content
-      var feilds = $("#article-content").children();
+      var feilds = $("#item-content").children();
       var content = {};
       var current, key, value, indexStr;
       var num = 0;
@@ -284,8 +288,9 @@ var editor = {
       // Update Database
       if (articleID != "new") {
         let updates = {};
-        updates[blogs + articleID] = header;
-        updates[blogContent + articleID] = content;
+        console.log(articles + articleID, articleContent + articleID)
+        updates[articles + articleID] = header;
+        updates[articleContent + articleID] = content;
         editor.database
           .ref()
           .update(updates)
@@ -293,7 +298,7 @@ var editor = {
             if (callback) {
               callback();
               if (publish) {
-                $("#article-date").val(currentDate);
+                $("#item-date").val(currentDate);
               }
             } else {
               editor.alert(
@@ -311,11 +316,11 @@ var editor = {
             );
           });
       } else if (articleID == "new") {
-        var newRef = editor.database.ref("blogs/").push();
+        var newRef = editor.database.ref("articles/").push();
         header.id = newRef.key;
         let updates = {};
-        updates["unpublished/blogs/" + newRef.key] = header;
-        updates["unpublished/blogContent/" + newRef.key] = content;
+        updates["unpublished/articles/" + newRef.key] = header;
+        updates["unpublished/articleContents/" + newRef.key] = content;
         editor.database
           .ref()
           .update(updates)
@@ -332,16 +337,16 @@ var editor = {
           });
       }
     },
-    delete: function (blogs = "blogs/", blogContent = "blogContent/") {
+    delete: function (articles = "articles/", articleContent = "articleContents/") {
       let articleID = api.params.get("id");
       if (articleID != "new") {
         editor.article.save(
-          "blogsArchive/",
-          "blogContentArchive/",
+          "archive/articles/",
+          "archive/articleContents/",
           function () {
             let updates = {};
-            updates[blogs + articleID] = null;
-            updates[blogContent + articleID] = null;
+            updates[articles + articleID] = null;
+            updates[articleContent + articleID] = null;
             editor.database
               .ref()
               .update(updates)
@@ -395,13 +400,13 @@ var editor = {
           if (published === "false") {
             editor.episode.delete(
               "unpublished/episodes/",
-              "unpublished/episodeContent/"
+              "unpublished/episodeContents/"
             );
           } else {
             editor.episode.delete();
           }
         });
-      $("#editor-episode-save")
+      $("#editor-item-save")
         .off()
         .click(function () {
           let published = new URLSearchParams(window.location.search).get(
@@ -412,7 +417,7 @@ var editor = {
           } else {
             editor.episode.save(
               "unpublished/episodes/",
-              "unpublished/episodeContent/",
+              "unpublished/episodeContents/",
               function () {
                 editor.alert(
                   $("#save-alert"),
@@ -423,29 +428,31 @@ var editor = {
             );
           }
         });
-      $("#editor-episode-publish")
+      $("#editor-item-publish")
         .off()
         .click(function () {
           editor.episode.save(
             "episodes/",
-            "episodeContent/",
+            "episodeContents/",
             function () {
               let episodeID = api.params.get("id");
               let updates = {};
               updates["unpublished/episodes/" + episodeID] = null;
-              updates["unpublished/episodeContent/" + episodeID] = null;
+              updates["unpublished/episodeContents/" + episodeID] = null;
               editor.database
                 .ref()
                 .update(updates)
                 .then(function () {
-                  $("#editor-episode-publish").hide();
-                  $("#editor-episode-unpublish").show();
-                  $("#editor-episode-published").show();
+                  $("#editor-item-publish").hide();
+                  $("#editor-item-unpublish").show();
+                  $("#editor-item-published").show();
                   window.history.replaceState(
                     {},
                     document.title,
                     "/episode.html?id=" + api.params.get("id")
                   );
+                  api.params = new URLSearchParams(window.location.search);
+                  api.item(episodeID, "episode");
                   editor.alert(
                     $("#save-alert"),
                     "alert-success",
@@ -463,24 +470,24 @@ var editor = {
             true
           );
         });
-      $("#editor-episode-unpublish")
+      $("#editor-item-unpublish")
         .off()
         .click(function () {
           editor.episode.save(
             "unpublished/episodes/",
-            "unpublished/episodeContent/",
+            "unpublished/episodeContents/",
             function () {
               let episodeID = api.params.get("id");
               let updates = {};
               updates["episodes/" + episodeID] = null;
-              updates["episodeContent/" + episodeID] = null;
+              updates["episodeContents/" + episodeID] = null;
               editor.database
                 .ref()
                 .update(updates)
                 .then(function () {
-                  $("#editor-episode-publish").show();
+                  $("#editor-item-publish").show();
                   $(
-                    "#editor-episode-published, #editor-episode-unpublish"
+                    "#editor-item-published, #editor-item-unpublish"
                   ).hide();
                   window.history.replaceState(
                     {},
@@ -489,6 +496,8 @@ var editor = {
                       api.params.get("id") +
                       "&published=false"
                   );
+                  api.params = new URLSearchParams(window.location.search);
+                  api.item(episodeID, "episode");
                   editor.alert(
                     $("#save-alert"),
                     "alert-success",
@@ -506,7 +515,7 @@ var editor = {
             true
           );
         });
-      $("#editor-episode-delete")
+      $("#editor-item-delete")
         .off()
         .click(function () {
           $("#modal-delete-episode").modal("show");
@@ -515,14 +524,14 @@ var editor = {
         .off()
         .click(function () {
           console.log("triggered preview");
-          api.episode(api.params.get("id"), true);
+          api.item(api.params.get("id"), "episode", true);
         });
       $("#accessibility-preview-2")
         .off()
         .show()
         .click(function () {
           console.log("triggered preview");
-          api.episode(api.params.get("id"));
+          api.item(api.params.get("id"), "episode");
           if ($("body").hasClass("dark")) {
             $("#accessibility-color").click();
           }
@@ -530,7 +539,7 @@ var editor = {
         });
     },
     deleteSection: function (id) {
-      if ($("#episode-content > div").length > 1) {
+      if ($("#item-content > div").length > 1) {
         $("#" + id)
           .parent()
           .remove();
@@ -580,19 +589,19 @@ var editor = {
     },
     save: function (
       episodes = "episodes/",
-      episodeContent = "episodeContent/",
+      episodeContent = "episodeContents/",
       callback = null,
       publish = false
     ) {
       let episodeID = api.params.get("id");
       // Episode Header
       let header = {
-        date: $("#episode-date").val(),
-        title: $("#episode-title").text(),
+        date: $("#item-date").val(),
+        title: $("#item-title").text(),
         id: episodeID,
-        description: $("#episode-description").text(),
-        topic: $("#episode-topic").val(),
-        pid: $("#episode-pid").val(),
+        description: $("#item-description").text(),
+        topic: $("#item-topic").val(),
+        pid: $("#item-pid").val(),
       };
       let currentDate = new Date(
         Date.now() - new Date().getTimezoneOffset() * 60000
@@ -603,7 +612,7 @@ var editor = {
         header.date = currentDate;
       }
       // Episode Content
-      var feilds = $("#episode-content").children();
+      var feilds = $("#item-content").children();
       var content = {};
       var current, key, value, indexStr;
       var num = 0;
@@ -636,7 +645,7 @@ var editor = {
             if (callback) {
               callback();
               if (publish) {
-                $("#episode-date").val(currentDate);
+                $("#item-date").val(currentDate);
               }
             } else {
               editor.alert(
@@ -658,7 +667,7 @@ var editor = {
         header.id = newRef.key;
         let updates = {};
         updates["unpublished/episodes/" + newRef.key] = header;
-        updates["unpublished/episodeContent/" + newRef.key] = content;
+        updates["unpublished/episodeContents/" + newRef.key] = content;
         editor.database
           .ref()
           .update(updates)
@@ -677,13 +686,13 @@ var editor = {
     },
     delete: function (
       episodes = "episodes/",
-      episodeContent = "episodeContent/"
+      episodeContent = "episodeContents/"
     ) {
       let episodeID = api.params.get("id");
       if (episodeID != "new") {
         editor.episode.save(
-          "episodesArchive/",
-          "episodeContentArchive/",
+          "archive/episodes/",
+          "archive/episodeContents/",
           function () {
             let updates = {};
             updates[episodes + episodeID] = null;

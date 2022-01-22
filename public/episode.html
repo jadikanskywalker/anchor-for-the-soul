@@ -22,10 +22,10 @@
         opacity: 0;
         transition: opacity 0.3s ease;
       }
-      .episode-header-main {
+      .item-header-main {
         margin-top: 0.4rem;
       }
-      .episode-accessibility-menu {
+      .item-accessibility-menu {
         position: absolute;
         top: 0;
         right: 0;
@@ -41,7 +41,7 @@
       .accessibility-color img {
         padding-bottom: 1px;
       }
-      .episode-topic.dark,
+      .item-topic.dark,
       .accessibility-color.dark,
       .accessibility-preview.dark {
         background-color: #919699 !important;
@@ -69,14 +69,14 @@
       .dropdown-toggle::after {
         margin-left: 0.05rem;
       }
-      .episode-accessibility-menu .dropdown-menu {
+      .item-accessibility-menu .dropdown-menu {
         left: auto;
         right: 0;
         min-width: 0;
         text-align: right;
         padding: 0.3rem 0;
       }
-      .episode-accessibility-menu .dropdown-menu .dropdown-item {
+      .item-accessibility-menu .dropdown-menu .dropdown-item {
         padding: 0.25rem 0.9rem 0.25rem 1rem;
         cursor: pointer;
       }
@@ -91,18 +91,18 @@
         height: 32px;
         width: 34px;
       }
-      .episode-title {
+      .item-title {
         font-family: "Calligraffitti", cursive;
         outline: 0;
         line-height: 1.45;
       }
-      .episode-description {
+      .item-description {
         font-size: 120%;
         font-style: italic;
         line-height: 1.6;
         font-weight: 300;
       }
-      .episode-author-img-div {
+      .item-author-img-div {
         width: 40px;
         height: 40px;
         overflow: hidden;
@@ -110,10 +110,10 @@
         justify-content: center;
         align-items: center;
       }
-      .episode-author-img {
+      .item-author-img {
         margin-top: 3px;
       }
-      .episode-author {
+      .item-author {
         font-size: 110%;
         font-weight: 600;
       }
@@ -121,21 +121,21 @@
         display: block;
         width: 100%;
       }
-      .episode-content h3,
+      .item-content h3,
       .h3 {
         margin: 2.4rem 1px 1.4rem;
         font-size: 150%;
         font-weight: 600;
       }
-      .episode-content h4,
+      .item-content h4,
       .h4 {
         margin: 2.4rem 1px 1.4rem;
         font-size: 140%;
         font-weight: 300;
         font-style: italic;
       }
-      .episode-content p,
-      .episode-content div.content-editable,
+      .item-content p,
+      .item-content div.content-editable,
       .p {
         font-size: 120%;
         line-height: 1.8;
@@ -144,34 +144,34 @@
         padding: 25px;
       }
       @media (max-width: 768px) {
-        .episode-title {
+        .item-title {
           font-family: "Calligraffitti", cursive;
           outline: 0;
         }
-        .episode-description {
+        .item-description {
           font-size: 120%;
           font-style: italic;
           line-height: 1.6;
           font-weight: 300;
         }
-        .episode-content h3,
+        .item-content h3,
         .h3 {
           font-size: 160%;
           margin-left: 0px;
         }
-        .episode-content h4,
+        .item-content h4,
         .h4 {
           font-size: 150%;
           margin-left: 0px;
         }
-        .episode-content p,
-        .episode-content div.content-editable,
+        .item-content p,
+        .item-content div.content-editable,
         .p {
           font-size: 130%;
         }
       }
       /* Editor Styles */
-      .episode-pid {
+      .item-pid {
         margin-top: 0px;
         border-radius: 5px;
         padding: 4px;
@@ -194,8 +194,8 @@
         outline: 0;
         margin: 0.5rem 0;
       }
-      .episode-content input.h3,
-      .episode-content input.h4 {
+      .item-content input.h3,
+      .item-content input.h4 {
         margin: 0.5rem 0;
       }
       #modal-add .form-check {
@@ -323,7 +323,7 @@
       </svg>
     </section>
     <div class="main">
-      <section class="container mt-1 py-4 mt-1 mb-3 episode-header">
+      <section class="container mt-1 py-4 mt-1 mb-3 item-header">
         <div class="row user">
           <div class="col-12 col-xl-10 offset-xl-1 px-lg-5 mb-1">
             <a href="content.html" class="text-muted back-to-resources"
@@ -331,10 +331,10 @@
             >
           </div>
           <div
-            class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center episode-header-main"
+            class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center item-header-main"
           >
             <div
-              class="episode-accessibility-menu d-flex justify-content-center"
+              class="item-accessibility-menu d-flex justify-content-center"
             >
               <div class="dropdown mr-1">
                 <button
@@ -377,22 +377,22 @@
             <div
               class="d-flex justify-content-center align-items-center top-info mb-4"
             >
-              <p class="episode-date text-muted mb-0"></p>
-              <p class="episode-topic text-muted m-0 ml-3" value=""></p>
+              <p class="item-date text-muted mb-0"></p>
+              <p class="item-topic text-muted m-0 ml-3" value=""></p>
             </div>
-            <p class="display-4 episode-title mb-3 py-2"></p>
+            <p class="display-4 item-title mb-3 py-2"></p>
             <hr style="width: 36px; background-color: #eceded" />
           </div>
           <div
             class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-4 text-center"
           >
-            <p class="text-muted mb-2 episode-description"></p>
+            <p class="text-muted mb-2 item-description"></p>
           </div>
           <!-- <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 pt-5 d-flex align-items-center">
-						<div class="episode-author-img-div rounded-circle">
-							<img class="episode-author-img" src="images/profile.jpg" width="55px">
+						<div class="item-author-img-div rounded-circle">
+							<img class="item-author-img" src="images/profile.jpg" width="55px">
 						</div>
-						<p class="episode-author mb-0 ml-3">Jaden Hicks</p>
+						<p class="item-author mb-0 ml-3">Jaden Hicks</p>
 					</div> -->
         </div>
         <div class="row editor-only">
@@ -400,10 +400,10 @@
             <a href="content.html" class="text-muted">< All Resources</a>
           </div>
           <div
-            class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center episode-header-main"
+            class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-center item-header-main"
           >
             <div
-              class="episode-accessibility-menu d-flex justify-content-center"
+              class="item-accessibility-menu d-flex justify-content-center"
             >
               <button
                 class="btn btn-sm accessibility-preview"
@@ -414,12 +414,12 @@
             </div>
             <input
               type="datetime-local"
-              id="episode-date"
-              class="episode-date text-muted mb-3"
+              id="item-date"
+              class="item-date text-muted mb-3"
             />
             <select
               class="custom-select mb-3"
-              id="episode-topic"
+              id="item-topic"
               style="width: fit-content"
             >
               <option value="theology">Theology</option>
@@ -429,8 +429,8 @@
             </select>
             <div
               contenteditable
-              id="episode-title"
-              class="display-4 episode-title mb-3"
+              id="item-title"
+              class="display-4 item-title mb-3"
             ></div>
             <hr style="width: 36px; background-color: #eceded" />
           </div>
@@ -439,8 +439,8 @@
           >
             <div
               contenteditable
-              id="episode-description"
-              class="text-muted mb-2 episode-description content-editable"
+              id="item-description"
+              class="text-muted mb-2 item-description content-editable"
               style="width: 100%"
             ></div>
           </div>
@@ -454,11 +454,11 @@
               <input
                 type="text"
                 maxlength="10"
-                class="form-control text-muted episode-pid"
-								id="episode-pid"
+                class="form-control text-muted item-pid"
+								id="item-pid"
               />
               <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" id="episode-go">
+                <button class="btn btn-secondary" type="button" id="item-go">
                   Go
                 </button>
               </div>
@@ -466,7 +466,7 @@
           </div>
         </div>
       </section>
-      <section class="container episode-content">
+      <section class="container item-content">
         <div class="row">
           <figure class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 mb-2">
             <audio controls src>
@@ -477,8 +477,8 @@
         </div>
         <div class="row">
           <div
-            class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-left episode-content-column"
-            id="episode-content"
+            class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-left item-content-column"
+            id="item-content"
           ></div>
           <div
             class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 mt-1 pt-4 px-4 editor-only"
@@ -497,28 +497,28 @@
             >
               Changes saved.
             </div>
-            <button class="btn btn-info" id="editor-episode-save">Save</button>
+            <button class="btn btn-info" id="editor-item-save">Save</button>
             <a
               class="btn btn-secondary"
-              id="editor-episode-cancel"
+              id="editor-item-cancel"
               href="content.html"
               >Cancel</a
             >
-            <button class="btn btn-success ml-3" id="editor-episode-publish">
+            <button class="btn btn-success ml-3" id="editor-item-publish">
               Publish
             </button>
             <button
               class="btn btn-warning text-white ml-3"
-              id="editor-episode-unpublish"
+              id="editor-item-unpublish"
             >
               Unpublish
             </button>
-            <label class="text-muted ml-3" id="editor-episode-published"
+            <label class="text-muted ml-3" id="editor-item-published"
               >&check; Published</label
             >
             <button
               class="btn btn-danger float-right"
-              id="editor-episode-delete"
+              id="editor-item-delete"
             >
               Delete
             </button>
@@ -688,9 +688,9 @@
       $(document).ready(function () {
         const id = api.params.get("id");
         auth.initApp(function () {
-          api.sizeArticleContent("episode");
-          api.episode(id);
-          api.latestEpisodes(false, id);
+          api.sizeItemContent("episode");
+          api.item(id, "episode");
+          api.latestItems(id, "episode");
         });
       });
     </script>

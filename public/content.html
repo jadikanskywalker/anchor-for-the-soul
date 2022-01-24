@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -99,7 +99,7 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-  <div class="main">
+  <div class="content-footer">
     <section class="container-fluid footer">
       <p class="mb-0 mx-3 mx-sm-5 pl-lg-5">&copy; 2020 Jaden Hicks</p>
     </section>
@@ -122,10 +122,8 @@
                 var navbarHeight = $('.navbar').outerHeight() + 6;
                 if (scrollHeight > navbarHeight) {
                     $('.filter-menu').css('top', '2rem');
-                    console.log('1');
                 } else {
                     $('.filter-menu').css('top', (navbarHeight + 24) + 'px')
-                    console.log('2');
                 }
             }
             filterMenu();

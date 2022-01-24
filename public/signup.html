@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Anchor for the Soul – Sign Up</title>
-    
+
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
 
@@ -13,116 +13,176 @@
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2503018486553172"
-    crossorigin="anonymous"></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2503018486553172"
+      crossorigin="anonymous"
+    ></script>
 
-    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
     <style>
-        #signin {
-            border-radius: 8px;
-            border: none;
-            box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
-        }
-        .form-control {
-            border: none;
-        }
-        .alert {
-            display: none;
-        }
-        .header {
-            background-color: #cbcdcd;
-        }
-        .intro {
-            background-color: #ebebeb;
-        }
+      #signin {
+        border-radius: 8px;
+        border: none;
+        box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
+      }
+      .form-control {
+        border: none;
+      }
+      .alert {
+        display: none;
+      }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <section class="container-fluid header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-            <a class="navbar-brand">Anchor for the Soul <span>Signup</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <section class="container-fluid header header-small">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <a class="navbar-brand">Anchor for the Soul <span>Signup</span></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mr-1">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item btn-group my-1 mx-lg-2">
+              <a class="btn btn-info" href="content.html">Resources</a>
+              <button
+                type="button"
+                class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="sr-only">Toggle Dropdown</span>
               </button>
-            
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mr-2">
-                  <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                  </li>
-                  <li class="nav-item btn-group my-1 mx-lg-2">
-                    <a class="btn btn-info" href="content.html">Resources</a>
-                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-lg-right">
-                        <a class="dropdown-item" href="content.html?type=article">Articles</a>
-                        <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown auth-only">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                    <div class="dropdown-menu dropdown-menu-lg-right">
-                      <a class="dropdown-item" href="/profile.html">Profile</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" id="signout">Sign Out</a>
-                    </div>
-                </li>
-              </ul>
-            </div>
-        </nav>
-        <div class="row justify-content-center mt-4">
-            <div class="col-12 col-md-6 col-lg-4 bg-dark py-2 px-3 text-white" id="signin">
-                <p class="h3 mb-3 pt-2 font-cursive">Sign Up</p>
-                <div class="px-1">
-                    <label for="name" class="text-light pl-1">Name</label>
-                    <input name="name" id="name" class="form-control mb-2" type="text" placeholder="Name">
-                    <label for="email" class="text-light pl-1">Email Address</label>
-                    <input name="email" id="email" class="form-control mb-2" type="email" placeholder="Email Address">
-                    <div class="form-check mb-2 ml-1">
-                        <input class="form-check-input" type="checkbox" value="" id="email-updates" checked>
-                        <label class="form-check-label text-light" for="email-updates">
-                            Recieve email updates for new resources.
-                        </label>
-                    </div>
-                    <label for="password" class="text-light pl-1">Password</label>
-                    <input name="password" id="password" type="password" class="form-control mb-3" placeholder="Password">
-                </div>
-                <div class="alert alert-danger mx-1 py-2 px-3" id="submit-error" role="alert"></div>
-                <button class="btn btn-info ml-1 mb-2 mt-1" id="submit">Submit</button>
-            </div>
+              <div class="dropdown-menu dropdown-menu-lg-right">
+                <a class="dropdown-item" href="content.html?type=article"
+                  >Articles</a
+                >
+                <a class="dropdown-item" href="content.html?type=episode"
+                  >Episodes</a
+                >
+              </div>
+            </li>
+            <li class="nav-item dropdown auth-only">
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="account-name"
+              ></a>
+              <div class="dropdown-menu dropdown-menu-lg-right">
+                <a class="dropdown-item" href="/profile.html">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" id="signout">Sign Out</a>
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="row justify-content-center pt-0 pb-3 my-0">
-            <div class="col-12 col-md-6 col-lg-4 py-0 px-3">
-                <a class="btn btn-link text-muted" href="signin.html">Already have an account? Sign In</a>
-            </div>
-        </div>
-        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
-            <path d="M0,0 L0,40 C200,40 390,36 500,20 L500,0 Z" fill="#cbcdcd" />
-        </svg>
+      </nav>
+      <svg
+        class="bottom-curve bottom-curve-light"
+        viewBox="0 0 500 40"
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#ebeded" />
+      </svg>
     </section>
-    <section class="container-fluid intro px-4 px-lg-5 pb-0 mb-5">
-        <div class="row intro-profile px-lg-5">
+    <section class="container-fluid mt-5">
+      <div class="row justify-content-center">
+        <div
+          class="col-12 col-md-6 col-lg-4 bg-dark py-2 px-3 text-white"
+          id="signin"
+        >
+          <p class="h3 mb-3 pt-2 font-cursive">Sign Up</p>
+          <div class="px-1">
+            <label for="name" class="text-light pl-1">Name</label>
+            <input
+              name="name"
+              id="name"
+              class="form-control mb-2"
+              type="text"
+              placeholder="Name"
+            />
+            <label for="email" class="text-light pl-1">Email Address</label>
+            <input
+              name="email"
+              id="email"
+              class="form-control mb-2"
+              type="email"
+              placeholder="Email Address"
+            />
+            <div class="form-check mb-2 ml-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="email-updates"
+                checked
+              />
+              <label class="form-check-label text-light" for="email-updates">
+                Recieve email updates for new resources.
+              </label>
+            </div>
+            <label for="password" class="text-light pl-1">Password</label>
+            <input
+              name="password"
+              id="password"
+              type="password"
+              class="form-control mb-3"
+              placeholder="Password"
+            />
+          </div>
+          <div
+            class="alert alert-danger mx-1 py-2 px-3"
+            id="submit-error"
+            role="alert"
+          ></div>
+          <button class="btn btn-info ml-1 mb-2 mt-1" id="submit">
+            Submit
+          </button>
         </div>
-        <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
-            <path d="M0,0 C60,25 440,38 500,40 L500,0 Z" fill="#ebebeb" />
-        </svg>
+      </div>
+      <div class="row justify-content-center pt-0 pb-3 my-0">
+        <div class="col-12 col-md-6 col-lg-4 py-0 px-3">
+          <a class="btn btn-link text-muted" href="signin.html"
+            >Already have an account? Sign In</a
+          >
+        </div>
+      </div>
     </section>
 
     <script deter src="js/jquery.js"></script>
     <script deter src="js/auth.js"></script>
     <script>
-        $(document).ready(function() {
-            auth.initApp({}, false, true);
-            $("#submit").click(function() {
-                auth.signup();
-            });
+      $(document).ready(function () {
+        auth.initApp({}, false, true);
+        $("#submit").click(function () {
+          auth.signup();
         });
+      });
     </script>
-</body>
+  </body>
+</html>

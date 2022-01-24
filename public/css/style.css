@@ -268,10 +268,6 @@ body.dark {
   margin-right: 5%;
 }
 
-.main {
-  display: none;
-}
-
 .bg-blue {
   background-color: rgb(187, 223, 250) !important;
 }
@@ -370,7 +366,7 @@ body.dark {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("images/BlogCovers/rocks.jpg");
+  background-image: url("../images/BlogCovers/rocks.jpg");
   background-size: cover;
   transition: all 0.3s ease;
   z-index: 1;
@@ -469,6 +465,10 @@ body.dark {
   text-decoration: underline;
 }
 
+.content-footer {
+  display: none;
+}
+
 .footer-container {
   position: relative;
   margin-top: -30px;
@@ -482,7 +482,7 @@ body.dark {
 .footer-lg {
   margin-top: 3rem;
   padding-top: 1.8rem;
-  background-color: #f4c18a !important;
+  background-color: #faca97 !important;
   padding-bottom: 2.2rem;
   position: relative;
   z-index: 2;
@@ -632,8 +632,7 @@ body.dark {
 }
 
 .card-topic,
-.article-topic,
-.episode-topic {
+.item-topic {
   background-color: #ebeded !important;
   padding: 4px;
   margin: 0.05rem 0px;
@@ -649,8 +648,7 @@ body.dark {
   color: rgb(187 209 225) !important;
 }
 
-.article-topic,
-.episode-topic {
+.item-topic {
   display: none;
 }
 
@@ -713,7 +711,7 @@ iframe {
 #save-alert-2 {
   top: 80px;
 }
-#editor-article-publish {
+#editor-item-publish {
   display: none;
 }
 .auth-only {

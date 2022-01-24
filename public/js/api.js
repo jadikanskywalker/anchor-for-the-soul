@@ -177,7 +177,7 @@ var api = {
     // Set card clickhandlers, size cards, show content
     api.cardClickhandlers(filter);
     $("#content-loading").hide();
-    $(".main").show();
+    $('.content-footer').show();
     api.sizeCards("#content");
     $(window).resize(function () {
       api.sizeCards("#content");
@@ -345,7 +345,6 @@ var api = {
         .once("value")
         .then((snapshot) => {
           api.dataUnpublished[0] = snapshot.val() || null;
-          console.log(api.dataUnpublished[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -356,7 +355,6 @@ var api = {
         .once("value")
         .then((snapshot) => {
           api.dataUnpublished[1] = snapshot.val() || null;
-          console.log(api.dataUnpublished[1]);
         })
         .catch((err) => {
           console.log(err);
@@ -492,7 +490,6 @@ var api = {
     // Search for indices of key strings
     while ((index = transformedText.search(/(?<!\<)\/i|\/b/i)) > -1) {
       let tagType = transformedText[index + 1] == "i" ? "i" : "strong";
-      console.log(index, tagType, transformedText.substring(index, index + 3));
       // Replace open string with open tag
       transformedText =
         transformedText.substring(0, index) +
@@ -500,7 +497,6 @@ var api = {
         tagType +
         ">" +
         transformedText.substring(index + 3);
-      console.log(transformedText);
       // Replace close key string with close tag
       let i = index + 2;
       while (i < transformedText.length) {
@@ -560,7 +556,6 @@ var api = {
     // type = "article" or "episode"
     api.database = firebase.database();
     let published = api.params.get("published");
-    console.log("published:", published)
     // Set variables for database paths
     let items, itemContent;
     if (published === "false" && auth.editorStatus) {
@@ -572,7 +567,6 @@ var api = {
       items = "/" + type + "s/" + id;
       itemContent = "/" + type + "Contents/" + id;
     }
-    console.log(items, itemContent)
     // Set clickhandlers for Item Accessbility Features
     $("#accessibility-color")
       .off()
@@ -592,7 +586,6 @@ var api = {
     $("#accessibility-size")
       .off()
       .click(function () {
-        console.log("triggered size");
         if (!sizeMenu) {
           $(this).next().fadeIn(100);
           sizeMenu = !sizeMenu;

@@ -1,4 +1,5 @@
 var editor = {
+  // Comment and modularize
   database: firebase.database(),
   init: function () {
     var pathname = window.location.pathname;
@@ -684,6 +685,7 @@ var editor = {
           });
       }
     },
+    // Fix problem!!!
     delete: function (
       episodes = "episodes/",
       episodeContent = "episodeContents/"

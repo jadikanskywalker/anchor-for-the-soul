@@ -2,12 +2,14 @@ var auth = {
   editors: {},
   editorStatus: false,
   updates: false,
+  // Signing to account
   signin: function () {
     var email = $("#email").val();
     var password = $("#password").val();
     var submit = $("#submit");
     submit.attr("disabled", true);
     var alertElement = $("#submit-error");
+    // Check inputs
     if (email.length < 4) {
       auth.alert(
         alertElement,
@@ -22,14 +24,16 @@ var auth = {
       submit.attr("disabled", false);
       return;
     }
-
+    // Sign in
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(function () {
+        // Success: Redirect to content
         window.location.href = "/content.html";
       })
       .catch(function (error) {
+        // Error: Display error
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode === "auth/wrong-password") {
@@ -46,9 +50,11 @@ var auth = {
         submit.attr("disabled", false);
       });
   },
+  // Signout of account
   signout: function () {
     firebase.auth().signOut();
   },
+  // Signup for account
   signup: function () {
     var name = $("#name").val();
     var email = $("#email").val();
@@ -57,6 +63,7 @@ var auth = {
     let submit = $("#submit");
     var alertElement = $("#submit-error");
     submit.attr("disabled", true);
+    // Check inputs
     if (name.length < 4) {
       auth.alert(alertElement, "alert-warning", "Please enter a name.");
       submit.attr("disabled", false);
@@ -76,26 +83,31 @@ var auth = {
       submit.attr("disabled", false);
       return;
     }
+    // Sign up
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password) // Create user
       .then(function () {
         if (updates == true) {
           updates = "true";
         } else {
           updates = "false";
         }
+        // Add user attributes
         firebase
           .auth()
-          .currentUser.updateProfile({ displayName: name, photoURL: updates })
+          .currentUser.updateProfile({ displayName: name, photoURL: updates }) // photoURL used to store email updates setting "true" or "false"
           .then(function () {
+            // Success: Redirect to Home
             window.location.href = "/index.html";
           })
           .catch(function (error) {
+            // Error: Redirect to home (account created without name, updates)
             window.location.href = "/index.html";
           });
       })
       .catch(function (error) {
+        // Error: Display error
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode == "auth/weak-password") {
@@ -110,8 +122,8 @@ var auth = {
         submit.attr("disabled", false);
         console.log(error);
       });
-    // [END createwithemail]
   },
+  // Verify email address
   sendEmailVerification: function () {
     firebase
       .auth()
@@ -127,6 +139,7 @@ var auth = {
         auth.alert($("#save-alert"), "alert-danger", "Something went wrong");
       });
   },
+  // Send password reset link to email
   sendPasswordReset: function (item = $("#save-alert")) {
     var email;
     if (firebase.auth().currentUser) {
@@ -152,6 +165,7 @@ var auth = {
         console.log(error);
       });
   },
+  // Function to handle alerts
   alert: function (item, addClass, text) {
     item
       .removeClass("alert-danger")
@@ -164,9 +178,10 @@ var auth = {
       item.fadeOut();
     }, 3500);
   },
+  // Initialize Authentication
   initApp: function (isEditorCallback, profile = false, signin = false) {
     firebase.auth().onAuthStateChanged(function (user) {
-      console.log(user);
+      // console.log(user);
       if (user) {
         if (signin) {
           window.location.href = "/content.html";
@@ -223,8 +238,10 @@ var auth = {
       }
     });
   },
+  // Check editor status of user
   isEditor(uid, isEditorCallback) {
     if (Object.keys(auth.editors).length > 0) {
+      // If editor ids already retrieved, check user id
       for (key in editors) {
         if (data[key] && key == uid) {
           auth.editorStatus = true;
@@ -234,6 +251,7 @@ var auth = {
         isEditorCallback();
       }
     } else {
+      // Retrieve editor ids and check user id
       return firebase
         .database()
         .ref("/editors/")
@@ -253,37 +271,15 @@ var auth = {
           auth.editorStatus = false;
           isEditorCallback();
         });
-      // $.when(
-      //     $.ajax({
-      //         url: 'https://anchor-for-the-soul.firebaseio.com/editors.json',
-      //         data: {
-      //             orderBy: '"$key"',
-      //             limitToLast: 10
-      //         },
-      //         success: function(data, status, jqXHR) {
-      //             auth.editors = data;
-      //             for (key in data) {
-      //                 if (data[key] && key == uid) {
-      //                     auth.editorStatus = true;
-      //                 } else {
-      //                     auth.editorStatus = false;
-      //                 }
-      //             }
-      //         }
-      //     })
-      // ).then(function() {
-      //   isEditorCallback();
-      // }).catch(function(err) {
-      //   console.log('Error: ' + err)
-      // });
     }
   },
+  // Code for user profile updates
   profile: {
+    // Save changes to user profile
     save: function () {
       let name = $("#profile-name").val();
       let email = $("#profile-email").val();
       let updates = $("#profile-updates").is(":checked") ? "true" : "false";
-      console.log(updates, firebase.auth().currentUser.photoURL);
       let emailTest =
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (
@@ -293,6 +289,7 @@ var auth = {
         emailTest.test(email)
       ) {
         var user = firebase.auth().currentUser;
+        // Update user name and email updates preferences
         if (name !== user.displayName || updates !== user.photoURL) {
           user
             .updateProfile({ displayName: name, photoURL: updates })
@@ -311,11 +308,13 @@ var auth = {
               );
             });
         }
+        // Update user email
         if (email != user.email) {
           user
             .updateEmail(email)
             .then(function () {
               auth.alert($("#save-alert-2"), "alert-success", "Email saved.");
+              // Update email verification buttons
               if (firebase.auth().currentUser.emailVerified) {
                 $("#profile-verified").show();
                 $("#profile-verify, #profile-verify-instructions").hide();
@@ -330,6 +329,7 @@ var auth = {
               }
             })
             .catch(function (error) {
+              // If necessary, relogin user using login modal
               if (error.code == "auth/requires-recent-login") {
                 $("#modal-resignin").modal("show");
                 $("#modal-enter")
@@ -355,8 +355,9 @@ var auth = {
                         .then(function () {
                           $("#modal-resignin").modal("hide");
                           $("#modal-resignin .action").text(
-                            "update your email address"
+                            "Update your Email Address"
                           );
+                          // Update email after user reverified
                           user
                             .updateEmail(email)
                             .then(function () {
@@ -410,12 +411,13 @@ var auth = {
         }
       }
     },
+    // Delete user profile
     delete: function () {
       var user = firebase.auth().currentUser;
 
       $("#modal-resignin").modal("show");
       $("#modal-delete").modal("hide");
-      $("#modal-resignin .action").text("delete your account");
+      $("#modal-resignin .action").text("Delete your Account");
       $("#modal-enter")
         .off()
         .click(function () {
@@ -429,6 +431,7 @@ var auth = {
             credential.email == user.email &&
             credential.password.length > 4
           ) {
+            // Reauthenticate user
             let credentialReturn = firebase.auth.EmailAuthProvider.credential(
               credential.email,
               credential.password
@@ -437,6 +440,7 @@ var auth = {
               .reauthenticateWithCredential(credentialReturn)
               .then(function () {
                 $("#modal-resignin").modal("hide");
+                // Delete account
                 user
                   .delete()
                   .then(function () {

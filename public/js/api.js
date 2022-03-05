@@ -488,8 +488,8 @@ var api = {
     let index,
       transformedText = text;
     // Search for indices of key strings
-    while ((index = transformedText.search(/(?<!\<)\/i|\/b/i)) > -1) {
-      let tagType = transformedText[index + 1] == "i" ? "i" : "strong";
+    while ((index = transformedText.substring(index).search(/\ \/i|\ \/b/i)) > -1) {
+      let tagType = transformedText[index + 2] == "i" ? "i" : "strong";
       // Replace open string with open tag
       transformedText =
         transformedText.substring(0, index) +

@@ -113,9 +113,11 @@
     <script src="js/auth.js"></script>
     <script>
         $(document).ready(function() {
-            auth.initApp(function() {
-              api.contentInit(false);
-            });
+            if (api != null) {
+                auth.initApp(function() {
+                    api.contentInit(false);
+                });
+            } else console.log("api not defined");
 
             $(window).resize(function() {
                 api.sizeCards('#latestArticles');

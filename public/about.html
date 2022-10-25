@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Anchor for the Soul – About</title>
+
+    <script src="/__/firebase/7.21.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <section class="container-fluid header header-small">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <a class="navbar-brand">Anchor for the Soul</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mr-1">
+            <li class="nav-item my-1">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item my-1 active">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item btn-group my-1 mx-lg-2">
+              <a class="btn btn-info" href="content.html">Resources</a>
+              <button
+                type="button"
+                class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-lg-right">
+                <a class="dropdown-item" href="content.html?type=article"
+                  >Articles</a
+                >
+                <a class="dropdown-item" href="content.html?type=episode"
+                  >Episodes</a
+                >
+              </div>
+            </li>
+            <li class="nav-item dropdown auth-only">
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="account-name"
+              ></a>
+              <div class="dropdown-menu dropdown-menu-lg-right">
+                <a class="dropdown-item" href="/profile.html">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" id="signout">Sign Out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <svg
+        class="bottom-curve bottom-curve-light"
+        viewBox="0 0 500 40"
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#ebeded" />
+      </svg>
+      <svg
+        class="bottom-curve bottom-curve-dark d-none"
+        viewBox="0 0 500 40"
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
+      </svg>
+    </section>
+    <div class="main">
+      <section class="container mt-3 py-4 mt-1 mb-3 item-header">
+        <div class="row">
+          <div class="col-12">
+            <div class="container py-3 px-md-3 px-lg-5">
+              <p class="display-4 mb-3 font-cursive">Anchor for the Soul</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="container px-md-3 px-lg-5 mb-5">
+            <p class="verse-content">
+              We have this hope as an
+              <em class="text-muted">anchor for the soul</em>, firm and secure.
+            </p>
+            <small class="text-muted verse-ref"
+              >&ndash; Hebrews 6:19 (NIV)</small
+            >
+          </div>
+        </div>
+        <div class="row">
+          <h3>About</h3>
+
+          <div class="d-none d-md-block col-md-9">
+            <p class="intro-profile-desc">
+              I am a highly contemplative college student. A Christian: to be
+              specific, a Reformed Protestant, complementarian, conservative,
+              credo-baptistic Christian Hedonist... but I certainly have a lot
+              of finding-out to do. My hope is that if anything in life I do,
+              Christ is glorified and His is made known. Not by my power,
+              wisdom, or strength, but by His faithfulness to use broken people
+              to . I love math, computer science, philosophy, classical music,
+              long theological debates with friends, jazz, coffee, and Jesus
+              above all, and I hope that this website is a valuable resource to
+              you.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container-fluid content px-4 px-lg-5 pt-5 pb-4">
+        <p class="h3 px-0 px-lg-4 mb-4 pb-3">Lastest Articles</p>
+        <div class="row px-1 px-lg-4" id="content">
+          <div class="loading" id="loadingLatestArticles"></div>
+        </div>
+      </section>
+      <section class="container-fluid footer">
+        <p class="mx-3 mx-sm-5 pl-lg-5">
+          &copy;
+          <script>
+            document.write("<span>" + new Date().getFullYear() + "</span>")
+          </script>
+          Jaden Hicks
+        </p>
+      </section>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modal-delete"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this section?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-danger modal-confirm">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modal-add"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel2"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">
+              What type of section?
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-1">Please choose a section style.</p>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-h3"
+                value="h3"
+              />
+              <label class="form-check-label h3" for="radio-h3">
+                Heading 1
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-h4"
+                value="h4"
+              />
+              <label class="form-check-label h4" for="radio-h4">
+                Heading 2
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-p"
+                value="p"
+                checked
+              />
+              <label class="form-check-label p" for="radio-p">
+                Paragraph
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-info modal-confirm">
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modal-delete-article"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this article? Once deleted, this
+            article can only be restored within the Admin console.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-danger modal-confirm">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap-4.5.2-dist/js/bootstrap.min.js" async defer></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      $(document).ready(function () {
+        auth.initApp(function () {
+          api.latestItems(id, "article")
+        })
+        const id = api.params.get("id")
+      })
+    </script>
+  </body>
+</html>

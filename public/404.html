@@ -1,73 +1,131 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
     <title>Anchor for the Soul – Page Not Found</title>
-    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+
+    <script src="/__/firebase/7.21.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style media="screen">
-      #message { max-width: 360px; margin: 0 auto; padding: 32px 24px 16px; border-radius: 7px; }
-      #message h1 { font-size: 2.5rem; font-family: "Calligraffitti", cursive; font-weight: 300; color: white; margin: 0 0 1.3rem;}
-      #message p { line-height: 140%; margin: 16px 0;}
-      #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #message {
+        max-width: 360px;
+        margin: 0 auto;
+        padding: 32px 24px 16px;
+        border-radius: 7px;
+      }
+      #message h1 {
+        font-size: 2.5rem;
+        font-family: "Calligraffitti", cursive;
+        font-weight: 300;
+        margin: 0 0 1.3rem;
+      }
+      #message p {
+        line-height: 140%;
+        margin: 16px 0;
+      }
     </style>
   </head>
   <body>
-    <section class="container-fluid header">
+    <section class="container-fluid header header-small">
       <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-          <a class="navbar-brand">Anchor for the Soul <span>Page Not Found</span></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav ml-auto mr-2">
-                <li class="nav-item">
-                  <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item btn-group my-1 mx-lg-2">
-                  <a class="btn btn-info" href="content.html">Resources</a>
-                  <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-lg-right">
-                      <a class="dropdown-item" href="content.html?type=article">Articles</a>
-                      <a class="dropdown-item" href="content.html?type=episode">Episodes</a>
-                  </div>
-              </li>
-              <li class="nav-item dropdown auth-only">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="account-name"></a>
-                  <div class="dropdown-menu dropdown-menu-lg-right">
-                    <a class="dropdown-item" href="/profile.html">Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" id="signout">Sign Out</a>
-                  </div>
-              </li>
-            </ul>
-          </div>
+        <a class="navbar-brand"
+          >Anchor for the Soul <span>Page Not Found</span></a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mr-1">
+            <li class="nav-item my-1">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item my-1">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item btn-group my-1 mx-lg-2">
+              <a class="btn btn-info" href="content.html">Resources</a>
+              <button
+                type="button"
+                class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-lg-right">
+                <a class="dropdown-item" href="content.html?type=article"
+                  >Articles</a
+                >
+                <a class="dropdown-item" href="content.html?type=episode"
+                  >Episodes</a
+                >
+              </div>
+            </li>
+            <li class="nav-item dropdown auth-only">
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="account-name"
+              ></a>
+              <div class="dropdown-menu dropdown-menu-lg-right">
+                <a class="dropdown-item" href="/profile.html">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" id="signout">Sign Out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
       </nav>
+      <svg
+        class="bottom-curve bottom-curve-light"
+        viewBox="0 0 500 40"
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#ebeded" />
+      </svg>
+      <svg
+        class="bottom-curve bottom-curve-dark d-none"
+        viewBox="0 0 500 40"
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
+      </svg>
+    </section>
+    <section class="container">
       <div class="row justify-content-center">
         <div class="my-5" id="message">
           <h1>Page Not Found</h1>
-          <p class="text-muted">This page was not found. Please check the URL for mistakes and try again.</p>
+          <p class="text-muted">
+            This page was not found. Please check the URL for mistakes and try
+            again.
+          </p>
           <a href="/index.html" class="text-info pl-1">Home</a>
         </div>
       </div>
-      <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
-          <path d="M0,0 L0,40 C200,40 390,36 500,20 L500,0 Z" fill="#111111" />
-      </svg>
-    </section>
-    <section class="container-fluid intro px-4 px-lg-5 pb-5">
-      <div class="row intro-profile px-lg-5">
-      </div>
-      <svg class="bottom-curve" viewBox="0 0 500 40" preserveAspectRatio="none">
-        <path d="M0,0 C60,25 440,38 500,40 L500,0 Z" fill="rgb(216, 216, 216)" />
-      </svg>
     </section>
   </body>
 </html>

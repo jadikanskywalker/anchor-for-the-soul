@@ -75,7 +75,7 @@ body.dark {
 .navbar-brand span {
   color: #4b5355;
   font-family: "Calligraffitti", cursive;
-  margin-left: 0.5rem;
+  margin-left: 0.2rem;
 }
 
 .navbar .nav-link {
@@ -111,7 +111,6 @@ body.dark {
   margin-bottom: 0;
 }
 
-.header-verse,
 .font-cursive {
   font-family: "Calligraffitti", cursive;
 }
@@ -122,6 +121,21 @@ body.dark {
   font-weight: 300;
   margin-top: 10px;
   padding-left: 10%;
+}
+
+.verse-content {
+  font-family: "Open Sans", sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.verse-ref {
+  font-size: 24px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  margin-top: 0.5rem;
+  padding-left: 1rem;
 }
 
 .ship-container {

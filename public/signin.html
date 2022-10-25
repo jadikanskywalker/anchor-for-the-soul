@@ -58,11 +58,11 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mr-1">
-            <li class="nav-item">
+            <li class="nav-item my-1">
               <a class="nav-link" href="index.html">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+            <li class="nav-item my-1">
+              <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item btn-group my-1 mx-lg-2">
               <a class="btn btn-info" href="content.html">Resources</a>
@@ -162,24 +162,24 @@
     <script deter src="js/auth.js"></script>
     <script>
       $(document).ready(function () {
-        auth.initApp({}, false, true);
+        auth.initApp({}, false, true)
         $("#submit").click(function () {
-          auth.signin();
-        });
+          auth.signin()
+        })
         $("#forgot-password").click(function () {
-          $(this).hide();
-          $("#password").hide();
-          $("#email").addClass("mb-3");
-          $("#signin-text").text("Reset Password");
-          $("#submit").hide();
+          $(this).hide()
+          $("#password").hide()
+          $("#email").addClass("mb-3")
+          $("#signin-text").text("Reset Password")
+          $("#submit").hide()
           $("#signin").append(
             '<button class="btn btn-info ml-0 mb-2 mt-1" id="send-reset-link">Send Reset Link</button>'
-          );
+          )
           $("#send-reset-link").click(function () {
-            auth.sendPasswordReset($("#submit-error"));
-          });
-        });
-      });
+            auth.sendPasswordReset($("#submit-error"))
+          })
+        })
+      })
     </script>
   </body>
 </html>

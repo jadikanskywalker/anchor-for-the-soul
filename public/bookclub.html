@@ -1,7 +1,7 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Anchor for the Soul – About</title>
+    <title>Anchor for the Soul – Book Club</title>
 
     <script src="/__/firebase/7.21.0/firebase-app.js"></script>
     <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
@@ -94,52 +94,61 @@
         <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
       </svg>
     </section>
-    <div class="main">
-      <section class="container mt-3 py-4 mt-1 mb-3 item-header">
+    <div class="main px-lg-4">
+      <section class="container mt-5">
         <div class="row">
-          <div class="col-12">
-            <div class="container py-3 px-md-3 px-lg-5">
-              <p class="display-4 mb-3 font-cursive">Anchor for the Soul</p>
+          <div class="col-12 col-lg-10 offset-lg-1 mb-4">
+            <div class="container mb-2 px-lg-2 position-relative">
+              <div class="lead-image-container">
+                <div class="lead-image-overlay"></div>
+                <img
+                  class="lead-image"
+                  src="https://foodtank.com/wp-content/uploads/2021/07/alfons-morales-YLSwjSy7stw-unsplash.jpg"
+                />
+              </div>
+              <p
+                class="display-1 mb-3 mx-md-3 mx-lg-5 font-cursive font-weight-normal lead-text"
+              >
+                Book Club
+              </p>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="container px-md-3 px-lg-5 mb-5">
-            <p class="verse-content">
-              We have this hope as an
-              <em class="text-muted">anchor for the soul</em>, firm and secure.
-            </p>
-            <small class="text-muted verse-ref"
-              >&ndash; Hebrews 6:19 (NIV)</small
-            >
-          </div>
-        </div>
-        <div class="row">
-          <h3>About</h3>
-
-          <div class="d-none d-md-block col-md-9">
-            <p class="intro-profile-desc">
-              I am a highly contemplative college student. A Christian: to be
-              specific, a Reformed Protestant, complementarian, conservative,
-              credo-baptistic Christian Hedonist... but I certainly have a lot
-              of finding-out to do. My hope is that if anything in life I do,
-              Christ is glorified and His is made known. Not by my power,
-              wisdom, or strength, but by His faithfulness to use broken people
-              to . I love math, computer science, philosophy, classical music,
-              long theological debates with friends, jazz, coffee, and Jesus
-              above all, and I hope that this website is a valuable resource to
-              you.
-            </p>
+          <div class="col-12 col-lg-10 col-xl-10 offset-lg-1 offset-xl-1">
+            <div class="container px-md-1 px-lg-5 mb-5">
+              <p class="verse-content font-cursive">
+                Do not be conformed to this world, but be transformed by the
+                <em class="text-muted">renewal of your mind</em>.
+              </p>
+              <small class="text-muted verse-ref">&ndash; Romans 12:2</small>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="container-fluid content px-4 px-lg-5 pt-5 pb-4">
-        <p class="h3 px-0 px-lg-4 mb-4 pb-3">Lastest Articles</p>
-        <div class="row px-1 px-lg-4" id="content">
-          <div class="loading" id="loadingLatestArticles"></div>
+      <section class="container">
+        <div
+          class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2 text-left item-content-column"
+          id="item-content"
+        >
+          <p>Article Series (In Progress)</p>
+          <h3>Part One -- The Objection and its Root</h3>
+          <p>
+            A chief teaching of the Bible, and most emphatically the New
+            Testament, is the doctrine of divine judgement and retribution: all
+            men will be judged by God in the last days, and unbelievers will be
+            cast into hell for eternity as a punishment for their sins and
+            sinful nature. Believers indeed deserve hell for their sin and would
+            end up there if not for the intervening blood of Christ. It is often
+            summed up like this: all sin and evil will be punished by God;
+            either you will bear the full weight of your sins in hell, or
+            through faith in Christ your sins will have been paid for by his
+            precious blood.
+          </p>
         </div>
       </section>
+
       <section class="container-fluid footer">
         <p class="mx-3 mx-sm-5 pl-lg-5">
           &copy;
@@ -306,136 +315,5 @@
         const id = api.params.get("id")
       })
     </script>
-  </body>
-</html> -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Anchor for the Soul – Page Not Found</title>
-
-    <script src="/__/firebase/7.21.0/firebase-app.js"></script>
-    <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-    <script src="/__/firebase/init.js"></script>
-
-    <link rel="stylesheet" href="bootstrap-4.5.2-dist/css/bootstrap.min.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
-    <link href="css/style.css" rel="stylesheet" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <style media="screen">
-      #message {
-        max-width: 360px;
-        margin: 0 auto;
-        padding: 32px 24px 16px;
-        border-radius: 7px;
-      }
-      #message h1 {
-        font-size: 2.5rem;
-        font-family: "Calligraffitti", cursive;
-        font-weight: 300;
-        margin: 0 0 1.3rem;
-      }
-      #message p {
-        line-height: 140%;
-        margin: 16px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <section class="container-fluid header header-small">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-        <a class="navbar-brand"
-          >Anchor for the Soul <span>Page Not Found</span></a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto mr-1">
-            <li class="nav-item my-1">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item my-1">
-              <a class="nav-link" href="about.html">About</a>
-            </li>
-            <li class="nav-item btn-group my-1 mx-lg-2">
-              <a class="btn btn-info" href="content.html">Resources</a>
-              <button
-                type="button"
-                class="btn btn-info dropdown-toggle dropdown-toggle-split"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <div class="dropdown-menu dropdown-menu-lg-right">
-                <a class="dropdown-item" href="content.html?type=article"
-                  >Articles</a
-                >
-                <a class="dropdown-item" href="content.html?type=episode"
-                  >Episodes</a
-                >
-              </div>
-            </li>
-            <li class="nav-item dropdown auth-only">
-              <a
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                role="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-                id="account-name"
-              ></a>
-              <div class="dropdown-menu dropdown-menu-lg-right">
-                <a class="dropdown-item" href="/profile.html">Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" id="signout">Sign Out</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <svg
-        class="bottom-curve bottom-curve-light"
-        viewBox="0 0 500 40"
-        preserveAspectRatio="none"
-      >
-        <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#ebeded" />
-      </svg>
-      <svg
-        class="bottom-curve bottom-curve-dark d-none"
-        viewBox="0 0 500 40"
-        preserveAspectRatio="none"
-      >
-        <path d="M0,0 L0,40 C180,40 390,26 500,10 L500,0 Z" fill="#111111" />
-      </svg>
-    </section>
-    <section class="container">
-      <div class="row justify-content-center">
-        <div class="my-5" id="message">
-          <h1>Page Not Found</h1>
-          <p class="text-muted">
-            This page was not found. Please check the URL for mistakes and try
-            again.
-          </p>
-          <a href="/index.html" class="text-info pl-1">Home</a>
-        </div>
-      </div>
-    </section>
   </body>
 </html>

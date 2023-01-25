@@ -111,6 +111,37 @@ body.dark {
   margin-bottom: 0;
 }
 
+.lead-text {
+  line-height: 1;
+  position: absolute;
+  bottom: 0;
+  left: 2.5rem;
+  color: white;
+  border-bottom: 2px solid white;
+}
+
+.lead-image-container {
+  position: relative;
+  width: 100%;
+  height: 260px;
+}
+
+.lead-image-overlay {
+  width:100%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(47, 49, 50, 0.4);
+}
+
+.lead-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+}
+
 .font-cursive {
   font-family: "Calligraffitti", cursive;
 }

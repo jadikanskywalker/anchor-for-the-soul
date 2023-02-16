@@ -1,4 +1,4 @@
-.header-header {
+  .header-header {
     min-height: 230px;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -123,6 +123,22 @@
   .p {
     font-size: 120%;
     line-height: 1.8;
+  }
+  .item-content p.indented {
+    padding: 1.2rem 13%;
+  }
+  .item-content blockquote {
+    padding: 1.2rem 6%;
+  }
+  .item-content blockquote.quote {
+
+  }
+  .item-content blockquote.verse {
+    font-size: 100%;
+  }
+  .item-content blockquote.verse .blockquote-footer {
+    font-size: 115%;
+    margin: 0.3rem 1.3rem 0;
   }
   .footer {
     padding: 25px;

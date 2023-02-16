@@ -483,13 +483,13 @@ var api = {
       height.window - height.navbar - height.articleHeader
     )
   },
-  // Transform text of item function (italics, bold, etc.)
+  // Transform text of item function (italics, bold, newline)
   transformText: function (text) {
     let i,
       transformedText = text.slice()
     let newText
     let tagType, tagLength
-    // Search for indices of key strings
+    // Search for italics and bold
     for (i = 0; i < transformedText.length; i++) {
       if (transformedText[i] == "/") {
         if (transformedText[i + 1] == "i") {
@@ -519,6 +519,19 @@ var api = {
             i = j + 3 + tagLength
             break
           }
+        }
+      }
+    }
+    // Search for newline
+    for (i = 0; i < transformedText.length; i++) {
+      if (transformedText[i] == "\\") {
+        if (transformedText[i + 1] == "n") {
+          newText =
+            transformedText.substring(0, i) +
+            "<br>" +
+            transformedText.substring(i + 2)
+          transformedText = newText.slice()
+          i++
         }
       }
     }
@@ -707,15 +720,54 @@ var api = {
             key = Object.keys(api.dataContent[i])[0]
             if (!auth.editorStatus || preview) {
               object = api.transformText(api.dataContent[i][key])
-              contentColumn.append("<" + key + ">" + object + "</" + key + ">")
+              if (key == "p" || key == "h3" || key == "h4" || key == "h5") {
+                contentColumn.append(
+                  "<" + key + ">" + object + "</" + key + ">"
+                )
+              } else if (key == "quote") {
+                let pieces = object.split(">>")
+                if (pieces.length == 2) {
+                  contentColumn.append(
+                    "<blockquote class='blockquote quote'><p class='mb-0'>" +
+                      pieces[0] +
+                      "</p><footer class='blockquote-footer'><cite title='Source Title'>" +
+                      pieces[1] +
+                      "</cite></footer></blockquote>"
+                  )
+                }
+              } else if (key == "verse") {
+                let pieces = object.split(">>")
+                if (pieces.length == 2) {
+                  contentColumn.append(
+                    "<blockquote class='blockquote verse'><p class='mb-0'>" +
+                      pieces[0] +
+                      "</p><footer class='blockquote-footer'><cite title='Source Title'>" +
+                      pieces[1] +
+                      "</cite></footer></blockquote>"
+                  )
+                }
+              } else if (key == "em") {
+                contentColumn.append(
+                  "<p class='indented'><em>" + object + "</em></p>"
+                )
+              }
             } else {
-              if (key == "p") {
+              if (
+                key == "p" ||
+                key == "quote" ||
+                key == "verse" ||
+                key == "em"
+              ) {
                 contentColumn.append(
                   "<div class='editor-editable'><div contenteditable id='" +
                     i +
                     "'  type='" +
                     key +
-                    "' class='bg-light content-editable' style='width:100%;'>" +
+                    "' key='" +
+                    key +
+                    "' class='bg-light " +
+                    key +
+                    " content-editable' style='width:100%;'>" +
                     api.dataContent[i][key] +
                     "</div><button class='editor-delete text-muted' placeid='" +
                     i +
@@ -730,6 +782,8 @@ var api = {
                   "<div class='editor-input'><input id='" +
                     i +
                     "' type='" +
+                    key +
+                    "' key='" +
                     key +
                     "' value='" +
                     api.dataContent[i][key] +

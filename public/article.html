@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <!--
   To-Do List
    / increase modularity and readability of code
@@ -7,9 +9,9 @@
    • link element (and sources)
    • image element
    • video element
-   • verse element
-   • quote element
-   • key point element
+   - verse element
+   - quote element
+   / key point element
    - bold effect
    • underline effect
    
@@ -39,7 +41,6 @@
    • improved analytics
 -->
 
-<!DOCTYPE html>
 <html>
   <head>
     <title>Anchor for the Soul – Article</title>
@@ -387,7 +388,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p class="mb-1">Please choose a section style.</p>
+            <p class="mb-1">Please choose a section style:</p>
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -417,6 +418,18 @@
                 class="form-check-input"
                 type="radio"
                 name="style"
+                id="radio-h5"
+                value="h5"
+              />
+              <label class="form-check-label h5" for="radio-h5">
+                Heading 3
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
                 id="radio-p"
                 value="p"
                 checked
@@ -424,6 +437,63 @@
               <label class="form-check-label p" for="radio-p">
                 Paragraph
               </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-quote"
+                value="quote"
+              />
+              <label class="form-check-label p" for="radio-quote">
+                Quote
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-verse"
+                value="verse"
+              />
+              <label class="form-check-label p" for="radio-verse">
+                Verse
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-em"
+                value="em"
+              />
+              <label class="form-check-label p em" for="radio-em">
+                Indented Emphasis
+              </label>
+            </div>
+            <p class="mt-2 mb-1">Content sections:</p>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-img"
+                value="img"
+              />
+              <label class="form-check-label p" for="radio-img"> Image </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="style"
+                id="radio-vid"
+                value="vid"
+              />
+              <label class="form-check-label p" for="radio-vid"> Video </label>
             </div>
           </div>
           <div class="modal-footer">
@@ -441,13 +511,13 @@
       class="modal fade"
       id="modal-delete-article"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="exampleModalLabel3"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            <h5 class="modal-title" id="exampleModalLabel3">Are you sure?</h5>
             <button
               type="button"
               class="close"
